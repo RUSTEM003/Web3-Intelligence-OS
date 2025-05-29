@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Dashboard from './pages/Dashboard';
 import Nodes from './pages/Nodes';
 import Wallets from './pages/Wallets';
@@ -34,9 +34,9 @@ function AppRoutes() {
 }
 
 function App() {
-  useState(() => {
+  useEffect(() => {
     console.log('Registering modules...');
-  });
+  }, []);
 
   return (
     <ModuleRegistryProvider>

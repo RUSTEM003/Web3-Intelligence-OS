@@ -10,6 +10,7 @@ interface SearchInputProps {
   suggestions?: string[];
   variant?: 'default' | 'minimal' | 'expanded';
   className?: string;
+  disabled?: boolean;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
@@ -21,6 +22,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   suggestions = [],
   variant = 'default',
   className = '',
+  disabled = false,
 }) => {
   const [query, setQuery] = useState(value || '');
   const [isFocused, setIsFocused] = useState(false);
@@ -87,7 +89,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="flex-1 bg-transparent border-none outline-none px-2 text-sm text-text-primary placeholder-text-tertiary"
+          disabled={disabled}
+          className={`flex-1 bg-transparent border-none outline-none px-2 text-sm ${disabled ? 'opacity-60 cursor-not-allowed' : ''} text-text-primary placeholder-text-tertiary`}
         />
         
         {query && (

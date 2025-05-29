@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { 
   Network, 
@@ -15,68 +15,36 @@ import {
   Maximize2, 
   Info, 
   Settings, 
-  Save
+  Save,
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
 import Button from '../components/Button';
 import SearchInput from '../components/SearchInput';
 import DataCard from '../components/DataCard';
+import { graphsApi } from '../services/api';
+import { Graph, GraphNode, GraphEdge } from '../types/api';
 
-const mockGraphs: GraphData[] = [
-  {
-    id: '1',
-    name: 'Transaction Flow Analysis',
-    description: 'Visualization of cryptocurrency transaction flows between wallets',
-    type: 'network',
-    created_at: '2023-05-10T08:30:00Z',
-    updated_at: '2023-05-15T14:20:00Z',
-    nodes: [
-      { id: 'n1', label: 'Wallet A', type: 'source', value: 1200 },
-      { id: 'n2', label: 'Wallet B', type: 'target', value: 800 },
-      { id: 'n3', label: 'Exchange X', type: 'exchange', value: 1500 },
-      { id: 'n4', label: 'Wallet C', type: 'target', value: 400 },
-      { id: 'n5', label: 'Mixer Service', type: 'mixer', value: 300 }
-    ],
-    edges: [
-      { id: 'e1', source: 'n1', target: 'n3', value: 500 },
-      { id: 'e2', source: 'n3', target: 'n2', value: 300 },
-      { id: 'e3', source: 'n1', target: 'n5', value: 200 },
-      { id: 'e4', source: 'n5', target: 'n4', value: 150 },
-      { id: 'e5', source: 'n3', target: 'n4', value: 100 }
-    ]
-  },
-  {
-    id: '2',
-    name: 'Risk Assessment Matrix',
-    description: 'Visualization of risk factors across different entities',
-    type: 'heatmap',
-    created_at: '2023-05-12T10:15:00Z',
-    updated_at: '2023-05-14T16:30:00Z',
-    data: [
-      { name: 'Entity A', risk: 0.2, volume: 5000, category: 'Exchange' },
-      { name: 'Entity B', risk: 0.8, volume: 3000, category: 'Mixer' },
-      { name: 'Entity C', risk: 0.5, volume: 7000, category: 'DeFi' },
-      { name: 'Entity D', risk: 0.3, volume: 2000, category: 'Wallet' },
-      { name: 'Entity E', risk: 0.9, volume: 1000, category: 'Darknet' }
-    ]
-  },
-  {
-    id: '3',
-    name: 'Temporal Activity Pattern',
-    description: 'Time-based analysis of transaction activities',
-    type: 'timeline',
-    created_at: '2023-05-08T09:45:00Z',
-    updated_at: '2023-05-13T11:20:00Z',
-    data: [
-      { date: '2023-05-01', transactions: 120, volume: 15000, anomaly: false },
-      { date: '2023-05-02', transactions: 150, volume: 18000, anomaly: false },
-      { date: '2023-05-03', transactions: 180, volume: 22000, anomaly: false },
-      { date: '2023-05-04', transactions: 220, volume: 25000, anomaly: false },
-      { date: '2023-05-05', transactions: 350, volume: 40000, anomaly: true },
-      { date: '2023-05-06', transactions: 190, volume: 23000, anomaly: false },
-      { date: '2023-05-07', transactions: 160, volume: 19000, anomaly: false }
-    ]
-  }
-];
+interface GraphData {
+  id: string;
+  name: string;
+  description: string;
+  type: 'network' | 'heatmap' | 'timeline';
+  created_at: string;
+  updated_at: string;
+  nodes?: { id: string; label: string; type: string; value: number }[];
+  edges?: { id: string; source: string; target: string; value: number }[];
+  data?: Array<{
+    date?: string;
+    name?: string;
+    risk?: number;
+    volume?: number;
+    category?: string;
+    transactions?: number;
+    anomaly?: boolean;
+    [key: string]: any;
+  }>;
+}
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
@@ -102,11 +70,66 @@ interface GraphData {
 }
 
 const Graphs: React.FC = () => {
+  const [graphs, setGraphs] = useState<GraphData[]>([]);
   const [selectedGraph, setSelectedGraph] = useState<GraphData | null>(null);
   const [filter, setFilter] = useState({ type: '', search: '' });
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredGraphs = mockGraphs.filter(graph => {
+  useEffect(() => {
+    const fetchGraphs = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await graphsApi.getAll();
+        if (response.status === 200) {
+          const transformedData: GraphData[] = response.data.map((graph: Graph) => ({
+            id: graph.id,
+            name: graph.name,
+            description: graph.description || '',
+            type: (graph.tags?.includes('network') ? 'network' : 
+                  graph.tags?.includes('heatmap') ? 'heatmap' : 'timeline') as 'network' | 'heatmap' | 'timeline',
+            created_at: graph.created_at,
+            updated_at: graph.updated_at,
+            nodes: graph.nodes?.map(node => ({
+              id: node.id,
+              label: node.label,
+              type: node.properties?.type || 'default',
+              value: node.properties?.value || 100
+            })),
+            edges: graph.edges?.map(edge => ({
+              id: edge.id,
+              source: edge.source,
+              target: edge.target,
+              value: edge.properties?.value || 1
+            })),
+            data: graph.nodes?.map(node => ({
+              name: node.label,
+              risk: node.properties?.risk,
+              volume: node.properties?.volume,
+              category: node.properties?.category,
+              date: node.properties?.date,
+              transactions: node.properties?.transactions,
+              anomaly: node.properties?.anomaly
+            }))
+          }));
+          setGraphs(transformedData);
+        } else {
+          setError('Failed to fetch graphs data');
+        }
+      } catch (err) {
+        console.error('Error fetching graphs:', err);
+        setError('Error fetching graphs data. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchGraphs();
+  }, []);
+
+  const filteredGraphs = graphs.filter((graph: GraphData) => {
     return (
       (filter.type === '' || graph.type === filter.type) &&
       (filter.search === '' || 
@@ -187,6 +210,54 @@ const Graphs: React.FC = () => {
     }
   };
 
+  const handleRefresh = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await graphsApi.getAll();
+      if (response.status === 200) {
+        const transformedData: GraphData[] = response.data.map((graph: Graph) => ({
+          id: graph.id,
+          name: graph.name,
+          description: graph.description || '',
+          type: (graph.tags?.includes('network') ? 'network' : 
+                graph.tags?.includes('heatmap') ? 'heatmap' : 'timeline') as 'network' | 'heatmap' | 'timeline',
+          created_at: graph.created_at,
+          updated_at: graph.updated_at,
+          nodes: graph.nodes?.map(node => ({
+            id: node.id,
+            label: node.label,
+            type: node.properties?.type || 'default',
+            value: node.properties?.value || 100
+          })),
+          edges: graph.edges?.map(edge => ({
+            id: edge.id,
+            source: edge.source,
+            target: edge.target,
+            value: edge.properties?.value || 1
+          })),
+          data: graph.nodes?.map(node => ({
+            name: node.label,
+            risk: node.properties?.risk,
+            volume: node.properties?.volume,
+            category: node.properties?.category,
+            date: node.properties?.date,
+            transactions: node.properties?.transactions,
+            anomaly: node.properties?.anomaly
+          }))
+        }));
+        setGraphs(transformedData);
+      } else {
+        setError('Failed to fetch graphs data');
+      }
+    } catch (err) {
+      console.error('Error fetching graphs:', err);
+      setError('Error fetching graphs data. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-6">
@@ -198,13 +269,16 @@ const Graphs: React.FC = () => {
           <Button
             variant="secondary"
             size="sm"
-            leftIcon={<RefreshCw className="h-4 w-4" />}
+            leftIcon={<RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />}
+            onClick={handleRefresh}
+            disabled={isLoading}
           >
-            Refresh
+            {isLoading ? 'Loading...' : 'Refresh'}
           </Button>
           <Button
             variant="primary"
             leftIcon={<Plus className="h-4 w-4" />}
+            disabled={isLoading}
           >
             Create Graph
           </Button>
@@ -212,12 +286,22 @@ const Graphs: React.FC = () => {
       </div>
 
       <div className="bg-background-secondary border border-border-light rounded-lg p-5">
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <div className="flex items-center">
+              <AlertCircle className="h-5 w-5 text-red-500 dark:text-red-400 mr-2" />
+              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+            </div>
+          </div>
+        )}
+        
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-1">
             <SearchInput 
               placeholder="Search graphs by name, description or type..." 
               value={filter.search}
               onChange={(value) => setFilter({ ...filter, search: value })}
+              disabled={isLoading}
             />
           </div>
           
@@ -227,6 +311,7 @@ const Graphs: React.FC = () => {
                 className="block w-full py-2 px-3 border border-border-light bg-background-tertiary text-text-secondary rounded-md focus:outline-none focus:ring-1 focus:ring-accent-blue focus:border-accent-blue text-sm"
                 value={filter.type}
                 onChange={(e) => setFilter({ ...filter, type: e.target.value })}
+                disabled={isLoading}
               >
                 <option value="">All Graph Types</option>
                 <option value="network">Network</option>
@@ -240,6 +325,7 @@ const Graphs: React.FC = () => {
                 className={`p-2 ${viewMode === 'grid' ? 'bg-background-elevated text-text-primary' : 'text-text-tertiary'}`}
                 onClick={() => setViewMode('grid')}
                 aria-label="Grid view"
+                disabled={isLoading}
               >
                 <div className="grid grid-cols-2 gap-1 h-4 w-4">
                   <div className="bg-current rounded-sm"></div>
@@ -252,6 +338,7 @@ const Graphs: React.FC = () => {
                 className={`p-2 ${viewMode === 'list' ? 'bg-background-elevated text-text-primary' : 'text-text-tertiary'}`}
                 onClick={() => setViewMode('list')}
                 aria-label="List view"
+                disabled={isLoading}
               >
                 <div className="flex flex-col justify-between h-4 w-4">
                   <div className="h-0.5 bg-current rounded-sm"></div>
@@ -263,13 +350,28 @@ const Graphs: React.FC = () => {
           </div>
         </div>
 
-        {viewMode === 'grid' ? (
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-16">
+            <Loader2 className="h-12 w-12 text-accent-blue animate-spin mb-4" />
+            <p className="text-text-secondary">Loading graph data...</p>
+          </div>
+        ) : filteredGraphs.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16 text-text-tertiary">
+            <GitBranch className="h-12 w-12 mb-4" />
+            <p className="text-lg font-medium mb-2">No graphs found</p>
+            <p className="text-sm">
+              {filter.type || filter.search ? 
+                'Try adjusting your filters or create a new graph.' : 
+                'Create your first graph to visualize blockchain relationships.'}
+            </p>
+          </div>
+        ) : viewMode === 'grid' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredGraphs.map((graph) => (
+            {filteredGraphs.map((graph: GraphData) => (
               <div 
                 key={graph.id} 
                 className="bg-background-tertiary border border-border-light rounded-lg p-4 cursor-pointer hover:shadow-md transition-all hover:translate-y-[-2px]"
-                onClick={() => setSelectedGraph(graph as GraphData)}
+                onClick={() => setSelectedGraph(graph)}
               >
                 <div className="flex items-center mb-3">
                   {graph.type === 'network' && <GitBranch className="h-5 w-5 text-accent-blue mr-2" />}
@@ -302,11 +404,11 @@ const Graphs: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="bg-background-secondary divide-y divide-border-light">
-                {filteredGraphs.map((graph) => (
+                {filteredGraphs.map((graph: GraphData) => (
                   <tr 
                     key={graph.id} 
                     className="hover:bg-background-tertiary cursor-pointer"
-                    onClick={() => setSelectedGraph(graph as GraphData)}
+                    onClick={() => setSelectedGraph(graph)}
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">

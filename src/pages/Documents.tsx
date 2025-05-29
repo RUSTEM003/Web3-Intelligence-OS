@@ -86,9 +86,6 @@ const mockDocuments = [
   }
 ];
 
-const allTags = Array.from(new Set(documents.flatMap(doc => doc.tags || [])));
-const formats = ['markdown', 'pdf'];
-
 const Documents = () => {
   const [selectedDocument, setSelectedDocument] = useState<any>(null);
   const [filter, setFilter] = useState({ search: '', format: '', tag: '' });
@@ -96,6 +93,12 @@ const Documents = () => {
   const [documents, setDocuments] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const allTags = React.useMemo(() => 
+    Array.from(new Set(documents.flatMap(doc => doc.tags || []))),
+    [documents]
+  );
+const formats = ['markdown', 'pdf'];
 
   useEffect(() => {
     fetchDocuments();
@@ -242,7 +245,7 @@ const Documents = () => {
                 disabled={loading}
               >
                 <option value="">All Tags</option>
-                {allTags.map(tag => (
+                {allTags.map((tag: string) => (
                   <option key={tag} value={tag}>{tag}</option>
                 ))}
               </select>
@@ -286,7 +289,7 @@ const Documents = () => {
                 <p className="text-sm text-text-secondary mb-4 line-clamp-2">{doc.content}</p>
                 
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {doc.tags.map((tag, index) => (
+                  {doc.tags && doc.tags.map((tag: string, index: number) => (
                     <span 
                       key={index} 
                       className="px-2 py-1 text-xs rounded-full bg-background-primary border border-border-light text-text-secondary"
@@ -348,7 +351,7 @@ const Documents = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex flex-wrap gap-1">
-                        {doc.tags.slice(0, 2).map((tag, index) => (
+                        {doc.tags && doc.tags.slice(0, 2).map((tag: string, index: number) => (
                           <span 
                             key={index} 
                             className="px-2 py-1 text-xs rounded-full bg-background-primary border border-border-light text-text-secondary"
@@ -486,7 +489,7 @@ const Documents = () => {
                     <div className="bg-background-tertiary rounded-lg p-4">
                       <p className="text-xs text-text-tertiary uppercase mb-2">Tags</p>
                       <div className="flex flex-wrap gap-2 mt-1">
-                        {selectedDocument.tags.map((tag: string, index: number) => (
+                        {selectedDocument.tags && selectedDocument.tags.map((tag: string, index: number) => (
                           <span 
                             key={index} 
                             className="px-2 py-1 text-xs rounded-full bg-background-primary border border-border-light text-text-secondary"
