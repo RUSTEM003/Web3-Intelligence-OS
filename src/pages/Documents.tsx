@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   FileText, 
   Search, 
@@ -19,11 +19,14 @@ import {
   ArrowUpRight, 
   ArrowDownLeft, 
   Eye, 
-  Share2 
+  Share2,
+  AlertTriangle,
+  Loader2
 } from 'lucide-react';
 import Button from '../components/Button';
 import SearchInput from '../components/SearchInput';
 import DataCard from '../components/DataCard';
+import { documentsApi } from '../services/api';
 
 const mockDocuments = [
   {
@@ -83,19 +86,48 @@ const mockDocuments = [
   }
 ];
 
-const allTags = Array.from(new Set(mockDocuments.flatMap(doc => doc.tags)));
+const allTags = Array.from(new Set(documents.flatMap(doc => doc.tags || [])));
 const formats = ['markdown', 'pdf'];
 
 const Documents = () => {
   const [selectedDocument, setSelectedDocument] = useState<any>(null);
   const [filter, setFilter] = useState({ search: '', format: '', tag: '' });
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [documents, setDocuments] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredDocuments = mockDocuments.filter(doc => {
+  useEffect(() => {
+    fetchDocuments();
+  }, []);
+
+  const fetchDocuments = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await documentsApi.getAll();
+      
+      if (response.status === 200) {
+        setDocuments(response.data);
+      } else {
+        console.error('API returned error status:', response.status);
+        setError(`Failed to fetch documents data. Status: ${response.status}`);
+        setDocuments(mockDocuments);
+      }
+    } catch (err) {
+      console.error('Error fetching documents:', err);
+      setError('Error fetching documents data. Please try again later.');
+      setDocuments(mockDocuments);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredDocuments = documents.filter(doc => {
     const matchesSearch = doc.title.toLowerCase().includes(filter.search.toLowerCase()) ||
                          doc.content.toLowerCase().includes(filter.search.toLowerCase());
     const matchesFormat = filter.format === '' || doc.format === filter.format;
-    const matchesTag = filter.tag === '' || doc.tags.includes(filter.tag);
+    const matchesTag = filter.tag === '' || (doc.tags && doc.tags.includes(filter.tag));
     
     return matchesSearch && matchesFormat && matchesTag;
   });
@@ -152,9 +184,11 @@ const Documents = () => {
           <Button
             variant="secondary"
             size="sm"
-            leftIcon={<RefreshCw className="h-4 w-4" />}
+            leftIcon={<RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />}
+            onClick={fetchDocuments}
+            disabled={loading}
           >
-            Refresh
+            {loading ? 'Loading...' : 'Refresh'}
           </Button>
           <Button
             variant="primary"
@@ -166,12 +200,22 @@ const Documents = () => {
       </div>
 
       <div className="bg-background-secondary border border-border-light rounded-lg p-5">
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <div className="flex items-center">
+              <AlertTriangle className="h-5 w-5 text-red-500 dark:text-red-400 mr-2" />
+              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+            </div>
+          </div>
+        )}
+        
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-1">
             <SearchInput 
               placeholder="Search documents by title, content or tags..." 
               value={filter.search}
               onChange={(value) => setFilter({ ...filter, search: value })}
+              disabled={loading}
             />
           </div>
           
@@ -181,6 +225,7 @@ const Documents = () => {
                 className="block w-full py-2 px-3 border border-border-light bg-background-tertiary text-text-secondary rounded-md focus:outline-none focus:ring-1 focus:ring-accent-blue focus:border-accent-blue text-sm"
                 value={filter.format}
                 onChange={(e) => setFilter({ ...filter, format: e.target.value })}
+                disabled={loading}
               >
                 <option value="">All Formats</option>
                 {formats.map(format => (
@@ -194,6 +239,7 @@ const Documents = () => {
                 className="block w-full py-2 px-3 border border-border-light bg-background-tertiary text-text-secondary rounded-md focus:outline-none focus:ring-1 focus:ring-accent-blue focus:border-accent-blue text-sm"
                 value={filter.tag}
                 onChange={(e) => setFilter({ ...filter, tag: e.target.value })}
+                disabled={loading}
               >
                 <option value="">All Tags</option>
                 {allTags.map(tag => (
@@ -204,7 +250,22 @@ const Documents = () => {
           </div>
         </div>
 
-        {viewMode === 'grid' ? (
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-16">
+            <Loader2 className="h-12 w-12 text-accent-blue animate-spin mb-4" />
+            <p className="text-text-secondary">Loading document data...</p>
+          </div>
+        ) : filteredDocuments.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16 text-text-tertiary">
+            <FileText className="h-12 w-12 mb-4" />
+            <p className="text-lg font-medium mb-2">No documents found</p>
+            <p className="text-sm">
+              {filter.search || filter.format || filter.tag ? 
+                'Try adjusting your filters or create a new document.' : 
+                'Create your first document to start organizing your blockchain research.'}
+            </p>
+          </div>
+        ) : viewMode === 'grid' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredDocuments.map((doc) => (
               <div 

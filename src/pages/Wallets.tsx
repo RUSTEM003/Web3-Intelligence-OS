@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Wallet, 
   AlertTriangle, 
@@ -16,11 +16,13 @@ import {
   ChevronDown, 
   ChevronUp, 
   Shield, 
-  Eye
+  Eye,
+  Loader2
 } from 'lucide-react';
 import Button from '../components/Button';
 import SearchInput from '../components/SearchInput';
 import DataCard from '../components/DataCard';
+import { walletsApi } from '../services/api';
 
 interface WalletTransaction {
   id: string;
@@ -96,17 +98,46 @@ const Wallets = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterBlockchain, setFilterBlockchain] = useState('');
   const [filterRiskScore, setFilterRiskScore] = useState<number | null>(null);
+  const [wallets, setWallets] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredWallets = mockWallets.filter(wallet => {
+  useEffect(() => {
+    fetchWallets();
+  }, []);
+
+  const fetchWallets = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await walletsApi.getAll();
+      
+      if (response.status === 200) {
+        setWallets(response.data);
+      } else {
+        console.error('API returned error status:', response.status);
+        setError(`Failed to fetch wallets data. Status: ${response.status}`);
+        setWallets(mockWallets);
+      }
+    } catch (err) {
+      console.error('Error fetching wallets:', err);
+      setError('Error fetching wallets data. Please try again later.');
+      setWallets(mockWallets);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredWallets = wallets.filter(wallet => {
     const matchesSearch = wallet.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         wallet.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+                         (wallet.tags && wallet.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())));
     const matchesBlockchain = filterBlockchain === '' || wallet.blockchain === filterBlockchain;
     const matchesRiskScore = filterRiskScore === null || wallet.risk_score >= filterRiskScore;
     
     return matchesSearch && matchesBlockchain && matchesRiskScore;
   });
 
-  const blockchains = ['Ethereum', 'Bitcoin', 'Tezos', 'Cosmos', 'Polygon'];
+  const blockchains = Array.from(new Set(wallets.map(wallet => wallet.blockchain)));
   const riskScores = [
     { value: 0.8, label: 'High Risk (80%+)' },
     { value: 0.5, label: 'Medium Risk (50%+)' },
@@ -136,6 +167,28 @@ const Wallets = () => {
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-medium text-gray-900 dark:text-white">Wallet Explorer</h2>
+          <Button
+            variant="secondary"
+            size="sm"
+            leftIcon={<RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />}
+            onClick={fetchWallets}
+            disabled={loading}
+          >
+            {loading ? 'Loading...' : 'Refresh'}
+          </Button>
+        </div>
+        
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <div className="flex items-center">
+              <AlertTriangle className="h-5 w-5 text-red-500 dark:text-red-400 mr-2" />
+              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+            </div>
+          </div>
+        )}
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div className="col-span-1 md:col-span-1">
             <div className="relative">
@@ -148,6 +201,7 @@ const Wallets = () => {
                 placeholder="Search by address or tag"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                disabled={loading}
               />
             </div>
           </div>
@@ -156,6 +210,7 @@ const Wallets = () => {
               className="block w-full py-2 px-3 border border-gray-300 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               value={filterBlockchain}
               onChange={(e) => setFilterBlockchain(e.target.value)}
+              disabled={loading}
             >
               <option value="">All Blockchains</option>
               {blockchains.map(blockchain => (
@@ -168,6 +223,7 @@ const Wallets = () => {
               className="block w-full py-2 px-3 border border-gray-300 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               value={filterRiskScore === null ? '' : filterRiskScore.toString()}
               onChange={(e) => setFilterRiskScore(e.target.value === '' ? null : parseFloat(e.target.value))}
+              disabled={loading}
             >
               <option value="">All Risk Levels</option>
               {riskScores.map(score => (
@@ -178,24 +234,40 @@ const Wallets = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead className="bg-gray-50 dark:bg-gray-700">
-              <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Wallet</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Blockchain</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Balance</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Risk Score</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tags</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-              {filteredWallets.map((wallet) => (
-                <tr 
-                  key={wallet.id} 
-                  className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
-                  onClick={() => setSelectedWallet(wallet)}
-                >
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-16">
+              <Loader2 className="h-12 w-12 text-indigo-600 dark:text-indigo-400 animate-spin mb-4" />
+              <p className="text-gray-700 dark:text-gray-300">Loading wallet data...</p>
+            </div>
+          ) : filteredWallets.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 text-gray-500 dark:text-gray-400">
+              <Wallet className="h-12 w-12 mb-4" />
+              <p className="text-lg font-medium mb-2">No wallets found</p>
+              <p className="text-sm">
+                {searchTerm || filterBlockchain || filterRiskScore !== null ? 
+                  'Try adjusting your filters or add a new wallet.' : 
+                  'Add your first wallet to start tracking blockchain assets.'}
+              </p>
+            </div>
+          ) : (
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-700">
+                <tr>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Wallet</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Blockchain</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Balance</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Risk Score</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tags</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                {filteredWallets.map((wallet) => (
+                  <tr 
+                    key={wallet.id} 
+                    className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                    onClick={() => setSelectedWallet(wallet)}
+                  >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
@@ -247,9 +319,10 @@ const Wallets = () => {
                     </button>
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
 
