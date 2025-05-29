@@ -130,7 +130,7 @@ const Wallets = () => {
 
   const filteredWallets = wallets.filter(wallet => {
     const matchesSearch = wallet.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (wallet.tags && wallet.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())));
+                         (wallet.tags && wallet.tags.some((tag: string) => tag.toLowerCase().includes(searchTerm.toLowerCase())));
     const matchesBlockchain = filterBlockchain === '' || wallet.blockchain === filterBlockchain;
     const matchesRiskScore = filterRiskScore === null || wallet.risk_score >= filterRiskScore;
     
@@ -296,7 +296,7 @@ const Wallets = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex flex-wrap gap-1">
-                      {wallet.tags.map((tag, index) => (
+                      {wallet.tags.map((tag: string, index: number) => (
                         <span 
                           key={index} 
                           className={`px-2 py-1 inline-flex text-xs leading-4 font-medium rounded-full ${
