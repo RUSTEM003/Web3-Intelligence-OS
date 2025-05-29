@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { 
   Globe, 
   ZoomIn, 
@@ -7,7 +7,7 @@ import {
   Info, 
   AlertTriangle, 
   RefreshCw, 
-  Map, 
+  Map as MapIcon, 
   Maximize, 
   Minimize, 
   RotateCw, 
@@ -17,6 +17,14 @@ import {
 import Button from '../components/Button';
 import SearchInput from '../components/SearchInput';
 import DataCard from '../components/DataCard';
+
+import DeckGL from '@deck.gl/react';
+import { ScatterplotLayer } from '@deck.gl/layers';
+import { MapView } from '@deck.gl/core';
+import Map from 'react-map-gl/mapbox';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+const MAPBOX_TOKEN = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
 
 const mockNodeLocations = [
   { id: 1, type: 'Core', lat: 40.7128, lng: -74.0060, status: 'active', load: 78, country: 'USA' },
@@ -37,6 +45,16 @@ const MapViewer = () => {
   const [selectedNode, setSelectedNode] = useState<any>(null);
   const [filter, setFilter] = useState({ type: '', status: '', country: '' });
   const [view, setView] = useState('global');
+  const [viewState, setViewState] = useState({
+    longitude: 0,
+    latitude: 20,
+    zoom: 1.5,
+    pitch: 0,
+    bearing: 0,
+    minZoom: 1,
+    maxZoom: 15
+  });
+  const deckRef = useRef(null);
 
   const nodeTypes = Array.from(new Set(mockNodeLocations.map(node => node.type)));
   const nodeStatuses = ['active', 'warning', 'error'];
@@ -87,7 +105,7 @@ const MapViewer = () => {
           </Button>
           <Button
             variant="primary"
-            leftIcon={<Map className="h-4 w-4" />}
+            leftIcon={<MapIcon className="h-4 w-4" />}
           >
             Export Map
           </Button>
@@ -162,34 +180,94 @@ const MapViewer = () => {
         </div>
         
         <div className="relative h-[500px] bg-background-primary border border-border-light rounded-lg overflow-hidden">
-          {/* This would be replaced with an actual map component like react-map-gl or deck.gl */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <Globe className="h-16 w-16 text-text-tertiary mx-auto mb-4 opacity-30" />
-              <p className="text-text-tertiary">
-                Interactive WebGL map would be rendered here using deck.gl
-              </p>
-              <p className="text-xs text-text-tertiary mt-2">
-                Displaying {filteredNodes.length} nodes across {countries.length} countries
-              </p>
-            </div>
+          <DeckGL
+            ref={deckRef}
+            viewState={viewState}
+            onViewStateChange={(evt) => setViewState(evt.viewState as any)}
+            controller={true}
+            views={new MapView({ id: 'map' })}
+            layers={[
+              new ScatterplotLayer({
+                id: 'nodes-layer',
+                data: filteredNodes,
+                pickable: true,
+                opacity: 0.8,
+                stroked: true,
+                filled: true,
+                radiusScale: 6,
+                radiusMinPixels: 5,
+                radiusMaxPixels: 15,
+                lineWidthMinPixels: 1,
+                getPosition: (d: any) => [d.lng, d.lat],
+                getRadius: (d: any) => Math.sqrt(d.load || 10) * 0.5,
+                getFillColor: (d: any) => {
+                  switch (d.status) {
+                    case 'active': return [46, 204, 113, 255]; // green
+                    case 'warning': return [241, 196, 15, 255]; // yellow
+                    case 'error': return [231, 76, 60, 255]; // red
+                    default: return [149, 165, 166, 255]; // gray
+                  }
+                },
+                getLineColor: [255, 255, 255, 100],
+                onClick: (info: any) => setSelectedNode(info.object),
+                updateTriggers: {
+                  getFillColor: [filter],
+                  getRadius: [filter]
+                }
+              })
+            ]}
+          >
+            <Map 
+              mapStyle="mapbox://styles/mapbox/dark-v10"
+              mapboxAccessToken={MAPBOX_TOKEN}
+            />
+          </DeckGL>
+          <div className="absolute bottom-4 left-4 bg-background-secondary bg-opacity-80 border border-border-light rounded-md p-2 text-xs text-text-tertiary">
+            Displaying {filteredNodes.length} nodes across {countries.length} countries
           </div>
           
           {/* Map controls */}
           <div className="absolute top-4 right-4 flex flex-col space-y-2">
-            <button className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors">
+            <button 
+              className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors"
+              onClick={() => setViewState(prev => ({ ...prev, zoom: Math.min(prev.zoom + 1, prev.maxZoom) }))}
+            >
               <ZoomIn className="h-4 w-4 text-text-secondary" />
             </button>
-            <button className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors">
+            <button 
+              className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors"
+              onClick={() => setViewState(prev => ({ ...prev, zoom: Math.max(prev.zoom - 1, prev.minZoom) }))}
+            >
               <ZoomOut className="h-4 w-4 text-text-secondary" />
             </button>
-            <button className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors">
+            <button 
+              className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors"
+              onClick={() => setViewState(prev => ({ ...prev, pitch: prev.pitch === 0 ? 45 : 0 }))}
+            >
               <Layers className="h-4 w-4 text-text-secondary" />
             </button>
-            <button className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors">
+            <button 
+              className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors"
+              onClick={() => {
+                if (deckRef.current) {
+                  setViewState({
+                    longitude: 0,
+                    latitude: 20,
+                    zoom: 1.5,
+                    pitch: 0,
+                    bearing: 0,
+                    minZoom: 1,
+                    maxZoom: 15
+                  });
+                }
+              }}
+            >
               <Maximize className="h-4 w-4 text-text-secondary" />
             </button>
-            <button className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors">
+            <button 
+              className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors"
+              onClick={() => setViewState(prev => ({ ...prev, bearing: (prev.bearing + 15) % 360 }))}
+            >
               <RotateCw className="h-4 w-4 text-text-secondary" />
             </button>
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Globe, 
   Server, 
@@ -19,8 +19,12 @@ import {
   Shield,
   Clock,
   MapPin,
-  ArrowUpRight
+  ArrowUpRight,
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
+import { nodesApi } from '../services/api';
+import { Node as ApiNode } from '../types/api';
 import Button from '../components/Button';
 import SearchInput from '../components/SearchInput';
 import NodeStatusCard from '../components/NodeStatusCard';
@@ -146,14 +150,73 @@ const mockNodes: Node[] = [
 ];
 
 const Nodes: React.FC = () => {
+  const [nodes, setNodes] = useState<Node[]>([]);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [filterType, setFilterType] = useState<string>('All');
   const [filterStatus, setFilterStatus] = useState<string>('All');
   const [filterCountry, setFilterCountry] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredNodes = mockNodes.filter(node => {
+  useEffect(() => {
+    const fetchNodes = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await nodesApi.getAll();
+        if (response.status === 200) {
+          const transformedData: Node[] = response.data.map((apiNode: any) => {
+            const locationParts = apiNode.location?.split(',') || [];
+            const lat = parseFloat(locationParts[0] || '0');
+            const lng = parseFloat(locationParts[1] || '0');
+            const country = locationParts[2]?.trim() || 'Unknown';
+            const region = locationParts[0]?.trim() || 'Unknown';
+            
+            return {
+              id: apiNode.id,
+              name: apiNode.name || `Node ${apiNode.id.substring(0, 8)}`,
+              type: (apiNode.status?.includes('core') ? 'core' : 
+                    apiNode.status?.includes('edge') ? 'edge' : 
+                    apiNode.status?.includes('civic') ? 'civic' : 'quantum') as 'core' | 'edge' | 'quantum' | 'civic',
+              status: (apiNode.status === 'active' ? 'active' : 
+                     apiNode.status === 'inactive' ? 'inactive' : 
+                     apiNode.status === 'syncing' ? 'syncing' : 'error') as 'active' | 'inactive' | 'syncing' | 'error',
+              location: { 
+                lat, 
+                lng 
+              },
+              country,
+              ip: apiNode.ip_address || '0.0.0.0',
+              metrics: {
+                cpu: apiNode.performance_metrics?.cpu_usage || 0,
+                memory: apiNode.performance_metrics?.memory_usage || 0,
+                network: apiNode.performance_metrics?.network_traffic || 0
+              },
+              services: ['AI Reason Kernel', 'Graph Sync Manager', 'Quantum Integrity Checker'],
+              lastSynced: apiNode.last_sync || 'Never',
+              securityLevel: 'medium',
+              uptime: '99%',
+              region
+            };
+          });
+          setNodes(transformedData);
+        } else {
+          setError('Failed to fetch nodes data');
+        }
+      } catch (err) {
+        console.error('Error fetching nodes:', err);
+        setError('Error fetching nodes data. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchNodes();
+  }, []);
+
+  const filteredNodes = nodes.filter(node => {
     const matchesSearch = node.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           node.id.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSearch && 
@@ -248,9 +311,64 @@ const Nodes: React.FC = () => {
           <Button
             variant="secondary"
             size="md"
-            leftIcon={<RefreshCw className="h-4 w-4" />}
+            leftIcon={<RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />}
+            onClick={() => {
+              const fetchNodes = async () => {
+                setIsLoading(true);
+                setError(null);
+                try {
+                  const response = await nodesApi.getAll();
+                  if (response.status === 200) {
+                    const transformedData: Node[] = response.data.map((apiNode: any) => {
+                      const locationParts = apiNode.location?.split(',') || [];
+                      const lat = parseFloat(locationParts[0] || '0');
+                      const lng = parseFloat(locationParts[1] || '0');
+                      const country = locationParts[2]?.trim() || 'Unknown';
+                      const region = locationParts[0]?.trim() || 'Unknown';
+                      
+                      return {
+                        id: apiNode.id,
+                        name: apiNode.name || `Node ${apiNode.id.substring(0, 8)}`,
+                        type: (apiNode.status?.includes('core') ? 'core' : 
+                              apiNode.status?.includes('edge') ? 'edge' : 
+                              apiNode.status?.includes('civic') ? 'civic' : 'quantum') as 'core' | 'edge' | 'quantum' | 'civic',
+                        status: (apiNode.status === 'active' ? 'active' : 
+                               apiNode.status === 'inactive' ? 'inactive' : 
+                               apiNode.status === 'syncing' ? 'syncing' : 'error') as 'active' | 'inactive' | 'syncing' | 'error',
+                        location: { 
+                          lat, 
+                          lng 
+                        },
+                        country,
+                        ip: apiNode.ip_address || '0.0.0.0',
+                        metrics: {
+                          cpu: apiNode.performance_metrics?.cpu_usage || 0,
+                          memory: apiNode.performance_metrics?.memory_usage || 0,
+                          network: apiNode.performance_metrics?.network_traffic || 0
+                        },
+                        services: ['AI Reason Kernel', 'Graph Sync Manager', 'Quantum Integrity Checker'],
+                        lastSynced: apiNode.last_sync || 'Never',
+                        securityLevel: 'medium',
+                        uptime: '99%',
+                        region
+                      };
+                    });
+                    setNodes(transformedData);
+                  } else {
+                    setError('Failed to fetch nodes data');
+                  }
+                } catch (err) {
+                  console.error('Error fetching nodes:', err);
+                  setError('Error fetching nodes data. Please try again later.');
+                } finally {
+                  setIsLoading(false);
+                }
+              };
+              fetchNodes();
+            }}
+            disabled={isLoading}
           >
-            Refresh
+            {isLoading ? 'Loading...' : 'Refresh'}
           </Button>
           
           <Button
