@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Database, Server, Shield, Cpu, Globe, Zap } from 'lucide-react';
+import { ArrowUpRight, Database, Server, Shield, Cpu, Globe, Zap, Activity, Eye, EyeOff, Code, Lock } from 'lucide-react';
 
 interface Node {
   id: string;
@@ -39,6 +39,7 @@ const PlatformVisualization: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'nodes' | 'modules'>('nodes');
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [isAnimating, setIsAnimating] = useState(true);
+  const [showDetails, setShowDetails] = useState(true);
   const animationRef = useRef<number | null>(null);
   const [time, setTime] = useState(0);
 
@@ -61,45 +62,45 @@ const PlatformVisualization: React.FC = () => {
   const getNodeIcon = (type: Node['type']) => {
     switch (type) {
       case 'core':
-        return <Server className="h-6 w-6 text-blue-500" />;
+        return <Server className="h-6 w-6 text-accent-blue" />;
       case 'edge':
-        return <Globe className="h-6 w-6 text-green-500" />;
+        return <Globe className="h-6 w-6 text-accent-green" />;
       case 'quantum':
-        return <Cpu className="h-6 w-6 text-purple-500" />;
+        return <Cpu className="h-6 w-6 text-accent-purple" />;
       case 'civic':
-        return <Database className="h-6 w-6 text-orange-500" />;
+        return <Database className="h-6 w-6 text-accent-orange" />;
       default:
-        return <Server className="h-6 w-6 text-gray-500" />;
+        return <Server className="h-6 w-6 text-text-tertiary" />;
     }
   };
 
   const getModuleIcon = (category: Module['category']) => {
     switch (category) {
       case 'ai':
-        return <Cpu className="h-6 w-6 text-purple-500" />;
+        return <Cpu className="h-6 w-6 text-accent-purple" />;
       case 'blockchain':
-        return <Database className="h-6 w-6 text-blue-500" />;
+        return <Database className="h-6 w-6 text-accent-blue" />;
       case 'security':
-        return <Shield className="h-6 w-6 text-red-500" />;
+        return <Shield className="h-6 w-6 text-accent-red" />;
       case 'data':
-        return <Server className="h-6 w-6 text-green-500" />;
+        return <Server className="h-6 w-6 text-accent-green" />;
       case 'interface':
-        return <Globe className="h-6 w-6 text-orange-500" />;
+        return <Globe className="h-6 w-6 text-accent-orange" />;
       default:
-        return <Cpu className="h-6 w-6 text-gray-500" />;
+        return <Cpu className="h-6 w-6 text-text-tertiary" />;
     }
   };
 
   const getStatusColor = (status: Node['status'] | Module['status']) => {
     switch (status) {
       case 'active':
-        return 'bg-green-500';
+        return 'bg-accent-green';
       case 'inactive':
-        return 'bg-red-500';
+        return 'bg-accent-red';
       case 'syncing':
-        return 'bg-yellow-500';
+        return 'bg-accent-yellow';
       default:
-        return 'bg-gray-500';
+        return 'bg-text-tertiary';
     }
   };
 
@@ -118,9 +119,9 @@ const PlatformVisualization: React.FC = () => {
             className={`absolute h-px transition-all duration-300 ${
               isActive 
                 ? isSelected 
-                  ? 'bg-indigo-500 h-1.5 z-10' 
-                  : 'bg-indigo-300 dark:bg-indigo-700' 
-                : 'bg-gray-300 dark:bg-gray-700'
+                  ? 'bg-accent-blue h-1 z-10' 
+                  : 'bg-accent-blue-light opacity-40' 
+                : 'bg-border-light opacity-20'
             }`}
             style={{
               left: `${(mockNodes.findIndex(n => n.id === node.id) * 20) + 10}%`,
@@ -129,18 +130,19 @@ const PlatformVisualization: React.FC = () => {
               transform: mockNodes.findIndex(n => n.id === node.id) < mockNodes.findIndex(n => n.id === targetId) 
                 ? 'translateY(-50%)' 
                 : 'translateY(-50%) translateX(-100%)',
-              opacity: isSelected || !selectedItem ? 1 : 0.3,
+              opacity: isSelected || !selectedItem ? (isActive ? 0.8 : 0.2) : 0.1,
             }}
           >
             {isActive && (
               <div 
-                className={`absolute h-2 w-2 rounded-full bg-indigo-500 ${
+                className={`absolute h-1.5 w-1.5 rounded-full bg-accent-blue ${
                   isAnimating ? 'animate-pulse' : ''
                 }`}
                 style={{
                   left: `${((time % 100) / 100) * 100}%`,
                   top: '-50%',
                   display: isSelected || !selectedItem ? 'block' : 'none',
+                  filter: 'drop-shadow(0 0 2px rgba(58, 113, 199, 0.8))',
                 }}
               />
             )}
@@ -165,9 +167,9 @@ const PlatformVisualization: React.FC = () => {
             className={`absolute h-px transition-all duration-300 ${
               isActive 
                 ? isSelected 
-                  ? 'bg-indigo-500 h-1.5 z-10' 
-                  : 'bg-indigo-300 dark:bg-indigo-700' 
-                : 'bg-gray-300 dark:bg-gray-700'
+                  ? 'bg-accent-blue h-1 z-10' 
+                  : 'bg-accent-blue-light opacity-40' 
+                : 'bg-border-light opacity-20'
             }`}
             style={{
               left: `${(mockModules.findIndex(m => m.id === depId) * 20) + 10}%`,
@@ -176,18 +178,19 @@ const PlatformVisualization: React.FC = () => {
               transform: mockModules.findIndex(m => m.id === depId) < mockModules.findIndex(m => m.id === module.id) 
                 ? 'translateY(-50%)' 
                 : 'translateY(-50%) translateX(-100%)',
-              opacity: isSelected || !selectedItem ? 1 : 0.3,
+              opacity: isSelected || !selectedItem ? (isActive ? 0.8 : 0.2) : 0.1,
             }}
           >
             {isActive && (
               <div 
-                className={`absolute h-2 w-2 rounded-full bg-indigo-500 ${
+                className={`absolute h-1.5 w-1.5 rounded-full bg-accent-blue ${
                   isAnimating ? 'animate-pulse' : ''
                 }`}
                 style={{
                   left: `${((time % 100) / 100) * 100}%`,
                   top: '-50%',
                   display: isSelected || !selectedItem ? 'block' : 'none',
+                  filter: 'drop-shadow(0 0 2px rgba(58, 113, 199, 0.8))',
                 }}
               />
             )}
@@ -198,54 +201,75 @@ const PlatformVisualization: React.FC = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-      <div className="border-b border-gray-200 dark:border-gray-700">
-        <nav className="flex" aria-label="Tabs">
-          <button
-            onClick={() => setActiveTab('nodes')}
-            className={`px-4 py-3 text-sm font-medium ${
-              activeTab === 'nodes'
-                ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-            }`}
-            aria-current={activeTab === 'nodes' ? 'page' : undefined}
-          >
-            <div className="flex items-center space-x-2">
-              <Server className="h-4 w-4" />
-              <span>Nodes</span>
-            </div>
-          </button>
-          <button
-            onClick={() => setActiveTab('modules')}
-            className={`px-4 py-3 text-sm font-medium ${
-              activeTab === 'modules'
-                ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-            }`}
-            aria-current={activeTab === 'modules' ? 'page' : undefined}
-          >
-            <div className="flex items-center space-x-2">
-              <Cpu className="h-4 w-4" />
-              <span>Modules</span>
-            </div>
-          </button>
-        </nav>
+    <div className="bg-background-secondary rounded-lg shadow-xl overflow-hidden border border-border-light">
+      <div className="border-b border-border-light">
+        <div className="flex justify-between items-center">
+          <nav className="flex" aria-label="Tabs">
+            <button
+              onClick={() => setActiveTab('nodes')}
+              className={`px-4 py-3 text-sm font-medium transition-colors ${
+                activeTab === 'nodes'
+                  ? 'text-accent-blue border-b-2 border-accent-blue'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
+              aria-current={activeTab === 'nodes' ? 'page' : undefined}
+            >
+              <div className="flex items-center space-x-2">
+                <Server className="h-4 w-4" />
+                <span>Nodes</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveTab('modules')}
+              className={`px-4 py-3 text-sm font-medium transition-colors ${
+                activeTab === 'modules'
+                  ? 'text-accent-blue border-b-2 border-accent-blue'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
+              aria-current={activeTab === 'modules' ? 'page' : undefined}
+            >
+              <div className="flex items-center space-x-2">
+                <Cpu className="h-4 w-4" />
+                <span>Modules</span>
+              </div>
+            </button>
+          </nav>
+          
+          <div className="flex items-center gap-2 px-4">
+            <button
+              onClick={() => setShowDetails(!showDetails)}
+              className="p-1.5 rounded-md text-text-secondary hover:text-text-primary hover:bg-background-tertiary transition-colors"
+              title={showDetails ? "Hide details" : "Show details"}
+            >
+              {showDetails ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
+            <button
+              onClick={() => setIsAnimating(!isAnimating)}
+              className="p-1.5 rounded-md text-text-secondary hover:text-text-primary hover:bg-background-tertiary transition-colors"
+              title={isAnimating ? "Pause animation" : "Resume animation"}
+            >
+              <Activity className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div className="p-4">
+      <div className="p-4 sm:p-6">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-            {activeTab === 'nodes' ? 'Global Node Distribution' : 'Module Dependencies'}
-          </h3>
-          <button
-            onClick={() => setIsAnimating(!isAnimating)}
-            className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
-          >
-            {isAnimating ? 'Pause Animation' : 'Resume Animation'}
-          </button>
+          <div>
+            <h3 className="text-lg font-medium text-text-primary">
+              {activeTab === 'nodes' ? 'Global Node Distribution' : 'Module Dependencies'}
+            </h3>
+            <p className="text-xs text-text-tertiary mt-1">
+              {activeTab === 'nodes' 
+                ? 'Real-time visualization of node connections and status across regions'
+                : 'Dependency graph of system modules and their interactions'
+              }
+            </p>
+          </div>
         </div>
 
-        <div className="relative h-64 mb-6 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+        <div className="relative h-72 mb-6 border border-border-light rounded-lg overflow-hidden bg-background-primary glass-dark">
           {/* Connection lines */}
           {activeTab === 'nodes' ? renderNodeConnections() : renderModuleConnections()}
 
@@ -262,26 +286,32 @@ const PlatformVisualization: React.FC = () => {
                   onMouseEnter={() => setSelectedItem(node.id)}
                   onMouseLeave={() => setSelectedItem(null)}
                 >
-                  <div className={`p-3 rounded-full bg-white dark:bg-gray-700 shadow-md border-2 ${
-                    node.status === 'active' ? 'border-green-500' : 
-                    node.status === 'syncing' ? 'border-yellow-500' : 'border-red-500'
+                  <div className={`p-3 rounded-full glass shadow-lg border ${
+                    node.status === 'active' ? 'border-accent-green' : 
+                    node.status === 'syncing' ? 'border-accent-yellow' : 'border-accent-red'
                   }`}>
                     {getNodeIcon(node.type)}
                   </div>
-                  <div className="mt-2 text-center">
-                    <div className="text-xs font-medium text-gray-900 dark:text-white">{node.name}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">{node.region}</div>
-                    <div className="flex items-center mt-1">
-                      <div className={`h-2 w-2 rounded-full mr-1 ${getStatusColor(node.status)}`}></div>
-                      <span className="text-xs capitalize">{node.status}</span>
-                    </div>
-                  </div>
-                  {node.status === 'active' && (
-                    <div className="mt-1 w-full bg-gray-200 dark:bg-gray-600 rounded-full h-1.5">
-                      <div 
-                        className="bg-blue-500 h-1.5 rounded-full" 
-                        style={{ width: `${node.load}%` }}
-                      ></div>
+                  {showDetails && (
+                    <div className="mt-2 text-center">
+                      <div className="text-xs font-medium text-text-primary">{node.name}</div>
+                      <div className="text-xs text-text-tertiary">{node.region}</div>
+                      <div className="flex items-center mt-1 justify-center">
+                        <div className={`h-1.5 w-1.5 rounded-full mr-1 ${getStatusColor(node.status)}`}></div>
+                        <span className="text-xs capitalize text-text-secondary">{node.status}</span>
+                      </div>
+                      {node.status === 'active' && (
+                        <div className="mt-1.5 w-full bg-background-tertiary rounded-full h-1">
+                          <div 
+                            className={`h-1 rounded-full ${
+                              node.load > 80 ? 'bg-accent-red' : 
+                              node.load > 60 ? 'bg-accent-yellow' : 
+                              'bg-accent-green'
+                            }`}
+                            style={{ width: `${node.load}%` }}
+                          ></div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -296,19 +326,21 @@ const PlatformVisualization: React.FC = () => {
                   onMouseEnter={() => setSelectedItem(module.id)}
                   onMouseLeave={() => setSelectedItem(null)}
                 >
-                  <div className={`p-3 rounded-full bg-white dark:bg-gray-700 shadow-md border-2 ${
-                    module.status === 'active' ? 'border-green-500' : 'border-red-500'
+                  <div className={`p-3 rounded-full glass shadow-lg border ${
+                    module.status === 'active' ? 'border-accent-green' : 'border-accent-red'
                   }`}>
                     {getModuleIcon(module.category)}
                   </div>
-                  <div className="mt-2 text-center">
-                    <div className="text-xs font-medium text-gray-900 dark:text-white">{module.name}</div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 capitalize">{module.category}</div>
-                    <div className="flex items-center mt-1">
-                      <div className={`h-2 w-2 rounded-full mr-1 ${getStatusColor(module.status)}`}></div>
-                      <span className="text-xs capitalize">{module.status}</span>
+                  {showDetails && (
+                    <div className="mt-2 text-center">
+                      <div className="text-xs font-medium text-text-primary">{module.name}</div>
+                      <div className="text-xs text-text-tertiary capitalize">{module.category}</div>
+                      <div className="flex items-center mt-1 justify-center">
+                        <div className={`h-1.5 w-1.5 rounded-full mr-1 ${getStatusColor(module.status)}`}></div>
+                        <span className="text-xs capitalize text-text-secondary">{module.status}</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               ))
             }
@@ -316,80 +348,90 @@ const PlatformVisualization: React.FC = () => {
         </div>
 
         {/* Legend */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs mb-4">
           {activeTab === 'nodes' ? (
             <>
               <div className="flex items-center">
-                <div className="p-1 rounded-full bg-blue-100 dark:bg-blue-900 mr-2">
-                  <Server className="h-3 w-3 text-blue-500" />
+                <div className="p-1 rounded-full bg-background-tertiary mr-2">
+                  <Server className="h-3 w-3 text-accent-blue" />
                 </div>
-                <span>Core Node</span>
+                <span className="text-text-secondary">Core Node</span>
               </div>
               <div className="flex items-center">
-                <div className="p-1 rounded-full bg-green-100 dark:bg-green-900 mr-2">
-                  <Globe className="h-3 w-3 text-green-500" />
+                <div className="p-1 rounded-full bg-background-tertiary mr-2">
+                  <Globe className="h-3 w-3 text-accent-green" />
                 </div>
-                <span>Edge Node</span>
+                <span className="text-text-secondary">Edge Node</span>
               </div>
               <div className="flex items-center">
-                <div className="p-1 rounded-full bg-purple-100 dark:bg-purple-900 mr-2">
-                  <Cpu className="h-3 w-3 text-purple-500" />
+                <div className="p-1 rounded-full bg-background-tertiary mr-2">
+                  <Cpu className="h-3 w-3 text-accent-purple" />
                 </div>
-                <span>Quantum Node</span>
+                <span className="text-text-secondary">Quantum Node</span>
               </div>
               <div className="flex items-center">
-                <div className="p-1 rounded-full bg-orange-100 dark:bg-orange-900 mr-2">
-                  <Database className="h-3 w-3 text-orange-500" />
+                <div className="p-1 rounded-full bg-background-tertiary mr-2">
+                  <Database className="h-3 w-3 text-accent-orange" />
                 </div>
-                <span>Civic Node</span>
+                <span className="text-text-secondary">Civic Node</span>
               </div>
             </>
           ) : (
             <>
               <div className="flex items-center">
-                <div className="p-1 rounded-full bg-purple-100 dark:bg-purple-900 mr-2">
-                  <Cpu className="h-3 w-3 text-purple-500" />
+                <div className="p-1 rounded-full bg-background-tertiary mr-2">
+                  <Cpu className="h-3 w-3 text-accent-purple" />
                 </div>
-                <span>AI</span>
+                <span className="text-text-secondary">AI</span>
               </div>
               <div className="flex items-center">
-                <div className="p-1 rounded-full bg-blue-100 dark:bg-blue-900 mr-2">
-                  <Database className="h-3 w-3 text-blue-500" />
+                <div className="p-1 rounded-full bg-background-tertiary mr-2">
+                  <Database className="h-3 w-3 text-accent-blue" />
                 </div>
-                <span>Blockchain</span>
+                <span className="text-text-secondary">Blockchain</span>
               </div>
               <div className="flex items-center">
-                <div className="p-1 rounded-full bg-red-100 dark:bg-red-900 mr-2">
-                  <Shield className="h-3 w-3 text-red-500" />
+                <div className="p-1 rounded-full bg-background-tertiary mr-2">
+                  <Shield className="h-3 w-3 text-accent-red" />
                 </div>
-                <span>Security</span>
+                <span className="text-text-secondary">Security</span>
               </div>
               <div className="flex items-center">
-                <div className="p-1 rounded-full bg-green-100 dark:bg-green-900 mr-2">
-                  <Server className="h-3 w-3 text-green-500" />
+                <div className="p-1 rounded-full bg-background-tertiary mr-2">
+                  <Server className="h-3 w-3 text-accent-green" />
                 </div>
-                <span>Data</span>
+                <span className="text-text-secondary">Data</span>
               </div>
             </>
           )}
         </div>
 
-        <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-md">
+        <div className="glass p-4 rounded-lg border border-border-light">
           <div className="flex items-start">
-            <Zap className="h-5 w-5 text-yellow-500 mr-2 flex-shrink-0 mt-0.5" />
+            <div className="flex-shrink-0 p-2 rounded-md bg-background-tertiary mr-3">
+              <Zap className="h-5 w-5 text-accent-yellow" />
+            </div>
             <div>
-              <h4 className="text-sm font-medium text-gray-900 dark:text-white">System Status</h4>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <h4 className="text-sm font-medium text-text-primary">System Status</h4>
+              <p className="text-xs text-text-secondary mt-1">
                 {activeTab === 'nodes' 
                   ? `${mockNodes.filter(n => n.status === 'active').length} of ${mockNodes.length} nodes active. Global system load: ${Math.round(mockNodes.reduce((acc, node) => acc + node.load, 0) / mockNodes.length)}%`
                   : `${mockModules.filter(m => m.status === 'active').length} of ${mockModules.length} modules active. All critical systems operational.`
                 }
               </p>
-              <div className="mt-2">
-                <a href="#" className="text-xs text-indigo-600 dark:text-indigo-400 flex items-center">
-                  View detailed status
-                  <ArrowUpRight className="h-3 w-3 ml-1" />
-                </a>
+              <div className="flex gap-3 mt-3">
+                <button className="text-xs text-accent-blue hover:text-accent-blue-light flex items-center transition-colors">
+                  <Code className="h-3 w-3 mr-1" />
+                  View logs
+                </button>
+                <button className="text-xs text-accent-blue hover:text-accent-blue-light flex items-center transition-colors">
+                  <Lock className="h-3 w-3 mr-1" />
+                  Security report
+                </button>
+                <button className="text-xs text-accent-blue hover:text-accent-blue-light flex items-center transition-colors">
+                  <ArrowUpRight className="h-3 w-3 mr-1" />
+                  Detailed status
+                </button>
               </div>
             </div>
           </div>
