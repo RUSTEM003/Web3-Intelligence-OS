@@ -25,24 +25,24 @@ import { MapView } from '@deck.gl/core';
 import Map from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { nodesApi } from '../services/api';
+import { nodesApi, transformNodeData } from '../services/api';
 import { Node } from '../types/api';
 
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M3pxNTA0emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
 
 const mockNodeLocations = [
-  { id: 1, type: 'Core', lat: 40.7128, lng: -74.0060, status: 'active', load: 78, country: 'USA' },
-  { id: 2, type: 'Edge', lat: 51.5074, lng: -0.1278, status: 'active', load: 65, country: 'UK' },
-  { id: 3, type: 'Civic', lat: 48.8566, lng: 2.3522, status: 'active', load: 42, country: 'France' },
-  { id: 4, type: 'Privacy', lat: 52.5200, lng: 13.4050, status: 'active', load: 31, country: 'Germany' },
-  { id: 5, type: 'Quantum', lat: 35.6762, lng: 139.6503, status: 'active', load: 89, country: 'Japan' },
-  { id: 6, type: 'Core', lat: 55.7558, lng: 37.6173, status: 'active', load: 72, country: 'Russia' },
-  { id: 7, type: 'Edge', lat: 39.9042, lng: 116.4074, status: 'warning', load: 91, country: 'China' },
-  { id: 8, type: 'Civic', lat: -33.8688, lng: 151.2093, status: 'active', load: 45, country: 'Australia' },
-  { id: 9, type: 'Privacy', lat: 19.4326, lng: -99.1332, status: 'error', load: 0, country: 'Mexico' },
-  { id: 10, type: 'Edge', lat: -23.5505, lng: -46.6333, status: 'active', load: 58, country: 'Brazil' },
-  { id: 11, type: 'Core', lat: 28.6139, lng: 77.2090, status: 'warning', load: 87, country: 'India' },
-  { id: 12, type: 'Quantum', lat: 1.3521, lng: 103.8198, status: 'active', load: 76, country: 'Singapore' },
+  { id: '1', type: 'Core', lat: 40.7128, lng: -74.0060, status: 'active', load: 78, country: 'USA' },
+  { id: '2', type: 'Edge', lat: 51.5074, lng: -0.1278, status: 'active', load: 65, country: 'UK' },
+  { id: '3', type: 'Civic', lat: 48.8566, lng: 2.3522, status: 'active', load: 42, country: 'France' },
+  { id: '4', type: 'Privacy', lat: 52.5200, lng: 13.4050, status: 'active', load: 31, country: 'Germany' },
+  { id: '5', type: 'Quantum', lat: 35.6762, lng: 139.6503, status: 'active', load: 89, country: 'Japan' },
+  { id: '6', type: 'Core', lat: 55.7558, lng: 37.6173, status: 'active', load: 72, country: 'Russia' },
+  { id: '7', type: 'Edge', lat: 39.9042, lng: 116.4074, status: 'warning', load: 91, country: 'China' },
+  { id: '8', type: 'Civic', lat: -33.8688, lng: 151.2093, status: 'active', load: 45, country: 'Australia' },
+  { id: '9', type: 'Privacy', lat: 19.4326, lng: -99.1332, status: 'error', load: 0, country: 'Mexico' },
+  { id: '10', type: 'Edge', lat: -23.5505, lng: -46.6333, status: 'active', load: 58, country: 'Brazil' },
+  { id: '11', type: 'Core', lat: 28.6139, lng: 77.2090, status: 'warning', load: 87, country: 'India' },
+  { id: '12', type: 'Quantum', lat: 1.3521, lng: 103.8198, status: 'active', load: 76, country: 'Singapore' },
 ];
 
 const MapViewer = () => {
@@ -70,54 +70,33 @@ const MapViewer = () => {
         setLoading(true);
         const response = await nodesApi.getAll();
         
-        if (response.status === 200) {
-          const transformedNodes = response.data.map((node: any) => {
-            let lat = 0, lng = 0, country = 'Unknown';
+        if (response.status === 200 && response.data) {
+          const mapNodes = response.data.map((node: any) => {
+            let lat = 0, lng = 0, country = node.country || 'Unknown';
             
             if (node.location) {
               const parts = node.location.split(',');
               if (parts.length >= 2) {
                 lat = parseFloat(parts[0]) || Math.random() * 180 - 90;
                 lng = parseFloat(parts[1]) || Math.random() * 360 - 180;
-                if (parts.length > 2) {
-                  country = parts[2].trim();
-                }
               }
             } else {
               lat = Math.random() * 180 - 90;
               lng = Math.random() * 360 - 180;
             }
             
-            let type = 'Core';
-            if (node.name) {
-              if (node.name.toLowerCase().includes('edge')) type = 'Edge';
-              else if (node.name.toLowerCase().includes('civic')) type = 'Civic';
-              else if (node.name.toLowerCase().includes('privacy')) type = 'Privacy';
-              else if (node.name.toLowerCase().includes('quantum')) type = 'Quantum';
-            }
-            
-            let status = 'active';
-            if (node.status) {
-              if (node.status.toLowerCase().includes('error') || 
-                  node.status.toLowerCase().includes('fail')) {
-                status = 'error';
-              } else if (node.status.toLowerCase().includes('warn')) {
-                status = 'warning';
-              }
-            }
-            
             return {
               id: node.id,
-              type,
+              type: node.type || 'Core',
               lat,
               lng,
-              status,
-              load: node.performance_metrics?.cpu_usage || Math.floor(Math.random() * 100),
+              status: node.status || 'active',
+              load: node.metrics?.cpu || Math.floor(Math.random() * 100),
               country
             };
           });
           
-          setNodes(transformedNodes);
+          setNodes(mapNodes);
         } else {
           console.error('API returned error status:', response.status);
           setError(`API returned status ${response.status}`);
@@ -183,54 +162,33 @@ const MapViewer = () => {
               setLoading(true);
               setError(null);
               nodesApi.getAll().then(response => {
-                if (response.status === 200) {
-                  const transformedNodes = response.data.map((node: any) => {
-                    let lat = 0, lng = 0, country = 'Unknown';
+                if (response.status === 200 && response.data) {
+                  const mapNodes = response.data.map((node: any) => {
+                    let lat = 0, lng = 0, country = node.country || 'Unknown';
                     
                     if (node.location) {
                       const parts = node.location.split(',');
                       if (parts.length >= 2) {
                         lat = parseFloat(parts[0]) || Math.random() * 180 - 90;
                         lng = parseFloat(parts[1]) || Math.random() * 360 - 180;
-                        if (parts.length > 2) {
-                          country = parts[2].trim();
-                        }
                       }
                     } else {
                       lat = Math.random() * 180 - 90;
                       lng = Math.random() * 360 - 180;
                     }
                     
-                    let type = 'Core';
-                    if (node.name) {
-                      if (node.name.toLowerCase().includes('edge')) type = 'Edge';
-                      else if (node.name.toLowerCase().includes('civic')) type = 'Civic';
-                      else if (node.name.toLowerCase().includes('privacy')) type = 'Privacy';
-                      else if (node.name.toLowerCase().includes('quantum')) type = 'Quantum';
-                    }
-                    
-                    let status = 'active';
-                    if (node.status) {
-                      if (node.status.toLowerCase().includes('error') || 
-                          node.status.toLowerCase().includes('fail')) {
-                        status = 'error';
-                      } else if (node.status.toLowerCase().includes('warn')) {
-                        status = 'warning';
-                      }
-                    }
-                    
                     return {
                       id: node.id,
-                      type,
+                      type: node.type || 'Core',
                       lat,
                       lng,
-                      status,
-                      load: node.performance_metrics?.cpu_usage || Math.floor(Math.random() * 100),
+                      status: node.status || 'active',
+                      load: node.metrics?.cpu || Math.floor(Math.random() * 100),
                       country
                     };
                   });
                   
-                  setNodes(transformedNodes);
+                  setNodes(mapNodes);
                 } else {
                   setError(`API returned status ${response.status}`);
                   setNodes(mockNodeLocations);
