@@ -3,6 +3,8 @@ import { Search, X, ArrowRight, Clock } from 'lucide-react';
 
 interface SearchInputProps {
   placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
   onSearch?: (query: string) => void;
   recentSearches?: string[];
   suggestions?: string[];
@@ -12,13 +14,15 @@ interface SearchInputProps {
 
 const SearchInput: React.FC<SearchInputProps> = ({
   placeholder = 'Search...',
+  value,
+  onChange,
   onSearch,
   recentSearches = [],
   suggestions = [],
   variant = 'default',
   className = '',
 }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(value || '');
   const [isFocused, setIsFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -72,7 +76,13 @@ const SearchInput: React.FC<SearchInputProps> = ({
         <input
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            setQuery(newValue);
+            if (onChange) {
+              onChange(newValue);
+            }
+          }}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}

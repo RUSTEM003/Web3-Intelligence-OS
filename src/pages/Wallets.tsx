@@ -1,5 +1,35 @@
 import React, { useState } from 'react';
-import { Wallet, AlertTriangle, Search, Plus, ArrowUpRight, ArrowDownLeft, Tag } from 'lucide-react';
+import { 
+  Wallet, 
+  AlertTriangle, 
+  Plus, 
+  ArrowUpRight, 
+  ArrowDownLeft, 
+  Tag, 
+  RefreshCw, 
+  Download, 
+  Filter, 
+  ExternalLink, 
+  MoreHorizontal, 
+  Edit, 
+  Trash2, 
+  ChevronDown, 
+  ChevronUp, 
+  Shield, 
+  Eye
+} from 'lucide-react';
+import Button from '../components/Button';
+import SearchInput from '../components/SearchInput';
+import DataCard from '../components/DataCard';
+
+interface WalletTransaction {
+  id: string;
+  type: 'incoming' | 'outgoing';
+  amount: number;
+  timestamp: string;
+  from?: string;
+  to?: string;
+}
 
 const mockWallets = [
   {
@@ -110,7 +140,7 @@ const Wallets = () => {
           <div className="col-span-1 md:col-span-1">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400" />
+                <Filter className="h-5 w-5 text-gray-400" />
               </div>
               <input
                 type="text"
@@ -224,106 +254,210 @@ const Wallets = () => {
       </div>
 
       {selectedWallet && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-          <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Wallet Details</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="mt-6 bg-background-secondary rounded-lg border border-border-light overflow-hidden">
+          <div className="px-6 py-4 border-b border-border-light flex justify-between items-center">
             <div>
-              <h3 className="text-md font-medium mb-2 text-gray-900 dark:text-white">Information</h3>
-              <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Address</p>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white break-all">{selectedWallet.address}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Blockchain</p>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">{selectedWallet.blockchain}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Balance</p>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">{selectedWallet.balance.toFixed(2)}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Risk Score</p>
-                    <div className="flex items-center">
-                      <div className={`h-2.5 w-2.5 rounded-full ${getRiskScoreColor(selectedWallet.risk_score)} mr-2`}></div>
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">{(selectedWallet.risk_score * 100).toFixed(0)}%</span>
+              <h3 className="text-lg font-medium text-text-primary">
+                Wallet Details
+              </h3>
+              <p className="text-sm text-text-tertiary">
+                Detailed information about wallet {formatAddress(selectedWallet.address)}
+              </p>
+            </div>
+            <Button
+              variant="tertiary"
+              size="sm"
+              onClick={() => setSelectedWallet(null)}
+            >
+              Close
+            </Button>
+          </div>
+          
+          <div className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-sm font-medium text-text-tertiary mb-3">Wallet Information</h4>
+                  <div className="bg-background-tertiary rounded-lg p-4 space-y-4">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-text-tertiary">Address</span>
+                      <span className="text-sm text-text-secondary font-mono break-all">{selectedWallet.address}</span>
                     </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-text-tertiary">Blockchain</span>
+                      <span className="text-sm text-text-secondary">{selectedWallet.blockchain}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-text-tertiary">Balance</span>
+                      <span className="text-sm text-text-secondary">{selectedWallet.balance.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-text-tertiary">Risk Score</span>
+                      <div className="flex items-center">
+                        <div className={`h-2.5 w-2.5 rounded-full ${
+                          selectedWallet.risk_score >= 0.7 ? 'bg-accent-red' : 
+                          selectedWallet.risk_score >= 0.4 ? 'bg-accent-yellow' : 
+                          'bg-accent-green'
+                        } mr-2`}></div>
+                        <span className="text-sm text-text-secondary">{(selectedWallet.risk_score * 100).toFixed(0)}%</span>
+                        {selectedWallet.risk_score >= 0.7 && (
+                          <AlertTriangle className="h-4 w-4 text-accent-red ml-2" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="text-sm font-medium text-text-tertiary mb-3">Security Analysis</h4>
+                  <div className="bg-background-tertiary rounded-lg p-4 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <Shield className="h-4 w-4 text-accent-blue mr-2" />
+                        <span className="text-sm text-text-secondary">Security Score</span>
+                      </div>
+                      <span className={`text-sm ${selectedWallet.risk_score < 0.3 ? 'text-accent-green' : selectedWallet.risk_score < 0.7 ? 'text-accent-yellow' : 'text-accent-red'}`}>
+                        {selectedWallet.risk_score < 0.3 ? 'High' : selectedWallet.risk_score < 0.7 ? 'Medium' : 'Low'}
+                      </span>
+                    </div>
+                    
+                    <div className="w-full bg-background-primary rounded-full h-1.5">
+                      <div 
+                        className={`h-1.5 rounded-full ${
+                          selectedWallet.risk_score >= 0.7 ? 'bg-accent-red' : 
+                          selectedWallet.risk_score >= 0.4 ? 'bg-accent-yellow' : 
+                          'bg-accent-green'
+                        }`} 
+                        style={{ width: `${(1 - selectedWallet.risk_score) * 100}%` }}
+                      ></div>
+                    </div>
+                    
+                    <div className="text-xs text-text-tertiary">
+                      {selectedWallet.risk_score >= 0.7 
+                        ? 'High risk wallet. Suspicious activity detected.' 
+                        : selectedWallet.risk_score >= 0.4 
+                          ? 'Medium risk wallet. Some unusual patterns detected.' 
+                          : 'Low risk wallet. No suspicious activity detected.'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-sm font-medium text-text-tertiary mb-3">Tags</h4>
+                  <div className="bg-background-tertiary rounded-lg p-4">
+                    <div className="flex flex-wrap gap-2">
+                      {selectedWallet.tags.map((tag: string, index: number) => (
+                        <div 
+                          key={index} 
+                          className={`flex items-center px-3 py-1 rounded-full ${
+                            tag === 'Suspicious' || tag === 'High Risk' 
+                              ? 'bg-accent-red-translucent text-accent-red' 
+                              : tag === 'Verified' || tag === 'Personal'
+                                ? 'bg-accent-green-translucent text-accent-green'
+                                : 'bg-accent-blue-translucent text-accent-blue'
+                          }`}
+                        >
+                          <Tag className="h-4 w-4 mr-1" />
+                          <span>{tag}</span>
+                        </div>
+                      ))}
+                      <button className="flex items-center px-3 py-1 rounded-full border border-dashed border-border-light text-text-tertiary hover:text-text-secondary hover:border-text-tertiary transition-colors">
+                        <Plus className="h-4 w-4 mr-1" />
+                        <span>Add Tag</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="text-sm font-medium text-text-tertiary mb-3">Actions</h4>
+                  <div className="bg-background-tertiary rounded-lg p-4 grid grid-cols-2 gap-3">
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      leftIcon={<Eye className="h-4 w-4" />}
+                      fullWidth
+                    >
+                      View on Explorer
+                    </Button>
+                    
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      leftIcon={<Edit className="h-4 w-4" />}
+                      fullWidth
+                    >
+                      Edit Wallet
+                    </Button>
+                    
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      leftIcon={<Download className="h-4 w-4" />}
+                      fullWidth
+                    >
+                      Export Data
+                    </Button>
+                    
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      leftIcon={<Trash2 className="h-4 w-4" />}
+                      fullWidth
+                    >
+                      Delete Wallet
+                    </Button>
                   </div>
                 </div>
               </div>
             </div>
             
             <div>
-              <h3 className="text-md font-medium mb-2 text-gray-900 dark:text-white">Tags</h3>
-              <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                <div className="flex flex-wrap gap-2">
-                  {selectedWallet.tags.map((tag: string, index: number) => (
-                    <div 
-                      key={index} 
-                      className={`flex items-center px-3 py-1 rounded-full ${
-                        tag === 'Suspicious' || tag === 'High Risk' 
-                          ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' 
-                          : 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200'
-                      }`}
-                    >
-                      <Tag className="h-4 w-4 mr-1" />
-                      <span>{tag}</span>
-                    </div>
-                  ))}
-                  <button className="flex items-center px-3 py-1 rounded-full border border-dashed border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
-                    <Plus className="h-4 w-4 mr-1" />
-                    <span>Add Tag</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="text-md font-medium mb-2 text-gray-900 dark:text-white">Transaction History</h3>
-            {selectedWallet.transactions.length > 0 ? (
-              <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                <div className="space-y-3">
-                  {selectedWallet.transactions.map((tx: any) => (
-                    <div key={tx.id} className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-                      <div className="flex items-center">
-                        {tx.type === 'incoming' ? (
-                          <div className="h-8 w-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-3">
-                            <ArrowDownLeft className="h-4 w-4 text-green-600 dark:text-green-300" />
+              <h4 className="text-sm font-medium text-text-tertiary mb-3">Transaction History</h4>
+              {selectedWallet.transactions.length > 0 ? (
+                <div className="bg-background-tertiary rounded-lg p-4">
+                  <div className="space-y-3">
+                    {selectedWallet.transactions.map((tx: WalletTransaction) => (
+                      <div key={tx.id} className="flex items-center justify-between p-3 bg-background-secondary rounded-lg border border-border-light">
+                        <div className="flex items-center">
+                          {tx.type === 'incoming' ? (
+                            <div className="h-8 w-8 rounded-full bg-accent-green-translucent flex items-center justify-center mr-3">
+                              <ArrowDownLeft className="h-4 w-4 text-accent-green" />
+                            </div>
+                          ) : (
+                            <div className="h-8 w-8 rounded-full bg-accent-red-translucent flex items-center justify-center mr-3">
+                              <ArrowUpRight className="h-4 w-4 text-accent-red" />
+                            </div>
+                          )}
+                          <div>
+                            <p className="text-sm font-medium text-text-primary">
+                              {tx.type === 'incoming' ? 'Received' : 'Sent'} {tx.amount.toFixed(2)}
+                            </p>
+                            <p className="text-xs text-text-tertiary">
+                              {tx.type === 'incoming' ? 'From: ' + formatAddress(tx.from || '') : 'To: ' + formatAddress(tx.to || '')}
+                            </p>
                           </div>
-                        ) : (
-                          <div className="h-8 w-8 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center mr-3">
-                            <ArrowUpRight className="h-4 w-4 text-red-600 dark:text-red-300" />
-                          </div>
-                        )}
-                        <div>
-                          <p className="text-sm font-medium text-gray-900 dark:text-white">
-                            {tx.type === 'incoming' ? 'Received' : 'Sent'} {tx.amount.toFixed(2)}
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm text-text-secondary">
+                            {new Date(tx.timestamp).toLocaleDateString()}
                           </p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {tx.type === 'incoming' ? 'From: ' + formatAddress(tx.from) : 'To: ' + formatAddress(tx.to)}
+                          <p className="text-xs text-text-tertiary">
+                            {new Date(tx.timestamp).toLocaleTimeString()}
                           </p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {new Date(tx.timestamp).toLocaleDateString()}
-                        </p>
-                        <p className="text-xs text-gray-400 dark:text-gray-500">
-                          {new Date(tx.timestamp).toLocaleTimeString()}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
-                <p className="text-gray-500 dark:text-gray-400">No transactions found</p>
-              </div>
-            )}
+              ) : (
+                <div className="bg-background-tertiary rounded-lg p-4 text-center">
+                  <p className="text-text-tertiary">No transactions found</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

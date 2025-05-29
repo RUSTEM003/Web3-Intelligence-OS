@@ -14,6 +14,7 @@ interface DataCardProps {
   loading?: boolean;
   variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
   size?: 'sm' | 'md' | 'lg';
+  children?: ReactNode;
 }
 
 const DataCard: React.FC<DataCardProps> = ({
@@ -26,6 +27,7 @@ const DataCard: React.FC<DataCardProps> = ({
   loading = false,
   variant = 'default',
   size = 'md',
+  children,
 }) => {
   const getVariantClasses = () => {
     switch (variant) {
@@ -123,6 +125,8 @@ const DataCard: React.FC<DataCardProps> = ({
           </button>
         </div>
       )}
+      
+      {children}
     </div>
   );
 };

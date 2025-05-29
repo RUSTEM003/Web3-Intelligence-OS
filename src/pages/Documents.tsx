@@ -1,5 +1,29 @@
 import React, { useState } from 'react';
-import { FileText, Search, Plus, Download, FileIcon, Filter, Tag, Calendar, Trash2 } from 'lucide-react';
+import { 
+  FileText, 
+  Search, 
+  Plus, 
+  Download, 
+  FileIcon, 
+  Filter, 
+  Tag, 
+  Calendar, 
+  Trash2, 
+  RefreshCw, 
+  ExternalLink, 
+  Edit, 
+  MoreHorizontal, 
+  ChevronDown, 
+  ChevronUp, 
+  Clock, 
+  ArrowUpRight, 
+  ArrowDownLeft, 
+  Eye, 
+  Share2 
+} from 'lucide-react';
+import Button from '../components/Button';
+import SearchInput from '../components/SearchInput';
+import DataCard from '../components/DataCard';
 
 const mockDocuments = [
   {
@@ -94,67 +118,89 @@ const Documents = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Documents</h1>
-        <div className="flex space-x-2">
-          <button
-            className={`px-3 py-1 rounded-md ${viewMode === 'grid' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200' : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'}`}
-            onClick={() => setViewMode('grid')}
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-text-primary">Document Intelligence</h1>
+          <p className="text-sm text-text-tertiary mt-1">Manage and analyze blockchain-related documents and reports</p>
+        </div>
+        <div className="flex items-center space-x-3">
+          <div className="flex bg-background-tertiary border border-border-light rounded-md">
+            <button
+              className={`p-2 ${viewMode === 'grid' ? 'bg-background-elevated text-text-primary' : 'text-text-tertiary'}`}
+              onClick={() => setViewMode('grid')}
+              aria-label="Grid view"
+            >
+              <div className="grid grid-cols-2 gap-1 h-4 w-4">
+                <div className="bg-current rounded-sm"></div>
+                <div className="bg-current rounded-sm"></div>
+                <div className="bg-current rounded-sm"></div>
+                <div className="bg-current rounded-sm"></div>
+              </div>
+            </button>
+            <button
+              className={`p-2 ${viewMode === 'list' ? 'bg-background-elevated text-text-primary' : 'text-text-tertiary'}`}
+              onClick={() => setViewMode('list')}
+              aria-label="List view"
+            >
+              <div className="flex flex-col justify-between h-4 w-4">
+                <div className="h-0.5 bg-current rounded-sm"></div>
+                <div className="h-0.5 bg-current rounded-sm"></div>
+                <div className="h-0.5 bg-current rounded-sm"></div>
+              </div>
+            </button>
+          </div>
+          <Button
+            variant="secondary"
+            size="sm"
+            leftIcon={<RefreshCw className="h-4 w-4" />}
           >
-            Grid
-          </button>
-          <button
-            className={`px-3 py-1 rounded-md ${viewMode === 'list' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-200' : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'}`}
-            onClick={() => setViewMode('list')}
+            Refresh
+          </Button>
+          <Button
+            variant="primary"
+            leftIcon={<Plus className="h-4 w-4" />}
           >
-            List
-          </button>
-          <button className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 ml-2">
-            <Plus className="h-5 w-5 mr-2" />
             New Document
-          </button>
+          </Button>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div className="col-span-1 md:col-span-1">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                placeholder="Search documents..."
-                value={filter.search}
-                onChange={(e) => setFilter({ ...filter, search: e.target.value })}
-              />
+      <div className="bg-background-secondary border border-border-light rounded-lg p-5">
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <div className="flex-1">
+            <SearchInput 
+              placeholder="Search documents by title, content or tags..." 
+              value={filter.search}
+              onChange={(value) => setFilter({ ...filter, search: value })}
+            />
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <div className="w-full md:w-48">
+              <select
+                className="block w-full py-2 px-3 border border-border-light bg-background-tertiary text-text-secondary rounded-md focus:outline-none focus:ring-1 focus:ring-accent-blue focus:border-accent-blue text-sm"
+                value={filter.format}
+                onChange={(e) => setFilter({ ...filter, format: e.target.value })}
+              >
+                <option value="">All Formats</option>
+                {formats.map(format => (
+                  <option key={format} value={format}>{format.charAt(0).toUpperCase() + format.slice(1)}</option>
+                ))}
+              </select>
             </div>
-          </div>
-          <div>
-            <select
-              className="block w-full py-2 px-3 border border-gray-300 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              value={filter.format}
-              onChange={(e) => setFilter({ ...filter, format: e.target.value })}
-            >
-              <option value="">All Formats</option>
-              {formats.map(format => (
-                <option key={format} value={format}>{format.charAt(0).toUpperCase() + format.slice(1)}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <select
-              className="block w-full py-2 px-3 border border-gray-300 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              value={filter.tag}
-              onChange={(e) => setFilter({ ...filter, tag: e.target.value })}
-            >
-              <option value="">All Tags</option>
-              {allTags.map(tag => (
-                <option key={tag} value={tag}>{tag}</option>
-              ))}
-            </select>
+            
+            <div className="w-full md:w-48">
+              <select
+                className="block w-full py-2 px-3 border border-border-light bg-background-tertiary text-text-secondary rounded-md focus:outline-none focus:ring-1 focus:ring-accent-blue focus:border-accent-blue text-sm"
+                value={filter.tag}
+                onChange={(e) => setFilter({ ...filter, tag: e.target.value })}
+              >
+                <option value="">All Tags</option>
+                {allTags.map(tag => (
+                  <option key={tag} value={tag}>{tag}</option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
@@ -163,64 +209,80 @@ const Documents = () => {
             {filteredDocuments.map((doc) => (
               <div 
                 key={doc.id} 
-                className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 cursor-pointer hover:shadow-md transition-shadow"
+                className="bg-background-tertiary border border-border-light rounded-lg p-4 cursor-pointer hover:shadow-md transition-all hover:translate-y-[-2px]"
                 onClick={() => setSelectedDocument(doc)}
               >
-                <div className="flex items-center mb-2">
-                  {getFormatIcon(doc.format)}
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white ml-2">{doc.title}</h3>
+                <div className="flex items-center mb-3">
+                  <div className="h-10 w-10 rounded-md bg-background-elevated flex items-center justify-center mr-3">
+                    {getFormatIcon(doc.format)}
+                  </div>
+                  <div>
+                    <h3 className="text-base font-medium text-text-primary">{doc.title}</h3>
+                    <p className="text-xs text-text-tertiary">By: {doc.author}</p>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">{doc.content}</p>
-                <div className="flex flex-wrap gap-1 mb-2">
+                
+                <p className="text-sm text-text-secondary mb-4 line-clamp-2">{doc.content}</p>
+                
+                <div className="flex flex-wrap gap-1 mb-3">
                   {doc.tags.map((tag, index) => (
                     <span 
                       key={index} 
-                      className="px-2 py-1 text-xs rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200"
+                      className="px-2 py-1 text-xs rounded-full bg-background-primary border border-border-light text-text-secondary"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-                <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
-                  <span>Format: {doc.format}</span>
-                  <span>Updated: {formatDate(doc.updated_at)}</span>
+                
+                <div className="flex justify-between items-center text-xs text-text-tertiary pt-2 border-t border-border-light">
+                  <span className="flex items-center">
+                    <FileText className="h-3 w-3 mr-1" />
+                    {doc.format.toUpperCase()}
+                  </span>
+                  <span className="flex items-center">
+                    <Clock className="h-3 w-3 mr-1" />
+                    {formatDate(doc.updated_at)}
+                  </span>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead className="bg-gray-50 dark:bg-gray-700">
+          <div className="border border-border-light rounded-lg overflow-hidden">
+            <table className="min-w-full divide-y divide-border-light">
+              <thead className="bg-background-tertiary">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Document</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Format</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tags</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Updated</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Document</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Format</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Tags</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-text-tertiary uppercase tracking-wider">Updated</th>
+                  <th scope="col" className="relative px-6 py-3">
+                    <span className="sr-only">Actions</span>
+                  </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+              <tbody className="bg-background-secondary divide-y divide-border-light">
                 {filteredDocuments.map((doc) => (
                   <tr 
                     key={doc.id} 
-                    className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                    className="hover:bg-background-tertiary cursor-pointer"
                     onClick={() => setSelectedDocument(doc)}
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
+                        <div className="flex-shrink-0 h-10 w-10 rounded-md bg-background-elevated flex items-center justify-center">
                           {getFormatIcon(doc.format)}
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900 dark:text-white">{doc.title}</div>
-                          <div className="text-sm text-gray-500 dark:text-gray-400">By: {doc.author}</div>
+                          <div className="text-sm font-medium text-text-primary">{doc.title}</div>
+                          <div className="text-xs text-text-tertiary">By: {doc.author}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200">
-                        {doc.format}
+                      <span className="px-2 py-1 text-xs rounded-full bg-background-primary border border-border-light text-text-secondary">
+                        {doc.format.toUpperCase()}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -228,28 +290,33 @@ const Documents = () => {
                         {doc.tags.slice(0, 2).map((tag, index) => (
                           <span 
                             key={index} 
-                            className="px-2 py-1 text-xs rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200"
+                            className="px-2 py-1 text-xs rounded-full bg-background-primary border border-border-light text-text-secondary"
                           >
                             {tag}
                           </span>
                         ))}
                         {doc.tags.length > 2 && (
-                          <span className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                          <span className="px-2 py-1 text-xs rounded-full bg-background-elevated text-text-tertiary">
                             +{doc.tags.length - 2}
                           </span>
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-text-tertiary">
                       {formatDate(doc.updated_at)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <button className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-3">
-                        Edit
-                      </button>
-                      <button className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
-                        Delete
-                      </button>
+                      <div className="flex items-center justify-end space-x-2">
+                        <button className="p-1 text-text-tertiary hover:text-accent-blue transition-colors">
+                          <Eye className="h-4 w-4" />
+                        </button>
+                        <button className="p-1 text-text-tertiary hover:text-accent-blue transition-colors">
+                          <Edit className="h-4 w-4" />
+                        </button>
+                        <button className="p-1 text-text-tertiary hover:text-accent-red transition-colors">
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -260,72 +327,134 @@ const Documents = () => {
       </div>
 
       {selectedDocument && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{selectedDocument.title}</h2>
-            <div className="flex space-x-2">
-              <button className="flex items-center px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600">
-                <Download className="h-4 w-4 mr-1" />
-                Download
-              </button>
-              <button className="flex items-center px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
-                <FileText className="h-4 w-4 mr-1" />
-                {selectedDocument.format === 'markdown' ? 'Generate PDF' : 'View Markdown'}
-              </button>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            <div className="col-span-1 md:col-span-2">
-              <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-line">
-                  {selectedDocument.content}
-                </p>
+        <div className="bg-background-secondary border border-border-light rounded-lg mt-6">
+          <div className="border-b border-border-light p-5">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
+                <div className="h-10 w-10 rounded-md bg-background-elevated flex items-center justify-center mr-3">
+                  {getFormatIcon(selectedDocument.format)}
+                </div>
+                <h2 className="text-lg font-semibold text-text-primary">{selectedDocument.title}</h2>
+              </div>
+              <div className="flex space-x-2">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  leftIcon={<Download className="h-4 w-4" />}
+                >
+                  Download
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  leftIcon={<Share2 className="h-4 w-4" />}
+                >
+                  Share
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  leftIcon={<FileText className="h-4 w-4" />}
+                >
+                  {selectedDocument.format === 'markdown' ? 'Generate PDF' : 'View Markdown'}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSelectedDocument(null)}
+                >
+                  Close
+                </Button>
               </div>
             </div>
-            
-            <div>
-              <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                <h3 className="text-md font-medium mb-2 text-gray-900 dark:text-white">Document Information</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center">
-                    <Calendar className="h-5 w-5 text-gray-400 mr-2" />
-                    <div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">Created</p>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">{formatDate(selectedDocument.created_at)}</p>
-                    </div>
+            <p className="text-sm text-text-secondary mt-2">By: {selectedDocument.author}</p>
+          </div>
+          
+          <div className="p-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="md:col-span-2">
+                <DataCard
+                  title="DOCUMENT CONTENT"
+                  value=""
+                  variant="default"
+                  size="lg"
+                >
+                  <div className="mt-4 bg-background-tertiary border border-border-light rounded-lg p-4">
+                    <p className="text-sm text-text-secondary whitespace-pre-line">
+                      {selectedDocument.content}
+                    </p>
                   </div>
-                  <div className="flex items-center">
-                    <Calendar className="h-5 w-5 text-gray-400 mr-2" />
-                    <div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">Updated</p>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">{formatDate(selectedDocument.updated_at)}</p>
+                </DataCard>
+              </div>
+              
+              <div className="md:col-span-1">
+                <DataCard
+                  title="DOCUMENT INFORMATION"
+                  value=""
+                  variant="primary"
+                  size="lg"
+                >
+                  <div className="mt-4 space-y-4">
+                    <div className="bg-background-tertiary rounded-lg p-4">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-text-tertiary uppercase">Created</p>
+                          <p className="text-sm font-medium text-text-secondary mt-1">
+                            {formatDate(selectedDocument.created_at)}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-text-tertiary uppercase">Updated</p>
+                          <p className="text-sm font-medium text-text-secondary mt-1">
+                            {formatDate(selectedDocument.updated_at)}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center">
-                    <FileText className="h-5 w-5 text-gray-400 mr-2" />
-                    <div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">Format</p>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">{selectedDocument.format}</p>
+                    
+                    <div className="bg-background-tertiary rounded-lg p-4">
+                      <p className="text-xs text-text-tertiary uppercase mb-2">Format</p>
+                      <div className="flex items-center">
+                        {getFormatIcon(selectedDocument.format)}
+                        <span className="text-sm font-medium text-text-secondary ml-2">
+                          {selectedDocument.format.toUpperCase()}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center">
-                    <Tag className="h-5 w-5 text-gray-400 mr-2" />
-                    <div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">Tags</p>
-                      <div className="flex flex-wrap gap-1 mt-1">
+                    
+                    <div className="bg-background-tertiary rounded-lg p-4">
+                      <p className="text-xs text-text-tertiary uppercase mb-2">Tags</p>
+                      <div className="flex flex-wrap gap-2 mt-1">
                         {selectedDocument.tags.map((tag: string, index: number) => (
                           <span 
                             key={index} 
-                            className="px-2 py-1 text-xs rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200"
+                            className="px-2 py-1 text-xs rounded-full bg-background-primary border border-border-light text-text-secondary"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
                     </div>
+                    
+                    <div className="bg-background-tertiary rounded-lg p-4">
+                      <p className="text-xs text-text-tertiary uppercase mb-2">Actions</p>
+                      <div className="flex flex-col space-y-2">
+                        <button className="flex items-center text-sm text-accent-blue hover:text-accent-blue-light transition-colors">
+                          <Download className="h-4 w-4 mr-2" />
+                          Download PDF
+                        </button>
+                        <button className="flex items-center text-sm text-accent-blue hover:text-accent-blue-light transition-colors">
+                          <Edit className="h-4 w-4 mr-2" />
+                          Edit Document
+                        </button>
+                        <button className="flex items-center text-sm text-accent-red hover:text-accent-red-light transition-colors">
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          Delete Document
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </DataCard>
               </div>
             </div>
           </div>
