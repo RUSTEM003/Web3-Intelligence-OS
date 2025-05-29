@@ -20,8 +20,10 @@ import SearchInput from '../components/SearchInput';
 import DataCard from '../components/DataCard';
 
 import DeckGL from '@deck.gl/react';
-import { ScatterplotLayer } from '@deck.gl/layers';
+import { ScatterplotLayer, TextLayer, ArcLayer, ColumnLayer } from '@deck.gl/layers';
+import { HexagonLayer } from '@deck.gl/aggregation-layers';
 import { MapView } from '@deck.gl/core';
+import { FlyToInterpolator, TRANSITION_EVENTS } from '@deck.gl/core';
 import Map from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -29,6 +31,60 @@ import { nodesApi, transformNodeData } from '../services/api';
 import { Node } from '../types/api';
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M3pxNTA0emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
+
+interface NodeData {
+  id: string;
+  type: string;
+  lat: number;
+  lng: number;
+  status: string;
+  load: number;
+  country: string;
+}
+
+interface Connection {
+  id: string;
+  source: NodeData;
+  target: NodeData;
+  strength: number;
+}
+
+const generateConnections = (nodes: NodeData[], maxConnections = 3): Connection[] => {
+  const connections: Connection[] = [];
+  
+  if (!nodes || nodes.length === 0) return connections;
+  
+  nodes.forEach((source: NodeData) => {
+    const potentialTargets = nodes.filter(
+      (target: NodeData) => 
+        target.id !== source.id && 
+        (target.type === source.type || target.country === source.country)
+    );
+    
+    const sortedTargets = potentialTargets.sort((a: NodeData, b: NodeData) => {
+      const distA = Math.sqrt(
+        Math.pow(source.lat - a.lat, 2) + Math.pow(source.lng - a.lng, 2)
+      );
+      const distB = Math.sqrt(
+        Math.pow(source.lat - b.lat, 2) + Math.pow(source.lng - b.lng, 2)
+      );
+      return distA - distB;
+    });
+    
+    const targets = sortedTargets.slice(0, Math.min(maxConnections, sortedTargets.length));
+    
+    targets.forEach((target: NodeData) => {
+      connections.push({
+        id: `${source.id}-${target.id}`,
+        source,
+        target,
+        strength: source.type === target.type ? 0.8 : 0.4
+      });
+    });
+  });
+  
+  return connections;
+};
 
 const mockNodeLocations = [
   { id: '1', type: 'Core', lat: 40.7128, lng: -74.0060, status: 'active', load: 78, country: 'USA' },
@@ -49,14 +105,20 @@ const MapViewer = () => {
   const [selectedNode, setSelectedNode] = useState<any>(null);
   const [filter, setFilter] = useState({ type: '', status: '', country: '' });
   const [view, setView] = useState('global');
+  const [showConnections, setShowConnections] = useState(true);
+  const [show3D, setShow3D] = useState(true);
+  const [showLabels, setShowLabels] = useState(true);
   const [viewState, setViewState] = useState({
     longitude: 0,
     latitude: 20,
     zoom: 1.5,
-    pitch: 0,
+    pitch: 30,
     bearing: 0,
     minZoom: 1,
-    maxZoom: 15
+    maxZoom: 15,
+    transitionDuration: 1000,
+    transitionInterpolator: new FlyToInterpolator(),
+    transitionEasing: (t: number) => t * (2 - t)
   });
   const deckRef = useRef(null);
   
@@ -288,7 +350,36 @@ const MapViewer = () => {
             controller={true}
             views={new MapView({ id: 'map' })}
             layers={[
-              new ScatterplotLayer({
+              show3D ? new ColumnLayer({
+                id: 'nodes-3d-layer',
+                data: filteredNodes,
+                pickable: true,
+                extruded: true,
+                diskResolution: 12,
+                radius: 25000,
+                elevationScale: 5000,
+                getPosition: (d: any) => [d.lng, d.lat],
+                getFillColor: (d: any) => {
+                  switch (d.status) {
+                    case 'active': return [46, 204, 113, 200]; // green
+                    case 'warning': return [241, 196, 15, 200]; // yellow
+                    case 'error': return [231, 76, 60, 200]; // red
+                    default: return [149, 165, 166, 200]; // gray
+                  }
+                },
+                getElevation: (d: any) => (d.load || 10) * 100,
+                updateTriggers: {
+                  getFillColor: [filter],
+                  getElevation: [filter]
+                },
+                transitions: {
+                  getElevation: {
+                    duration: 1000,
+                    easing: (t: number) => t * (2 - t)
+                  }
+                },
+                onClick: (info: any) => setSelectedNode(info.object)
+              }) : new ScatterplotLayer({
                 id: 'nodes-layer',
                 data: filteredNodes,
                 pickable: true,
@@ -315,6 +406,80 @@ const MapViewer = () => {
                   getFillColor: [filter],
                   getRadius: [filter]
                 }
+              }),
+              
+              showConnections && new ArcLayer({
+                id: 'connections-layer',
+                data: generateConnections(filteredNodes),
+                pickable: true,
+                getWidth: (d: any) => d.strength * 2,
+                getSourcePosition: (d: any) => [d.source.lng, d.source.lat],
+                getTargetPosition: (d: any) => [d.target.lng, d.target.lat],
+                getSourceColor: (d: any) => {
+                  switch (d.source.status) {
+                    case 'active': return [46, 204, 113, 100];
+                    case 'warning': return [241, 196, 15, 100];
+                    case 'error': return [231, 76, 60, 100];
+                    default: return [149, 165, 166, 100];
+                  }
+                },
+                getTargetColor: (d: any) => {
+                  switch (d.target.status) {
+                    case 'active': return [46, 204, 113, 150];
+                    case 'warning': return [241, 196, 15, 150];
+                    case 'error': return [231, 76, 60, 150];
+                    default: return [149, 165, 166, 150];
+                  }
+                }
+              }),
+              
+              showLabels && new TextLayer({
+                id: 'text-layer',
+                data: filteredNodes,
+                pickable: true,
+                getPosition: (d: any) => [d.lng, d.lat],
+                getText: (d: any) => d.type,
+                getSize: 12,
+                getAngle: 0,
+                getTextAnchor: 'middle',
+                getAlignmentBaseline: 'center',
+                getPixelOffset: [0, show3D ? -40 : -20],
+                getColor: [255, 255, 255, 200],
+                fontFamily: 'Monaco, monospace',
+                fontWeight: 'bold',
+                background: true,
+                getBorderColor: [0, 0, 0, 200],
+                getBorderWidth: 4
+              }),
+              
+              new HexagonLayer({
+                id: 'hexagon-layer',
+                data: filteredNodes,
+                pickable: true,
+                extruded: true,
+                radius: 200000,
+                elevationScale: 100,
+                getPosition: (d: any) => [d.lng, d.lat],
+                opacity: 0.2,
+                coverage: 0.7,
+                lowerPercentile: 0,
+                upperPercentile: 100,
+                colorRange: [
+                  [26, 152, 80, 100],
+                  [102, 189, 99, 100],
+                  [166, 217, 106, 100],
+                  [253, 174, 97, 100],
+                  [244, 109, 67, 100],
+                  [215, 48, 39, 100]
+                ],
+                elevationRange: [0, 1000],
+                elevationDomain: [0, 10],
+                transitions: {
+                  elevationScale: {
+                    duration: 500,
+                    easing: (t: number) => t * (2 - t)
+                  }
+                }
               })
             ]}
           >
@@ -331,19 +496,31 @@ const MapViewer = () => {
           <div className="absolute top-4 right-4 flex flex-col space-y-2">
             <button 
               className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors"
-              onClick={() => setViewState(prev => ({ ...prev, zoom: Math.min(prev.zoom + 1, prev.maxZoom) }))}
+              onClick={() => setViewState(prev => ({ 
+                ...prev, 
+                zoom: Math.min(prev.zoom + 1, prev.maxZoom),
+                transitionDuration: 300
+              }))}
             >
               <ZoomIn className="h-4 w-4 text-text-secondary" />
             </button>
             <button 
               className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors"
-              onClick={() => setViewState(prev => ({ ...prev, zoom: Math.max(prev.zoom - 1, prev.minZoom) }))}
+              onClick={() => setViewState(prev => ({ 
+                ...prev, 
+                zoom: Math.max(prev.zoom - 1, prev.minZoom),
+                transitionDuration: 300
+              }))}
             >
               <ZoomOut className="h-4 w-4 text-text-secondary" />
             </button>
             <button 
               className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors"
-              onClick={() => setViewState(prev => ({ ...prev, pitch: prev.pitch === 0 ? 45 : 0 }))}
+              onClick={() => setViewState(prev => ({ 
+                ...prev, 
+                pitch: prev.pitch === 0 ? 45 : 0,
+                transitionDuration: 1000
+              }))}
             >
               <Layers className="h-4 w-4 text-text-secondary" />
             </button>
@@ -355,10 +532,13 @@ const MapViewer = () => {
                     longitude: 0,
                     latitude: 20,
                     zoom: 1.5,
-                    pitch: 0,
+                    pitch: 30,
                     bearing: 0,
                     minZoom: 1,
-                    maxZoom: 15
+                    maxZoom: 15,
+                    transitionDuration: 1000,
+                    transitionInterpolator: new FlyToInterpolator(),
+                    transitionEasing: (t) => t * (2 - t)
                   });
                 }
               }}
@@ -367,9 +547,41 @@ const MapViewer = () => {
             </button>
             <button 
               className="p-2 bg-background-secondary border border-border-light rounded-md shadow-lg hover:bg-background-elevated transition-colors"
-              onClick={() => setViewState(prev => ({ ...prev, bearing: (prev.bearing + 15) % 360 }))}
+              onClick={() => setViewState(prev => ({ 
+                ...prev, 
+                bearing: (prev.bearing + 15) % 360,
+                transitionDuration: 500
+              }))}
             >
               <RotateCw className="h-4 w-4 text-text-secondary" />
+            </button>
+            <div className="border-t border-border-light my-2"></div>
+            <button 
+              className={`p-2 border border-border-light rounded-md shadow-lg transition-colors ${
+                show3D ? 'bg-accent-blue bg-opacity-30' : 'bg-background-secondary hover:bg-background-elevated'
+              }`}
+              onClick={() => setShow3D(prev => !prev)}
+              title="Toggle 3D View"
+            >
+              <Layers className={`h-4 w-4 ${show3D ? 'text-accent-blue' : 'text-text-secondary'}`} />
+            </button>
+            <button 
+              className={`p-2 border border-border-light rounded-md shadow-lg transition-colors ${
+                showConnections ? 'bg-accent-blue bg-opacity-30' : 'bg-background-secondary hover:bg-background-elevated'
+              }`}
+              onClick={() => setShowConnections(prev => !prev)}
+              title="Toggle Connections"
+            >
+              <Globe className={`h-4 w-4 ${showConnections ? 'text-accent-blue' : 'text-text-secondary'}`} />
+            </button>
+            <button 
+              className={`p-2 border border-border-light rounded-md shadow-lg transition-colors ${
+                showLabels ? 'bg-accent-blue bg-opacity-30' : 'bg-background-secondary hover:bg-background-elevated'
+              }`}
+              onClick={() => setShowLabels(prev => !prev)}
+              title="Toggle Labels"
+            >
+              <Info className={`h-4 w-4 ${showLabels ? 'text-accent-blue' : 'text-text-secondary'}`} />
             </button>
           </div>
           
