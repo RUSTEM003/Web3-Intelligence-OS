@@ -1,4 +1,14 @@
-import api from './api';
+import axios from 'axios';
+import { ApiResponse } from '../types/api';
+
+let API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://app-xgxfvqwi.fly.dev';
+
+const axiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 interface UserCredentials {
   username: string;
@@ -23,7 +33,7 @@ interface UserUpdate {
 
 export const registerUser = async (userData: UserRegistration) => {
   try {
-    const response = await api.post('/api/users/', userData);
+    const response = await axiosInstance.post('/api/users/', userData);
     return response.data;
   } catch (error: any) {
     console.error('Error registering user:', error);
@@ -33,7 +43,7 @@ export const registerUser = async (userData: UserRegistration) => {
 
 export const loginUser = async (credentials: UserCredentials) => {
   try {
-    const response = await api.post('/api/users/login', credentials);
+    const response = await axiosInstance.post('/api/users/login', credentials);
     if (response.data.access_token) {
       localStorage.setItem('auth_token', response.data.access_token);
       localStorage.setItem('user_logged_in', 'true');
@@ -58,7 +68,7 @@ export const getCurrentUser = async () => {
   }
   
   try {
-    const response = await api.get('/api/users/');
+    const response = await axiosInstance.get('/api/users/');
     return response.data[0];
   } catch (error: any) {
     console.error('Error fetching current user:', error);
@@ -68,7 +78,7 @@ export const getCurrentUser = async () => {
 
 export const getUsers = async () => {
   try {
-    const response = await api.get('/api/users/');
+    const response = await axiosInstance.get('/api/users/');
     return response.data;
   } catch (error: any) {
     console.error('Error fetching users:', error);
@@ -78,7 +88,7 @@ export const getUsers = async () => {
 
 export const getUserById = async (id: string) => {
   try {
-    const response = await api.get(`/api/users/${id}`);
+    const response = await axiosInstance.get(`/api/users/${id}`);
     return response.data;
   } catch (error: any) {
     console.error(`Error fetching user ${id}:`, error);
@@ -88,7 +98,7 @@ export const getUserById = async (id: string) => {
 
 export const updateUser = async (id: string, userData: UserUpdate) => {
   try {
-    const response = await api.put(`/api/users/${id}`, userData);
+    const response = await axiosInstance.put(`/api/users/${id}`, userData);
     return response.data;
   } catch (error: any) {
     console.error(`Error updating user ${id}:`, error);
@@ -96,7 +106,7 @@ export const updateUser = async (id: string, userData: UserUpdate) => {
   }
 };
 
-api.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('auth_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
