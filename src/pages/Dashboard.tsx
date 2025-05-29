@@ -18,6 +18,9 @@ import DataCard from '../components/DataCard';
 import Button from '../components/Button';
 import SearchInput from '../components/SearchInput';
 import BlockchainTransactionList, { Transaction } from '../components/BlockchainTransactionList';
+import CryptocurrencyPriceTracker from '../components/CryptocurrencyPriceTracker';
+import BlockchainNetworkVisualization from '../components/BlockchainNetworkVisualization';
+import AIInsightsPanel from '../components/AIInsightsPanel.tsx';
 
 const performanceData = [
   { name: 'Core', nodes: 12, transactions: 240, uptime: 99 },
@@ -379,6 +382,26 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+      </div>
+      
+      {/* Blockchain-specific components */}
+      <div className="mt-6">
+        <CryptocurrencyPriceTracker 
+          onRefresh={() => console.log('Refreshing cryptocurrency data')}
+          onViewDetails={(id) => console.log(`View details for ${id}`)}
+        />
+      </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <BlockchainNetworkVisualization 
+          onRefresh={() => console.log('Refreshing network data')}
+          onNodeClick={(nodeId) => console.log(`Clicked on node ${nodeId}`)}
+        />
+        
+        <AIInsightsPanel 
+          onRefresh={() => console.log('Refreshing AI insights')}
+          onInsightAction={(insightId: string, action: string) => console.log(`Action ${action} on insight ${insightId}`)}
+        />
       </div>
     </div>
   );
