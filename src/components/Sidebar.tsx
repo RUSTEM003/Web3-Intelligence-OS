@@ -31,7 +31,8 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
     { name: 'Graphs', href: '/graphs', icon: BarChartIcon, number: '04' },
     { name: 'Documents', href: '/documents', icon: FileTextIcon, number: '05' },
     { name: 'Map Viewer', href: '/map', icon: MapIcon, number: '06' },
-    { name: 'Settings', href: '/settings', icon: SettingsIcon, number: '07' },
+    { name: 'Profile', href: '/profile', icon: FileIcon, number: '07' },
+    { name: 'Settings', href: '/settings', icon: SettingsIcon, number: '08' },
   ];
 
   const quickActions = [
