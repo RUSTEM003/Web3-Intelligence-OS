@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { 
   Globe, 
   ZoomIn, 
@@ -12,7 +12,8 @@ import {
   Minimize, 
   RotateCw, 
   Filter, 
-  ChevronDown 
+  ChevronDown,
+  Loader
 } from 'lucide-react';
 import Button from '../components/Button';
 import SearchInput from '../components/SearchInput';
@@ -23,6 +24,9 @@ import { ScatterplotLayer } from '@deck.gl/layers';
 import { MapView } from '@deck.gl/core';
 import Map from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
+
+import { nodesApi } from '../services/api';
+import { Node } from '../types/api';
 
 const MAPBOX_TOKEN = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
 
@@ -55,12 +59,87 @@ const MapViewer = () => {
     maxZoom: 15
   });
   const deckRef = useRef(null);
+  
+  const [nodes, setNodes] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    const fetchNodesData = async () => {
+      try {
+        setLoading(true);
+        const response = await nodesApi.getAll();
+        
+        if (response.status === 200) {
+          const transformedNodes = response.data.map((node: any) => {
+            let lat = 0, lng = 0, country = 'Unknown';
+            
+            if (node.location) {
+              const parts = node.location.split(',');
+              if (parts.length >= 2) {
+                lat = parseFloat(parts[0]) || Math.random() * 180 - 90;
+                lng = parseFloat(parts[1]) || Math.random() * 360 - 180;
+                if (parts.length > 2) {
+                  country = parts[2].trim();
+                }
+              }
+            } else {
+              lat = Math.random() * 180 - 90;
+              lng = Math.random() * 360 - 180;
+            }
+            
+            let type = 'Core';
+            if (node.name) {
+              if (node.name.toLowerCase().includes('edge')) type = 'Edge';
+              else if (node.name.toLowerCase().includes('civic')) type = 'Civic';
+              else if (node.name.toLowerCase().includes('privacy')) type = 'Privacy';
+              else if (node.name.toLowerCase().includes('quantum')) type = 'Quantum';
+            }
+            
+            let status = 'active';
+            if (node.status) {
+              if (node.status.toLowerCase().includes('error') || 
+                  node.status.toLowerCase().includes('fail')) {
+                status = 'error';
+              } else if (node.status.toLowerCase().includes('warn')) {
+                status = 'warning';
+              }
+            }
+            
+            return {
+              id: node.id,
+              type,
+              lat,
+              lng,
+              status,
+              load: node.performance_metrics?.cpu_usage || Math.floor(Math.random() * 100),
+              country
+            };
+          });
+          
+          setNodes(transformedNodes);
+        } else {
+          console.error('API returned error status:', response.status);
+          setError(`API returned status ${response.status}`);
+          setNodes(mockNodeLocations);
+        }
+      } catch (error) {
+        console.error('Error fetching nodes:', error);
+        setError('Failed to fetch nodes data');
+        setNodes(mockNodeLocations);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchNodesData();
+  }, []);
 
-  const nodeTypes = Array.from(new Set(mockNodeLocations.map(node => node.type)));
+  const nodeTypes = Array.from(new Set(nodes.map(node => node.type)));
   const nodeStatuses = ['active', 'warning', 'error'];
-  const countries = Array.from(new Set(mockNodeLocations.map(node => node.country)));
+  const countries = Array.from(new Set(nodes.map(node => node.country)));
 
-  const filteredNodes = mockNodeLocations.filter(node => {
+  const filteredNodes = nodes.filter(node => {
     const matchesType = filter.type === '' || node.type === filter.type;
     const matchesStatus = filter.status === '' || node.status === filter.status;
     const matchesCountry = filter.country === '' || node.country === filter.country;
@@ -99,7 +178,71 @@ const MapViewer = () => {
           <Button
             variant="secondary"
             size="sm"
-            leftIcon={<RefreshCw className="h-4 w-4" />}
+            leftIcon={<RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />}
+            onClick={() => {
+              setLoading(true);
+              setError(null);
+              nodesApi.getAll().then(response => {
+                if (response.status === 200) {
+                  const transformedNodes = response.data.map((node: any) => {
+                    let lat = 0, lng = 0, country = 'Unknown';
+                    
+                    if (node.location) {
+                      const parts = node.location.split(',');
+                      if (parts.length >= 2) {
+                        lat = parseFloat(parts[0]) || Math.random() * 180 - 90;
+                        lng = parseFloat(parts[1]) || Math.random() * 360 - 180;
+                        if (parts.length > 2) {
+                          country = parts[2].trim();
+                        }
+                      }
+                    } else {
+                      lat = Math.random() * 180 - 90;
+                      lng = Math.random() * 360 - 180;
+                    }
+                    
+                    let type = 'Core';
+                    if (node.name) {
+                      if (node.name.toLowerCase().includes('edge')) type = 'Edge';
+                      else if (node.name.toLowerCase().includes('civic')) type = 'Civic';
+                      else if (node.name.toLowerCase().includes('privacy')) type = 'Privacy';
+                      else if (node.name.toLowerCase().includes('quantum')) type = 'Quantum';
+                    }
+                    
+                    let status = 'active';
+                    if (node.status) {
+                      if (node.status.toLowerCase().includes('error') || 
+                          node.status.toLowerCase().includes('fail')) {
+                        status = 'error';
+                      } else if (node.status.toLowerCase().includes('warn')) {
+                        status = 'warning';
+                      }
+                    }
+                    
+                    return {
+                      id: node.id,
+                      type,
+                      lat,
+                      lng,
+                      status,
+                      load: node.performance_metrics?.cpu_usage || Math.floor(Math.random() * 100),
+                      country
+                    };
+                  });
+                  
+                  setNodes(transformedNodes);
+                } else {
+                  setError(`API returned status ${response.status}`);
+                  setNodes(mockNodeLocations);
+                }
+              }).catch(error => {
+                console.error('Error refreshing nodes:', error);
+                setError('Failed to refresh nodes data');
+                setNodes(mockNodeLocations);
+              }).finally(() => {
+                setLoading(false);
+              });
+            }}
           >
             Refresh
           </Button>
@@ -315,7 +458,7 @@ const MapViewer = () => {
           >
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {nodeTypes.map(type => {
-                const count = mockNodeLocations.filter(node => node.type === type).length;
+                const count = nodes.filter(node => node.type === type).length;
                 return (
                   <div key={type} className="bg-background-tertiary border border-border-light p-4 rounded-lg">
                     <div className="flex items-center">
@@ -326,11 +469,11 @@ const MapViewer = () => {
                     <div className="mt-2 h-2 bg-background-primary rounded-full overflow-hidden">
                       <div 
                         className="h-2 bg-accent-blue rounded-full" 
-                        style={{ width: `${(count / mockNodeLocations.length) * 100}%` }}
+                        style={{ width: `${(count / nodes.length) * 100}%` }}
                       ></div>
                     </div>
                     <p className="mt-1 text-xs text-text-tertiary">
-                      {((count / mockNodeLocations.length) * 100).toFixed(1)}% of total
+                      {((count / nodes.length) * 100).toFixed(1)}% of total
                     </p>
                   </div>
                 );
@@ -348,7 +491,7 @@ const MapViewer = () => {
           >
             <div className="mt-4 space-y-4">
               {nodeStatuses.map(status => {
-                const count = mockNodeLocations.filter(node => node.status === status).length;
+                const count = nodes.filter(node => node.status === status).length;
                 const statusColor = status === 'active' ? 'text-accent-green' : 
                                     status === 'warning' ? 'text-accent-yellow' : 'text-accent-red';
                 return (
