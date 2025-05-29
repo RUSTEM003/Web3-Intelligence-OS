@@ -203,11 +203,14 @@ const Nodes: React.FC = () => {
           });
           setNodes(transformedData);
         } else {
-          setError('Failed to fetch nodes data');
+          console.error('API returned error status:', response.status);
+          setError(`Failed to fetch nodes data. Status: ${response.status}`);
+          setNodes(mockNodes);
         }
       } catch (err) {
         console.error('Error fetching nodes:', err);
         setError('Error fetching nodes data. Please try again later.');
+        setNodes(mockNodes);
       } finally {
         setIsLoading(false);
       }
@@ -355,11 +358,14 @@ const Nodes: React.FC = () => {
                     });
                     setNodes(transformedData);
                   } else {
-                    setError('Failed to fetch nodes data');
+                    console.error('API returned error status:', response.status);
+                    setError(`Failed to fetch nodes data. Status: ${response.status}`);
+                    setNodes(mockNodes);
                   }
                 } catch (err) {
                   console.error('Error fetching nodes:', err);
                   setError('Error fetching nodes data. Please try again later.');
+                  setNodes(mockNodes);
                 } finally {
                   setIsLoading(false);
                 }
