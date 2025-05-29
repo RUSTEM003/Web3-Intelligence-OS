@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ExternalLink, ChevronDown, ChevronUp, Clock, ArrowRight, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 
-interface Transaction {
+export interface Transaction {
   id: string;
   hash: string;
   from: string;
