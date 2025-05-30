@@ -7,6 +7,7 @@ import Graphs from './pages/Graphs';
 import Documents from './pages/Documents';
 import Settings from './pages/Settings';
 import MapViewer from './pages/MapViewer';
+import Intelligence from './pages/Intelligence';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -50,6 +51,7 @@ function AppRoutes() {
         <Route path="graphs" element={<Graphs />} />
         <Route path="documents" element={<Documents />} />
         <Route path="map" element={<MapViewer />} />
+        <Route path="intelligence" element={<Intelligence />} />
         <Route path="profile" element={<Profile />} />
         <Route path="settings" element={<Settings />} />
       </Route>
