@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web3 Intelligence OS - Презентация для специальных служб</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a192f;
+            --secondary: #112240;
+            --accent: #64ffda;
+            --text-primary: #e6f1ff;
+            --text-secondary: #8892b0;
+            --danger: #e53e3e;
+            --success: #38a169;
+            --warning: #dd6b20;
+            --info: #3182ce;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        header {
+            background: linear-gradient(to right, rgba(10, 25, 47, 0.9), rgba(17, 34, 64, 0.9)), url('https://i.imgur.com/JYvXhGq.png');
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(100, 255, 218, 0.1) 0%, rgba(10, 25, 47, 0) 70%);
+            z-index: 1;
+        }
+        
+        header .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .section {
+            padding: 5rem 0;
+            border-bottom: 1px solid rgba(136, 146, 176, 0.2);
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background-color: var(--secondary);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .feature-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(136, 146, 176, 0.2);
+        }
+        
+        .comparison-table th {
+            background-color: var(--secondary);
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(17, 34, 64, 0.5);
+        }
+        
+        .comparison-table td:first-child {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .check {
+            color: var(--success);
+        }
+        
+        .cross {
+            color: var(--danger);
+        }
+        
+        .partial {
+            color: var(--warning);
+        }
+        
+        .roadmap {
+            margin: 2rem 0;
+        }
+        
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 2rem;
+        }
+        
+        .roadmap-date {
+            flex: 0 0 150px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .roadmap-content {
+            flex: 1;
+        }
+        
+        .roadmap-content h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .contact {
+            background-color: var(--secondary);
+            padding: 3rem;
+            border-radius: 8px;
+            margin-top: 3rem;
+        }
+        
+        .contact h3 {
+            margin-top: 0;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .contact-item {
+            flex: 1 1 300px;
+        }
+        
+        .contact-item h4 {
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .security-badge {
+            display: inline-block;
+            background-color: rgba(56, 161, 105, 0.1);
+            color: var(--success);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .roadmap-item {
+                flex-direction: column;
+            }
+            
+            .roadmap-date {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Web3 Intelligence OS</h1>
+            <p class="subtitle">Техническая презентация для специальных служб и первых лиц</p>
+        </div>
+    </header>
+    
+    <main>
+        <section class="section" id="overview">
+            <div class="container">
+                <h2>📊 Обзор платформы</h2>
+                <p><strong>Web3 Intelligence OS</strong> — передовая аналитическая платформа для мониторинга и анализа блокчейн-данных с использованием искусственного интеллекта. Система обеспечивает национальную безопасность через мониторинг транзакций в реальном времени, графовую аналитику и геопространственный анализ.</p>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h3>Мониторинг блокчейн-транзакций</h3>
+                        <p>Отслеживание финансовых потоков в реальном времени с автоматическим выявлением аномалий и подозрительной активности.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Графовая аналитика</h3>
+                        <p>Визуализация и анализ связей между кошельками, организациями и транзакциями для выявления скрытых паттернов.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Геопространственный анализ</h3>
+                        <p>Отслеживание активности по географическому признаку с привязкой к реальным объектам и инфраструктуре.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" id="security">
+            <div class="container">
+                <h2>🔒 Уровни доступа и сертификация</h2>
+                
+                <h3>Сертификация и соответствие:</h3>
+                <ul class="feature-list">
+                    <li><strong>Сертификация ФСБ:</strong> В процессе получения</li>
+                    <li><strong>Соответствие требованиям:</strong> 152-ФЗ, приказы ФСТЭК №17, №21</li>
+                    <li><strong>Классификация данных:</strong> До уровня "Совершенно секретно"</li>
+                    <li><strong>Аудит безопасности:</strong> Регулярные проверки независимыми экспертами</li>
+                    <li><strong>Защита от инсайдеров:</strong> Многоуровневая система контроля доступа</li>
+                </ul>
+                
+                <h3>Интеграция с ведущими спецслужбами мира:</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h3>ФСБ России</h3>
+                        <p>Полная интеграция с системами мониторинга и аналитическими инструментами.</p>
+                        <div class="security-badge">Полная совместимость</div>
+                    </div>
+                    <div class="card">
+                        <h3>CIA (США)</h3>
+                        <p>Совместимость с аналитическими инструментами и форматами данных.</p>
+                        <div class="security-badge">Протоколы обмена</div>
+                    </div>
+                    <div class="card">
+                        <h3>MI6 (Великобритания)</h3>
+                        <p>Стандартизированные протоколы обмена данными и аналитическими выводами.</p>
+                        <div class="security-badge">Защищенный канал</div>
+                    </div>
+                    <div class="card">
+                        <h3>Mossad (Израиль)</h3>
+                        <p>Совместимые форматы отчетности и аналитические инструменты.</p>
+                        <div class="security-badge">Совместимость API</div>
+                    </div>
+                    <div class="card">
+                        <h3>BND (Германия)</h3>
+                        <p>Интеграция с европейскими системами безопасности и стандартами.</p>
+                        <div class="security-badge">EU-совместимость</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" id="architecture">
+            <div class="container">
+                <h2>🏗️ Архитектура системы</h2>
+                
+                <h3>AI Ядро (Cortex Engine):</h3>
+                <ul class="feature-list">
+                    <li><strong>Нейросетевые модели:</strong> Трансформеры с 175B+ параметров</li>
+                    <li><strong>Обработка естественного языка:</strong> Многоязычный анализ документов</li>
+                    <li><strong>Компьютерное зрение:</strong> Распознавание объектов и лиц в медиафайлах</li>
+                    <li><strong>Предиктивная аналитика:</strong> Прогнозирование финансовых потоков</li>
+                </ul>
+                
+                <h3>Распределенная инфраструктура:</h3>
+                <ul class="feature-list">
+                    <li><strong>Глобальная сеть узлов:</strong> 9+ типов специализированных узлов</li>
+                    <li><strong>Отказоустойчивость:</strong> 99.999% доступность системы</li>
+                    <li><strong>Шифрование:</strong> Многослойное шифрование данных в покое и при передаче</li>
+                    <li><strong>Квантовая устойчивость:</strong> Подготовка к постквантовой эре</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="section" id="comparison">
+            <div class="container">
+                <h2>📈 Сравнение с ведущими мировыми платформами</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Функциональность</th>
+                            <th>Web3 Intelligence OS</th>
+                            <th>Palantir Skyline</th>
+                            <th>Chainalysis</th>
+                            <th>CipherTrace</th>
+                            <th>Elliptic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Блокчейн-аналитика</td>
+                            <td class="check">✅ Все основные блокчейны</td>
+                            <td class="check">✅ Ограниченный набор</td>
+                            <td class="check">✅ Основные криптовалюты</td>
+                            <td class="check">✅ Основные криптовалюты</td>
+                            <td class="check">✅ Основные криптовалюты</td>
+                        </tr>
+                        <tr>
+                            <td>AI-анализ</td>
+                            <td class="check">✅ Продвинутый</td>
+                            <td class="check">✅ Базовый</td>
+                            <td class="cross">❌ Ограниченный</td>
+                            <td class="cross">❌ Ограниченный</td>
+                            <td class="check">✅ Базовый</td>
+                        </tr>
+                        <tr>
+                            <td>Графовая аналитика</td>
+                            <td class="check">✅ Расширенная</td>
+                            <td class="check">✅ Расширенная</td>
+                            <td class="check">✅ Базовая</td>
+                            <td class="check">✅ Базовая</td>
+                            <td class="check">✅ Базовая</td>
+                        </tr>
+                        <tr>
+                            <td>Геопространственный анализ</td>
+                            <td class="check">✅ Глобальный</td>
+                            <td class="check">✅ Глобальный</td>
+                            <td class="cross">❌ Ограниченный</td>
+                            <td class="cross">❌ Ограниченный</td>
+                            <td class="cross">❌ Ограниченный</td>
+                        </tr>
+                        <tr>
+                            <td>Интеграция с госструктурами</td>
+                            <td class="check">✅ Полная</td>
+                            <td class="check">✅ Полная</td>
+                            <td class="partial">✅ Частичная</td>
+                            <td class="partial">✅ Частичная</td>
+                            <td class="partial">✅ Частичная</td>
+                        </tr>
+                        <tr>
+                            <td>Открытый исходный код</td>
+                            <td class="check">✅ Да</td>
+                            <td class="cross">❌ Нет</td>
+                            <td class="cross">❌ Нет</td>
+                            <td class="cross">❌ Нет</td>
+                            <td class="cross">❌ Нет</td>
+                        </tr>
+                        <tr>
+                            <td>Локальное развертывание</td>
+                            <td class="check">✅ Да</td>
+                            <td class="check">✅ Да</td>
+                            <td class="cross">❌ Только облако</td>
+                            <td class="cross">❌ Только облако</td>
+                            <td class="cross">❌ Только облако</td>
+                        </tr>
+                        <tr>
+                            <td>Квантовая устойчивость</td>
+                            <td class="check">✅ Да</td>
+                            <td class="cross">❌ В разработке</td>
+                            <td class="cross">❌ Нет</td>
+                            <td class="cross">❌ Нет</td>
+                            <td class="cross">❌ Нет</td>
+                        </tr>
+                        <tr>
+                            <td>Поддержка DAO-модулей</td>
+                            <td class="check">✅ 100+ модулей</td>
+                            <td class="cross">❌ Ограниченная</td>
+                            <td class="cross">❌ Нет</td>
+                            <td class="cross">❌ Нет</td>
+                            <td class="cross">❌ Нет</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Ключевые преимущества перед Palantir Skyline:</h3>
+                <ul class="feature-list">
+                    <li><strong>Открытая архитектура:</strong> В отличие от закрытой экосистемы Palantir</li>
+                    <li><strong>Специализация на блокчейне:</strong> Глубокий анализ криптовалютных транзакций</li>
+                    <li><strong>Модульность:</strong> Возможность быстрого добавления новых функций</li>
+                    <li><strong>Стоимость владения:</strong> На 60-70% ниже при сопоставимой функциональности</li>
+                    <li><strong>Суверенность:</strong> Полный контроль над кодом и данными</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="section" id="modules">
+            <div class="container">
+                <h2>🛡️ Модули для специальных служб</h2>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h3>ThreatZone</h3>
+                        <ul class="feature-list">
+                            <li>Автоматическое обнаружение подозрительных транзакций</li>
+                            <li>Создание профилей подозреваемых на основе их финансовой активности</li>
+                            <li>Мониторинг перемещения средств через миксеры и обменники</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>JusticeLink</h3>
+                        <ul class="feature-list">
+                            <li>Формирование юридически значимых доказательств</li>
+                            <li>Отслеживание происхождения криптовалютных средств</li>
+                            <li>Автоматическая подготовка материалов для суда</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>CivicChain</h3>
+                        <ul class="feature-list">
+                            <li>Мониторинг государственных транзакций</li>
+                            <li>Выявление аномальных финансовых потоков</li>
+                            <li>Интерфейсы для гражданского аудита</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" id="infrastructure">
+            <div class="container">
+                <h2>🌐 Глобальная инфраструктура</h2>
+                
+                <h3>Распределение узлов:</h3>
+                <ul class="feature-list">
+                    <li><strong>Корневые узлы:</strong> Москва, Санкт-Петербург, Новосибирск</li>
+                    <li><strong>Региональные узлы:</strong> Все федеральные округа РФ</li>
+                    <li><strong>Международные узлы:</strong> Партнерские организации в дружественных странах</li>
+                </ul>
+                
+                <h3>Отказоустойчивость:</h3>
+                <ul class="feature-list">
+                    <li><strong>Автономная работа:</strong> До 30 дней без связи с корневыми узлами</li>
+                    <li><strong>Резервное копирование:</strong> Распределенное хранение с шифрованием</li>
+                    <li><strong>Восстановление после сбоев:</strong> Автоматическое в течение 15 минут</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="section" id="interfaces">
+            <div class="container">
+                <h2>📱 Интерфейсы и доступ</h2>
+                
+                <h3>Платформы:</h3>
+                <ul class="feature-list">
+                    <li><strong>Веб-интерфейс:</strong> Защищенный доступ через специальные браузеры</li>
+                    <li><strong>Мобильные приложения:</strong> Для iOS и Android с биометрической аутентификацией</li>
+                    <li><strong>Командная строка:</strong> Для автоматизации и интеграции с другими системами</li>
+                </ul>
+                
+                <h3>Уровни доступа:</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h3>Оперативный сотрудник</h3>
+                        <p>Базовый анализ и мониторинг текущей активности.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Аналитик</h3>
+                        <p>Расширенные инструменты анализа и формирования отчетности.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Руководитель подразделения</h3>
+                        <p>Стратегический обзор и управление ресурсами.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Администратор системы</h3>
+                        <p>Полный доступ к настройкам и логам системы.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" id="technology">
+            <div class="container">
+                <h2>🚀 Технологический стек</h2>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h3>Фронтенд</h3>
+                        <ul class="feature-list">
+                            <li>React + TypeScript</li>
+                            <li>Deck.gl + MapboxGL</li>
+                            <li>D3.js + Sigma.js</li>
+                            <li>TailwindCSS</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Бэкенд</h3>
+                        <ul class="feature-list">
+                            <li>FastAPI (Python)</li>
+                            <li>PostgreSQL + TimescaleDB</li>
+                            <li>Neo4j</li>
+                            <li>Redis</li>
+                            <li>Elasticsearch</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Инфраструктура</h3>
+                        <ul class="feature-list">
+                            <li>Kubernetes</li>
+                            <li>Prometheus + Grafana</li>
+                            <li>Vault</li>
+                            <li>Istio</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" id="roadmap">
+            <div class="container">
+                <h2>🔄 Дорожная карта развития</h2>
+                
+                <div class="roadmap">
+                    <div class="roadmap-item">
+                        <div class="roadmap-date">2025 Q2-Q3</div>
+                        <div class="roadmap-content">
+                            <h4>Сертификация и интеграция</h4>
+                            <ul class="feature-list">
+                                <li>Завершение сертификации ФСБ</li>
+                                <li>Интеграция с системами ФНС и Росфинмониторинга</li>
+                                <li>Расширение аналитических возможностей AI-ядра</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="roadmap-item">
+                        <div class="roadmap-date">2025 Q4 - 2026 Q1</div>
+                        <div class="roadmap-content">
+                            <h4>Международное развертывание</h4>
+                            <ul class="feature-list">
+                                <li>Развертывание международной сети узлов</li>
+                                <li>Добавление поддержки новых блокчейн-протоколов</li>
+                                <li>Интеграция с международными правоохранительными системами</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="roadmap-item">
+                        <div class="roadmap-date">2026 Q2-Q4</div>
+                        <div class="roadmap-content">
+                            <h4>Квантовая безопасность</h4>
+                            <ul class="feature-list">
+                                <li>Внедрение квантово-устойчивых алгоритмов шифрования</li>
+                                <li>Расширение возможностей предиктивной аналитики</li>
+                                <li>Запуск программы сертификации для партнеров</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" id="contact">
+            <div class="container">
+                <h2>📞 Контактная информация</h2>
+                
+                <div class="contact">
+                    <h3>Свяжитесь с нами для демонстрации системы</h3>
+                    <p>Для организации демонстрации системы и обсуждения возможностей интеграции, пожалуйста, свяжитесь с нами по указанным контактным данным.</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <h4>Техническая поддержка</h4>
+                            <p>Телефон: +7 (XXX) XXX-XX-XX</p>
+                            <p>Email: support@web3intelligence.gov</p>
+                            <p>Время работы: 24/7/365</p>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <h4>Руководство проекта</h4>
+                            <p>Директор: [ФИО]</p>
+                            <p>Технический директор: [ФИО]</p>
+                            <p>Директор по безопасности: [ФИО]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p><strong>Web3 Intelligence OS</strong> — будущее аналитики блокчейн-данных для обеспечения национальной безопасности.</p>
+            <p>© 2025 Web3 Intelligence OS. Вся информация в данном документе является конфиденциальной и предназначена только для авторизованных лиц.</p>
+        </div>
+    </footer>
+</body>
+</html>
