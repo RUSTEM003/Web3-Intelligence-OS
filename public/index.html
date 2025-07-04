@@ -957,7 +957,7 @@
                 loadDefaultWeather();
             }
 
-            fetch('/api/realtime/detect-language')
+            fetch('api/realtime/detect-language')
                 .then(response => response.json())
                 .then(data => {
                     currentLanguage = data.language;
@@ -1131,7 +1131,7 @@
                 socket.emit('ai-question', { question, lang: currentLanguage });
             } else {
                 showAIThinking('Processing your request...');
-                fetch('/api/realtime/ai-chat', {
+                fetch('api/realtime/ai-chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ question, lang: currentLanguage })
@@ -1205,7 +1205,7 @@
             responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка врачей...</div>';
 
             try {
-                const response = await fetch('/api/doctors');
+                const response = await fetch('api/doctors');
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
@@ -1432,7 +1432,7 @@
             responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка видео...</div>';
 
             try {
-                const response = await fetch('/api/videos');
+                const response = await fetch('api/videos');
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
@@ -1475,7 +1475,7 @@
             responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Проверка состояния системы...</div>';
 
             try {
-                const response = await fetch('/health');
+                const response = await fetch('health');
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
@@ -1529,7 +1529,7 @@
             responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка данных о погоде...</div>';
 
             try {
-                const response = await fetch('/api/realtime/weather?lat=41.0082&lon=28.9784&lang=ru');
+                const response = await fetch('api/realtime/weather?lat=41.0082&lon=28.9784&lang=ru');
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
@@ -1606,7 +1606,7 @@
             responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка новостей...</div>';
 
             try {
-                const response = await fetch('/api/realtime/news?lang=ru');
+                const response = await fetch('api/realtime/news?lang=ru');
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
@@ -1650,7 +1650,7 @@
             responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка статистики...</div>';
 
             try {
-                const response = await fetch('/metrics');
+                const response = await fetch('metrics');
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
@@ -2122,7 +2122,7 @@
 
             console.log('Регистрация пациента:', patientData);
 
-            fetch('/api/auth/register/patient', {
+            fetch('api/auth/register/patient', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -2156,7 +2156,7 @@
 
             console.log('Регистрация врача:', doctorData);
 
-            fetch('/api/auth/register/doctor', {
+            fetch('api/auth/register/doctor', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -2186,7 +2186,7 @@
 
             console.log('Вход пользователя:', loginData);
 
-            fetch('/api/auth/login', {
+            fetch('api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
