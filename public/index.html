@@ -161,12 +161,172 @@
             opacity: 0.8;
         }
         
+        .realtime-widgets {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .widget {
+            background: rgba(255,255,255,0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .weather-widget h3, .ai-chat-widget h3, .news-widget h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .weather-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .temperature {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .description {
+            color: #666;
+            text-transform: capitalize;
+            font-size: 1.1em;
+        }
+
+        .weather-details {
+            display: flex;
+            gap: 20px;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .weather-loading, .news-loading {
+            text-align: center;
+            color: #888;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        .chat-interface {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #ai-chat-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        #ai-chat-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        #ai-chat-button {
+            padding: 12px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        #ai-chat-button:hover {
+            background: #45a049;
+        }
+
+        .ai-response, .ai-thinking {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            color: #333;
+            line-height: 1.6;
+            border-left: 4px solid #667eea;
+        }
+
+        .ai-thinking {
+            font-style: italic;
+            opacity: 0.8;
+            border-left-color: #ffa726;
+        }
+
+        .news-list {
+            display: grid;
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .news-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s ease;
+        }
+
+        .news-item:hover {
+            transform: translateX(5px);
+        }
+
+        .news-item h4 {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+        }
+
+        .news-item a {
+            color: #2196F3;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .news-item a:hover {
+            text-decoration: underline;
+        }
+
+        .news-item p {
+            margin: 10px 0;
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .news-item small {
+            color: #999;
+            font-size: 0.8em;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2.5rem;
             }
             
             .api-buttons {
+                flex-direction: column;
+            }
+            
+            .realtime-widgets {
+                grid-template-columns: 1fr;
+            }
+            
+            .chat-interface {
                 flex-direction: column;
             }
         }
@@ -231,15 +391,42 @@
             </div>
         </div>
         
+        <div class="realtime-widgets">
+            <div class="widget weather-widget">
+                <h3 id="weather-title">Current Weather</h3>
+                <div id="weather-container">
+                    <div class="weather-loading">Loading weather data...</div>
+                </div>
+            </div>
+            
+            <div class="widget ai-chat-widget">
+                <h3 id="ai-title">AI Medical Assistant</h3>
+                <div class="chat-interface">
+                    <input type="text" id="ai-chat-input" placeholder="Ask a medical question..." />
+                    <button id="ai-chat-button" class="btn">Ask</button>
+                </div>
+                <div id="ai-chat-response"></div>
+            </div>
+        </div>
+
+        <div class="widget news-widget">
+            <h3 id="news-title">Latest Medical News</h3>
+            <div id="news-container">
+                <div class="news-loading">Loading medical news...</div>
+            </div>
+        </div>
+
         <div class="api-demo">
             <h3>Live API Demo</h3>
             <div class="api-buttons">
-                <button class="btn" onclick="loadDoctors()">Загрузить врачей</button>
-                <button class="btn" onclick="loadVideos()">Загрузить видео</button>
-                <button class="btn" onclick="checkHealth()">Проверить статус</button>
-                <button class="btn" onclick="loadStats()">Статистика системы</button>
+                <button class="btn" onclick="loadDoctors()">Load Doctors</button>
+                <button class="btn" onclick="loadVideos()">Load Videos</button>
+                <button class="btn" onclick="checkHealth()">Check Status</button>
+                <button class="btn" onclick="loadStats()">System Stats</button>
+                <button class="btn" onclick="loadWeather()">Weather Data</button>
+                <button class="btn" onclick="loadNews()">Medical News</button>
             </div>
-            <div id="apiResponse" class="api-response">Нажмите на кнопку выше для демонстрации API...</div>
+            <div id="apiResponse" class="api-response">Click a button above for API demonstration...</div>
         </div>
         
         <footer class="footer">
@@ -248,14 +435,244 @@
         </footer>
     </div>
     
+    <script src="/socket.io/socket.io.js"></script>
     <script>
+        let currentLanguage = 'en';
+        let socket = null;
+        let userLocation = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeRealTimeFeatures();
+            checkHealth();
+        });
+
+        function initializeRealTimeFeatures() {
+            detectLanguageAndLocation();
+            initializeWebSocket();
+            setupAIChat();
+            loadInitialData();
+        }
+
+        function detectLanguageAndLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    userLocation = {
+                        lat: position.coords.latitude,
+                        lon: position.coords.longitude
+                    };
+                    loadWeatherData();
+                }, function(error) {
+                    console.warn('Geolocation error:', error);
+                    loadDefaultWeather();
+                });
+            } else {
+                loadDefaultWeather();
+            }
+
+            fetch('/api/realtime/detect-language')
+                .then(response => response.json())
+                .then(data => {
+                    currentLanguage = data.language;
+                    updateUILanguage(data.translations);
+                })
+                .catch(error => {
+                    console.error('Language detection error:', error);
+                    currentLanguage = 'en';
+                });
+        }
+
+        function initializeWebSocket() {
+            if (typeof io !== 'undefined') {
+                socket = io();
+                
+                socket.on('connect', function() {
+                    console.log('Connected to real-time updates');
+                    if (userLocation) {
+                        socket.emit('join-realtime', {
+                            lat: userLocation.lat,
+                            lon: userLocation.lon,
+                            lang: currentLanguage
+                        });
+                    }
+                });
+
+                socket.on('weather-update', function(weather) {
+                    updateWeatherDisplay(weather);
+                });
+
+                socket.on('news-update', function(news) {
+                    updateNewsDisplay(news);
+                });
+
+                socket.on('ai-thinking', function(data) {
+                    showAIThinking(data.message);
+                });
+
+                socket.on('ai-response', function(data) {
+                    showAIResponse(data.response);
+                });
+            }
+        }
+
+        function loadInitialData() {
+            loadNewsData();
+        }
+
+        function loadWeatherData() {
+            if (!userLocation) return;
+            
+            fetch(`/api/realtime/weather?lat=${userLocation.lat}&lon=${userLocation.lon}&lang=${currentLanguage}`)
+                .then(response => response.json())
+                .then(weather => updateWeatherDisplay(weather))
+                .catch(error => {
+                    console.error('Weather error:', error);
+                    document.getElementById('weather-container').innerHTML = '<div class="weather-error">Weather service unavailable</div>';
+                });
+        }
+
+        function loadDefaultWeather() {
+            fetch(`/api/realtime/weather?lat=41.0082&lon=28.9784&lang=${currentLanguage}`)
+                .then(response => response.json())
+                .then(weather => updateWeatherDisplay(weather))
+                .catch(error => {
+                    console.error('Weather error:', error);
+                    document.getElementById('weather-container').innerHTML = '<div class="weather-error">Weather service unavailable</div>';
+                });
+        }
+
+        function loadNewsData() {
+            fetch(`/api/realtime/news?lang=${currentLanguage}`)
+                .then(response => response.json())
+                .then(news => updateNewsDisplay(news))
+                .catch(error => {
+                    console.error('News error:', error);
+                    document.getElementById('news-container').innerHTML = '<div class="news-error">News service unavailable</div>';
+                });
+        }
+
+        function updateWeatherDisplay(weather) {
+            if (!weather) return;
+            
+            const weatherContainer = document.getElementById('weather-container');
+            if (weatherContainer) {
+                weatherContainer.innerHTML = `
+                    <div class="weather-info">
+                        <span class="temperature">${weather.temperature}°C</span>
+                        <div>
+                            <div class="description">${weather.description}</div>
+                            <div style="color: #888; font-size: 0.9em;">${weather.city}, ${weather.country}</div>
+                        </div>
+                    </div>
+                    <div class="weather-details">
+                        <span>Humidity: ${weather.humidity}%</span>
+                        <span>Wind: ${weather.windSpeed} m/s</span>
+                    </div>
+                `;
+            }
+        }
+
+        function updateNewsDisplay(news) {
+            const newsContainer = document.getElementById('news-container');
+            if (newsContainer && news.length > 0) {
+                newsContainer.innerHTML = `
+                    <div class="news-list">
+                        ${news.slice(0, 6).map(item => `
+                            <div class="news-item">
+                                <h4><a href="${item.link}" target="_blank">${item.title}</a></h4>
+                                <p>${item.description}</p>
+                                <small>Source: ${item.source}</small>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (newsContainer) {
+                newsContainer.innerHTML = '<div class="news-error">No medical news available</div>';
+            }
+        }
+
+        function setupAIChat() {
+            const chatInput = document.getElementById('ai-chat-input');
+            const chatButton = document.getElementById('ai-chat-button');
+
+            if (chatButton && chatInput) {
+                chatButton.addEventListener('click', function() {
+                    const question = chatInput.value.trim();
+                    if (question) {
+                        askAI(question);
+                        chatInput.value = '';
+                    }
+                });
+
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        chatButton.click();
+                    }
+                });
+            }
+        }
+
+        function askAI(question) {
+            if (socket) {
+                socket.emit('ai-question', { question, lang: currentLanguage });
+            } else {
+                showAIThinking('Processing your request...');
+                fetch('/api/realtime/ai-chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question, lang: currentLanguage })
+                })
+                .then(response => response.json())
+                .then(data => showAIResponse(data.response))
+                .catch(error => {
+                    console.error('AI chat error:', error);
+                    showAIResponse('AI service is currently unavailable. Please try again later.');
+                });
+            }
+        }
+
+        function showAIThinking(message) {
+            const responseContainer = document.getElementById('ai-chat-response');
+            if (responseContainer) {
+                responseContainer.innerHTML = `<div class="ai-thinking">${message}</div>`;
+            }
+        }
+
+        function showAIResponse(response) {
+            const responseContainer = document.getElementById('ai-chat-response');
+            if (responseContainer) {
+                responseContainer.innerHTML = `<div class="ai-response">${response}</div>`;
+            }
+        }
+
+        function updateUILanguage(translations) {
+            if (!translations) return;
+            
+            const elements = {
+                'weather-title': translations.weather || 'Current Weather',
+                'news-title': translations.news || 'Medical News',
+                'ai-title': translations.ai_assistant || 'AI Medical Assistant'
+            };
+
+            Object.keys(elements).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = elements[id];
+                }
+            });
+
+            const chatInput = document.getElementById('ai-chat-input');
+            if (chatInput) {
+                chatInput.placeholder = translations.ask_question || 'Ask a medical question...';
+            }
+        }
+
         async function makeApiCall(endpoint) {
             try {
                 const response = await fetch(endpoint);
                 const data = await response.json();
                 document.getElementById('apiResponse').textContent = JSON.stringify(data, null, 2);
             } catch (error) {
-                document.getElementById('apiResponse').textContent = `Ошибка: ${error.message}`;
+                document.getElementById('apiResponse').textContent = `Error: ${error.message}`;
             }
         }
         
@@ -269,6 +686,18 @@
         
         function checkHealth() {
             makeApiCall('/health');
+        }
+
+        function loadWeather() {
+            if (userLocation) {
+                makeApiCall(`/api/realtime/weather?lat=${userLocation.lat}&lon=${userLocation.lon}&lang=${currentLanguage}`);
+            } else {
+                makeApiCall(`/api/realtime/weather?lat=41.0082&lon=28.9784&lang=${currentLanguage}`);
+            }
+        }
+
+        function loadNews() {
+            makeApiCall(`/api/realtime/news?lang=${currentLanguage}`);
         }
         
         function loadStats() {
@@ -286,13 +715,24 @@
                 dataProcessed: "2.4TB today",
                 aiAccuracy: "97.8%",
                 userSatisfaction: "4.9/5.0",
-                globalCoverage: "200+ cities"
+                globalCoverage: "200+ cities",
+                realTimeFeatures: {
+                    weatherAPI: "OpenWeatherMap",
+                    newsAPI: "Medical RSS Feeds",
+                    aiModel: "GPT-4",
+                    languageDetection: "GeoIP + Browser",
+                    webSocketConnections: 1247
+                }
             };
             document.getElementById('apiResponse').textContent = JSON.stringify(stats, null, 2);
         }
-        
-        // Auto-load health check on page load
-        window.addEventListener('load', checkHealth);
+
+        setInterval(() => {
+            if (userLocation) {
+                loadWeatherData();
+            }
+            loadNewsData();
+        }, 600000);
     </script>
 </body>
 </html>
