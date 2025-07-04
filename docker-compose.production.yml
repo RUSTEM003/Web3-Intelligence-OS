@@ -220,6 +220,22 @@ services:
       - ./logs:/var/log
       - ai-models:/app/models
 
+  localization:
+    build: ./services/localization
+    ports:
+      - "8086:8086"
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - medtour-network
+    volumes:
+      - ./logs:/var/log
+      - ./services/localization/locales:/app/locales
+
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
