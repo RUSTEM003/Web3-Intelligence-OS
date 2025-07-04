@@ -204,6 +204,22 @@ services:
     volumes:
       - ./logs:/var/log
 
+  ai-diagnostics:
+    build: ./services/ai-diagnostics
+    ports:
+      - "8085:8085"
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - medtour-network
+    volumes:
+      - ./logs:/var/log
+      - ai-models:/app/models
+
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
@@ -224,6 +240,7 @@ volumes:
   rtmp-recordings:
   rtmp-hls:
   rtmp-dash:
+  ai-models:
 
 networks:
   medtour-network:
