@@ -22,9 +22,6 @@ const redis = new Redis(process.env.REDIS_URL || 'redis://redis:6379', {
 
 const createRateLimiter = (options = {}) => {
   const defaultOptions = {
-    store: new RedisStore({
-      sendCommand: (...args) => redis.call(...args),
-    }),
     windowMs: 15 * 60 * 1000,
     max: 100,
     message: {
@@ -48,6 +45,14 @@ const createRateLimiter = (options = {}) => {
       });
     }
   };
+
+  try {
+    defaultOptions.store = new RedisStore({
+      sendCommand: (...args) => redis.call(...args),
+    });
+  } catch (error) {
+    logger.warn('Redis store unavailable, using memory store for rate limiting');
+  }
 
   return rateLimit({ ...defaultOptions, ...options });
 };
