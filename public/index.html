@@ -415,11 +415,46 @@
             color: #fff;
             border: 1px solid #764ba2;
         }
+        .top-widgets {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .widget {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 15px 20px;
+            min-width: 200px;
+            text-align: center;
+            color: #fff;
+            font-weight: 500;
+        }
+        .weather-widget {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .news-widget {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
 
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="top-widgets">
+            <div class="widget weather-widget">
+                <div id="current-time">Загрузка времени...</div>
+            </div>
+            <div class="widget weather-widget">
+                <div id="weather-display">Загрузка погоды...</div>
+            </div>
+            <div class="widget news-widget">
+                <div id="news-display">Загрузка новостей...</div>
+            </div>
+        </div>
+
         <header class="header">
             <h1>MEDTOUR</h1>
             <p>Глобальная AI-платформа для Турецкой медицины</p>
@@ -946,6 +981,50 @@
             }
             loadNewsData();
         }, 600000);
+
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('ru-RU', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            const timeElement = document.getElementById('current-time');
+            if (timeElement) {
+                timeElement.innerHTML = `<strong>Текущее время:</strong><br>${timeString}`;
+            }
+        }
+
+        function updateTopWeather() {
+            const weatherElement = document.getElementById('weather-display');
+            if (weatherElement && window.lastWeatherData) {
+                weatherElement.innerHTML = `<strong>${window.lastWeatherData.temperature}°C</strong><br>${window.lastWeatherData.description}<br>${window.lastWeatherData.city}, ${window.lastWeatherData.country}`;
+            } else if (weatherElement) {
+                weatherElement.innerHTML = `<strong>22°C</strong><br>Clear sky<br>Istanbul, TR`;
+            }
+        }
+
+        function updateTopNews() {
+            const newsElement = document.getElementById('news-display');
+            if (newsElement && window.lastNewsData && window.lastNewsData.length > 0) {
+                const latestNews = window.lastNewsData[0];
+                newsElement.innerHTML = `<strong>Медицинские новости:</strong><br>${latestNews.title.substring(0, 50)}...`;
+            } else if (newsElement) {
+                newsElement.innerHTML = `<strong>Медицинские новости:</strong><br>AI революция в диагностике...`;
+            }
+        }
+
+        setInterval(updateCurrentTime, 1000);
+        setInterval(updateTopWeather, 300000);
+        setInterval(updateTopNews, 600000);
+        
+        updateCurrentTime();
+        updateTopWeather();
+        updateTopNews();
     </script>
 </body>
     <script>
