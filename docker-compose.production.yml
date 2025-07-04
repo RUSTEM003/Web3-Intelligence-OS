@@ -1,0 +1,189 @@
+version: '3.9'
+
+services:
+  medtour:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SITE_URL=https://medtour.ai
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - S3_BUCKET=${S3_BUCKET}
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=${DATABASE_URL}
+      - GPU_QUEUE_URL=http://gpu-queue:8080
+      - VIDEO_TRANSLATOR_URL=http://video-translator:8081
+    volumes:
+      - ./public:/app/public
+      - ./logs:/app/logs
+      - uploads:/var/www/uploads
+      - videos:/var/www/videos
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - mysql
+    networks:
+      - medtour-network
+
+  gpu-queue:
+    build: ./services/gpu-queue
+    ports:
+      - "8080:8080"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - CUDA_VISIBLE_DEVICES=0,1,2,3
+    volumes:
+      - /dev/nvidia0:/dev/nvidia0
+      - /dev/nvidiactl:/dev/nvidiactl
+      - /dev/nvidia-uvm:/dev/nvidia-uvm
+      - uploads:/app/uploads
+    restart: unless-stopped
+    runtime: nvidia
+    depends_on:
+      - redis
+    networks:
+      - medtour-network
+
+  video-translator:
+    build: ./services/video-translator
+    ports:
+      - "8081:8081"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - S3_BUCKET=${S3_BUCKET}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+    volumes:
+      - uploads:/app/uploads
+      - videos:/app/videos
+      - ./ffmpeg:/usr/local/bin/ffmpeg
+    restart: unless-stopped
+    depends_on:
+      - redis
+    networks:
+      - medtour-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 2gb --maxmemory-policy allkeys-lru
+    networks:
+      - medtour-network
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: medtour
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password --innodb-buffer-pool-size=1G
+    networks:
+      - medtour-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/letsencrypt
+      - uploads:/var/www/uploads
+      - videos:/var/www/videos
+      - certbot-www:/var/www/certbot
+    depends_on:
+      - medtour
+      - gpu-queue
+      - video-translator
+    restart: unless-stopped
+    networks:
+      - medtour-network
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./ssl:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    command: certonly --webroot --webroot-path=/var/www/certbot --email admin@medtour.ai --agree-tos --no-eff-email -d medtour.ai -d www.medtour.ai
+
+  rtmp-streaming:
+    build: ./services/rtmp-streaming
+    ports:
+      - "1935:1935"
+      - "8082:8080"
+    volumes:
+      - rtmp-recordings:/var/recordings
+      - rtmp-hls:/var/hls
+      - rtmp-dash:/var/dash
+    restart: unless-stopped
+    depends_on:
+      - medtour
+    networks:
+      - medtour-network
+
+  bullmq-worker:
+    build: ./services/bullmq-worker
+    ports:
+      - "3002:3002"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - GPU_QUEUE_URL=http://gpu-queue:8080
+      - VIDEO_TRANSLATOR_URL=http://video-translator:8081
+      - MEDTOUR_BACKEND_URL=http://medtour:3000
+      - GPU_WORKER_CONCURRENCY=4
+      - VIDEO_WORKER_CONCURRENCY=2
+      - AI_WORKER_CONCURRENCY=3
+    volumes:
+      - ./logs:/var/log
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - gpu-queue
+      - video-translator
+    networks:
+      - medtour-network
+
+  cloudflare-tunnel:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    restart: unless-stopped
+    depends_on:
+      - nginx
+    networks:
+      - medtour-network
+
+volumes:
+  redis-data:
+  mysql-data:
+  uploads:
+  videos:
+  certbot-www:
+  rtmp-recordings:
+  rtmp-hls:
+  rtmp-dash:
+
+networks:
+  medtour-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
