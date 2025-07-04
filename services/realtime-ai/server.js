@@ -23,9 +23,9 @@ const io = socketIo(server, {
 
 const PORT = process.env.PORT || 8083;
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+const openai = process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'test_key_for_local_development' 
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 
 const parser = new Parser();
 
@@ -149,6 +149,23 @@ async function getWeatherData(lat, lon, lang = 'en') {
     }
   }
 
+  if (!WEATHER_API_KEY || WEATHER_API_KEY === 'test_weather_key') {
+    const mockWeatherData = {
+      temperature: Math.floor(Math.random() * 15) + 15,
+      description: 'partly cloudy',
+      humidity: Math.floor(Math.random() * 30) + 50,
+      windSpeed: Math.floor(Math.random() * 5) + 2,
+      city: lat == 41.0082 ? 'Istanbul' : 'Test City',
+      country: 'TR',
+      icon: '02d',
+      timestamp: Date.now(),
+      mode: 'test'
+    };
+    
+    weatherCache.set(cacheKey, { data: mockWeatherData, timestamp: Date.now() });
+    return mockWeatherData;
+  }
+
   try {
     const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric&lang=${lang}`
@@ -230,6 +247,10 @@ async function getMedicalNews(lang = 'en') {
 async function translateText(text, targetLang) {
   if (targetLang === 'en') return text;
   
+  if (!openai) {
+    return text;
+  }
+  
   try {
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -262,6 +283,15 @@ async function getMedicalAIResponse(question, lang = 'en') {
     if (Date.now() - cached.timestamp < 3600000) {
       return cached.data;
     }
+  }
+
+  if (!openai) {
+    const mockResponse = lang === 'tr' 
+      ? 'AI hizmeti şu anda test modunda çalışıyor. Gerçek OpenAI entegrasyonu için API anahtarı gereklidir. Sağlık sorunları için lütfen bir doktora danışın.'
+      : 'AI service is currently running in test mode. Real OpenAI integration requires API key configuration. Please consult with healthcare professionals for medical concerns.';
+    
+    aiResponseCache.set(cacheKey, { data: mockResponse, timestamp: Date.now() });
+    return mockResponse;
   }
 
   try {
