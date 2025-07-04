@@ -1004,6 +1004,10 @@
 
         function loadInitialData() {
             loadNewsData();
+            loadWeatherData();
+            updateCurrentTime();
+            updateTopWeather();
+            updateTopNews();
         }
 
         function loadWeatherData() {
@@ -1020,7 +1024,9 @@
                 windSpeed: 3
             };
             console.log('Loading default weather:', weather);
+            window.lastWeatherData = weather;
             updateWeatherDisplay(weather);
+            updateTopWeather();
         }
 
         function loadNewsData() {
@@ -1062,7 +1068,9 @@
                     link: "#"
                 }
             ];
+            window.lastNewsData = medicalNews;
             updateNewsDisplay(medicalNews);
+            updateTopNews();
         }
 
         function updateWeatherDisplay(weather) {
@@ -1965,11 +1973,16 @@
         }
 
         setInterval(() => {
+            updateCurrentTime();
             if (userLocation) {
                 loadWeatherData();
             }
             loadNewsData();
-        }, 600000);
+        }, 60000);
+
+        setInterval(() => {
+            updateCurrentTime();
+        }, 1000);
 
         function updateCurrentTime() {
             const now = new Date();
@@ -2576,6 +2589,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const savedLang = localStorage.getItem('selectedLanguage') || 'ru';
             changeLanguage(savedLang);
+            loadInitialData();
         });
     </script>
 
