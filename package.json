@@ -1,0 +1,41 @@
+{
+  "name": "medtour",
+  "version": "1.0.0",
+  "description": "MEDTOUR - Глобальная AI-платформа для Турецкой медицины",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "npm run generate-sitemap",
+    "generate-sitemap": "node scripts/generate-sitemap-doctors.js && node scripts/generate-sitemap-videos.js",
+    "deploy": "pm2 start ecosystem.config.js",
+    "setup": "npm install && npm run generate-sitemap"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "compression": "^1.7.4",
+    "dotenv": "^16.3.1",
+    "mysql2": "^3.6.5",
+    "redis": "^4.6.10",
+    "winston": "^3.11.0",
+    "sitemap": "^7.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "medtour",
+    "medical",
+    "tourism",
+    "ai",
+    "turkey",
+    "healthcare"
+  ],
+  "author": "MEDTOUR Team",
+  "license": "MIT"
+}

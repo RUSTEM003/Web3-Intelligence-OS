@@ -1,0 +1,39 @@
+name: Deploy to Production
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Generate sitemaps
+        run: |
+          node scripts/generate-sitemap-doctors.js
+          node scripts/generate-sitemap-videos.js
+          
+      - name: Run tests
+        run: npm test --if-present
+        
+      - name: Build application
+        run: npm run build --if-present
+        
+      - name: Deploy to server
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Deploying to production server..."
+          # Add your deployment commands here
+          # ssh user@host 'cd /var/www/medtour && git pull && pm2 restart ecosystem.config.js'
