@@ -175,7 +175,7 @@
         }
 
         .stat-number {
-            font-size: 2.5rem;
+     ак       font-size: 2.5rem;
             font-weight: bold;
 боте             margin-bottom: 10px;
         }
@@ -1200,84 +1200,18 @@
             }
         }
 
-        function loadDoctors() {
+        async function loadDoctors() {
             const responseElement = document.getElementById('apiResponse');
-            const doctors = [
-                {
-                    id: 1,
-                    name: "Dr. Mehmet Özkan",
-                    specialty: "Кардиология",
-                    hospital: "Acıbadem Maslak Hospital",
-                    experience: "15 лет",
-                    languages: ["Турецкий", "Английский", "Немецкий", "Русский"],
-                    rating: 4.9,
-                    price: "€2,500",
-                    photo: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=150&h=150&fit=crop&crop=face",
-                    location: "Стамбул, Турция"
-                },
-                {
-                    id: 2,
-                    name: "Dr. Ayşe Demir",
-                    specialty: "Пластическая хирургия",
-                    hospital: "Memorial Şişli Hospital",
-                    experience: "12 лет",
-                    languages: ["Турецкий", "Английский", "Русский"],
-                    rating: 4.8,
-                    price: "€3,200",
-                    photo: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face",
-                    location: "Стамбул, Турция"
-                },
-                {
-                    id: 3,
-                    name: "Dr. Ali Yılmaz",
-                    specialty: "Ортопедия",
-                    hospital: "Medicana International Ankara",
-                    experience: "18 лет",
-                    languages: ["Турецкий", "Английский", "Арабский"],
-                    rating: 4.7,
-                    price: "€2,800",
-                    photo: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop&crop=face",
-                    location: "Анкара, Турция"
-                },
-                {
-                    id: 4,
-                    name: "Dr. Fatma Kaya",
-                    specialty: "Неврология",
-                    hospital: "Koç University Hospital",
-                    experience: "20 лет",
-                    languages: ["Турецкий", "Английский", "Русский", "Немецкий"],
-                    rating: 4.9,
-                    price: "€2,200",
-                    photo: "https://images.unsplash.com/photo-1594824475317-29bb4b71e3e3?w=150&h=150&fit=crop&crop=face",
-                    location: "Стамбул, Турция"
-                },
-                {
-                    id: 5,
-                    name: "Dr. Mustafa Çelik",
-                    specialty: "Онкология",
-                    hospital: "Anadolu Medical Center",
-                    experience: "14 лет",
-                    languages: ["Турецкий", "Английский", "Испанский"],
-                    rating: 4.8,
-                    price: "€4,500",
-                    photo: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=150&h=150&fit=crop&crop=face",
-                    location: "Стамбул, Турция"
-                },
-                {
-                    id: 6,
-                    name: "Dr. Zeynep Aktaş",
-                    specialty: "Стоматология",
-                    hospital: "Dentistanbul Clinic",
-                    experience: "10 лет",
-                    languages: ["Турецкий", "Английский", "Русский"],
-                    rating: 4.9,
-                    price: "€1,200",
-                    photo: "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=150&h=150&fit=crop&crop=face",
-                    location: "Стамбул, Турция"
-                }
-            ];
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка врачей...</div>';
 
-            responseElement.innerHTML = `
+            try {
+                const response = await fetch('/api/doctors');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                const doctors = await response.json();
+
+                responseElement.innerHTML = `
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
                     ${doctors.map(doctor => `
                         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 20px; color: white; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
@@ -1307,14 +1241,20 @@
                     <button onclick="showAllDoctors()" style="background: #FF9800; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">Показать всех врачей (1247)</button>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка загрузки врачей:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
         function bookAppointment(doctorId) {
             const modal = document.createElement('div');
             modal.className = 'booking-modal';
             modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); display: flex; align-items: center;
                 justify-content: center; z-index: 1000;
             `;
             modal.innerHTML = `
@@ -1349,7 +1289,7 @@
                 </div>
             `;
             document.body.appendChild(modal);
-            
+
             modal.querySelector('form').addEventListener('submit', function(e) {
                 e.preventDefault();
                 alert('Заявка отправлена! Мы свяжемся с вами в течение 24 часов.');
@@ -1382,15 +1322,15 @@
                     procedures: ["Ринопластика", "Маммопластика", "Липосакция", "Подтяжка лица"]
                 }
             ];
-            
+
             const doctor = doctors.find(d => d.id === doctorId);
             if (!doctor) return;
-            
+
             const modal = document.createElement('div');
             modal.className = 'profile-modal';
             modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); display: flex; align-items: center;
                 justify-content: center; z-index: 1000; overflow-y: auto;
             `;
             modal.innerHTML = `
@@ -1408,15 +1348,15 @@
                         <p><strong>Местоположение:</strong> ${doctor.location}</p>
                         <p><strong>Цена консультации:</strong> ${doctor.price}</p>
                         <p><strong>Языки:</strong> ${doctor.languages.join(', ')}</p>
-                        
+
                         <h4 style="color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; margin-top: 20px;">Образование</h4>
                         <p>${doctor.education}</p>
-                        
+
                         <h4 style="color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; margin-top: 20px;">Сертификации</h4>
                         <ul style="margin: 10px 0; padding-left: 20px;">
                             ${doctor.certifications.map(cert => `<li>${cert}</li>`).join('')}
                         </ul>
-                        
+
                         <h4 style="color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; margin-top: 20px;">Специализированные процедуры</h4>
                         <ul style="margin: 10px 0; padding-left: 20px;">
                             ${doctor.procedures.map(proc => `<li>${proc}</li>`).join('')}
@@ -1487,52 +1427,18 @@
             modals.forEach(modal => modal.remove());
         }
 
-        function loadVideos() {
+        async function loadVideos() {
             const responseElement = document.getElementById('apiResponse');
-            const videos = [
-                {
-                    id: 1,
-                    title: "Операция на сердце: современные методы",
-                    doctor: "Dr. Mehmet Özkan",
-                    duration: "15:30",
-                    views: 12450,
-                    language: "Русский",
-                    thumbnail: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&h=200&fit=crop",
-                    specialty: "Кардиология"
-                },
-                {
-                    id: 2,
-                    title: "Пластическая хирургия: консультация",
-                    doctor: "Dr. Ayşe Demir",
-                    duration: "8:45",
-                    views: 8920,
-                    language: "Английский",
-                    thumbnail: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=300&h=200&fit=crop",
-                    specialty: "Пластическая хирургия"
-                },
-                {
-                    id: 3,
-                    title: "Лечение суставов без операции",
-                    doctor: "Dr. Ali Yılmaz",
-                    duration: "12:15",
-                    views: 15670,
-                    language: "Турецкий",
-                    thumbnail: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=300&h=200&fit=crop",
-                    specialty: "Ортопедия"
-                },
-                {
-                    id: 4,
-                    title: "Диагностика неврологических заболеваний",
-                    doctor: "Dr. Fatma Kaya",
-                    duration: "20:10",
-                    views: 9340,
-                    language: "Русский",
-                    thumbnail: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=300&h=200&fit=crop",
-                    specialty: "Неврология"
-                }
-            ];
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка видео...</div>';
 
-            responseElement.innerHTML = `
+            try {
+                const response = await fetch('/api/videos');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                const videos = await response.json();
+
+                responseElement.innerHTML = `
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin-top: 20px;">
                     ${videos.map(video => `
                         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; overflow: hidden; color: white; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
@@ -1556,26 +1462,24 @@
                     <button onclick="showAllVideos()" style="background: #9C27B0; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">Все медицинские видео (89)</button>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка загрузки видео:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
-        function checkHealth() {
+        async function checkHealth() {
             const responseElement = document.getElementById('apiResponse');
-            const healthData = {
-                status: "healthy",
-                timestamp: new Date().toISOString(),
-                services: {
-                    database: "connected",
-                    redis: "connected",
-                    ai_service: "running",
-                    video_processor: "running",
-                    payment_gateway: "active",
-                    notification_service: "running"
-                },
-                uptime: "99.99%",
-                response_time: "45ms",
-                active_users: 1247,
-                total_appointments: 15420
-            };
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Проверка состояния системы...</div>';
+
+            try {
+                const response = await fetch('/health');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                const healthData = await response.json();
 
             responseElement.innerHTML = `
                 <div style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); border-radius: 15px; padding: 30px; color: white; text-align: center; margin-top: 20px;">
@@ -1612,26 +1516,24 @@
                     <p style="margin: 20px 0 0 0; opacity: 0.8;">Последнее обновление: ${new Date().toLocaleString('ru-RU')}</p>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка проверки состояния:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
-        function loadWeather() {
+        async function loadWeather() {
             const responseElement = document.getElementById('apiResponse');
-            const weatherData = {
-                temperature: 22,
-                description: "Clear sky",
-                city: "Istanbul",
-                country: "TR",
-                humidity: 65,
-                windSpeed: 3,
-                pressure: 1013,
-                visibility: 10,
-                forecast: [
-                    {day: "Завтра", temp: 24, desc: "Переменная облачность"},
-                    {day: "Послезавтра", temp: 21, desc: "Небольшой дождь"},
-                    {day: "Понедельник", temp: 25, desc: "Солнечно"},
-                    {day: "Вторник", temp: 23, desc: "Облачно"}
-                ]
-            };
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка данных о погоде...</div>';
+
+            try {
+                const response = await fetch('/api/realtime/weather?lat=41.0082&lon=28.9784&lang=ru');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                const weatherData = await response.json();
 
             responseElement.innerHTML = `
                 <div style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); border-radius: 15px; padding: 30px; color: white; text-align: center;">
@@ -1691,52 +1593,24 @@
                     </div>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка загрузки погоды:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
-        function loadNews() {
+        async function loadNews() {
             const responseElement = document.getElementById('apiResponse');
-            const newsData = [
-                {
-                    title: "Прорыв в лечении рака с использованием ИИ-технологий",
-                    description: "Исследователи разработали новый диагностический инструмент на основе искусственного интеллекта, который повышает точность диагностики онкологических заболеваний на 97.8%",
-                    source: "Medical Journal",
-                    published: new Date().toISOString(),
-                    category: "Онкология",
-                    readTime: "5 мин"
-                },
-                {
-                    title: "Турция становится ведущим направлением медицинского туризма",
-                    description: "40% рост числа международных пациентов в 2025 году. Турецкие клиники привлекают пациентов высоким качеством услуг и доступными ценами",
-                    source: "Healthcare Today",
-                    published: new Date().toISOString(),
-                    category: "Медицинский туризм",
-                    readTime: "3 мин"
-                },
-                {
-                    title: "Новые методы кардиохирургии в турецких клиниках",
-                    description: "Внедрение роботизированных систем для операций на сердце показывает выдающиеся результаты с 99.2% успешностью операций",
-                    source: "Cardiology News",
-                    published: new Date().toISOString(),
-                    category: "Кардиология",
-                    readTime: "4 мин"
-                },
-                {
-                    title: "Революция в пластической хирургии: 3D-моделирование",
-                    description: "Турецкие хирурги используют передовые 3D-технологии для планирования операций, что снижает риски и улучшает результаты",
-                    source: "Plastic Surgery Today",
-                    published: new Date().toISOString(),
-                    category: "Пластическая хирургия",
-                    readTime: "6 мин"
-                },
-                {
-                    title: "Телемедицина в Турции: новые возможности для пациентов",
-                    description: "Развитие телемедицинских услуг позволяет проводить консультации с ведущими специалистами удаленно, экономя время и средства пациентов",
-                    source: "Digital Health",
-                    published: new Date().toISOString(),
-                    category: "Телемедицина",
-                    readTime: "4 мин"
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка новостей...</div>';
+
+            try {
+                const response = await fetch('/api/realtime/news?lang=ru');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            ];
+                const newsData = await response.json();
 
             responseElement.innerHTML = `
                 <div style="background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%); border-radius: 15px; padding: 30px; color: white;">
@@ -1763,38 +1637,30 @@
                     </div>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка загрузки новостей:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
-        function loadStats() {
-            const stats = {
-                platform: "MEDTOUR AI Platform",
-                version: "1.0.0",
-                uptime: "99.99%",
-                activeUsers: 15420,
-                totalDoctors: 1247,
-                totalClinics: 89,
-                supportedLanguages: 25,
-                aiModelsActive: 12,
-                requestsPerSecond: 2847,
-                averageResponseTime: "45ms",
-                dataProcessed: "2.4TB today",
-                aiAccuracy: "97.8%",
-                userSatisfaction: "4.9/5.0",
-                globalCoverage: "200+ cities",
-                realTimeFeatures: {
-                    weatherAPI: "OpenWeatherMap",
-                    newsAPI: "Medical RSS Feeds",
-                    aiModel: "GPT-4",
-                    languageDetection: "GeoIP + Browser",
-                    webSocketConnections: 1247
+        async function loadStats() {
+            const responseElement = document.getElementById('apiResponse');
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка статистики...</div>';
+
+            try {
+                const response = await fetch('/metrics');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            };
+                const stats = await response.json();
 
             const responseElement = document.getElementById('apiResponse');
             responseElement.innerHTML = `
                 <div style="background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); border-radius: 15px; padding: 30px; color: white;">
                     <h3 style="margin: 0 0 25px 0; font-size: 24px; text-align: center;">Системная статистика MEDTOUR</h3>
-                    
+
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px;">
                         <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 12px; text-align: center;">
                             <h4 style="margin: 0 0 10px 0; font-size: 16px; opacity: 0.9;">Платформа</h4>
@@ -1882,6 +1748,12 @@
                     </div>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка загрузки статистики:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
         setInterval(() => {
@@ -2247,9 +2119,9 @@
             event.preventDefault();
             const formData = new FormData(event.target);
             const patientData = Object.fromEntries(formData);
-            
+
             console.log('Регистрация пациента:', patientData);
-            
+
             fetch('/api/auth/register/patient', {
                 method: 'POST',
                 headers: {
@@ -2277,13 +2149,13 @@
             event.preventDefault();
             const formData = new FormData(event.target);
             const doctorData = Object.fromEntries(formData);
-            
+
             const selectedLanguages = Array.from(document.getElementById('doctorLanguages').selectedOptions)
                 .map(option => option.value);
             doctorData.languages = selectedLanguages;
-            
+
             console.log('Регистрация врача:', doctorData);
-            
+
             fetch('/api/auth/register/doctor', {
                 method: 'POST',
                 headers: {
@@ -2311,9 +2183,9 @@
             event.preventDefault();
             const formData = new FormData(event.target);
             const loginData = Object.fromEntries(formData);
-            
+
             console.log('Вход пользователя:', loginData);
-            
+
             fetch('/api/auth/login', {
                 method: 'POST',
                 headers: {
@@ -2327,10 +2199,10 @@
                     localStorage.setItem('authToken', data.token);
                     localStorage.setItem('userRole', data.role);
                     localStorage.setItem('userId', data.userId);
-                    
+
                     alert('Вход выполнен успешно!');
                     closeModal('loginModal');
-                    
+
                     if (data.role === 'doctor') {
                         window.location.href = '/dashboard/doctor';
                     } else {
