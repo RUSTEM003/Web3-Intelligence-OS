@@ -173,6 +173,37 @@ services:
     networks:
       - medtour-network
 
+  ai-content-generator:
+    build: ./cron
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+      - bullmq-worker
+    restart: unless-stopped
+    networks:
+      - medtour-network
+    volumes:
+      - ./logs:/var/log
+
+  webrtc-signaling:
+    build: ./services/webrtc-signaling
+    ports:
+      - "8084:8084"
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+      - FRONTEND_URL=https://medtour.ai
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - medtour-network
+    volumes:
+      - ./logs:/var/log
+
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}

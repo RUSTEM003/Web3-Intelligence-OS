@@ -20,29 +20,18 @@ const gpuQueue = new Queue('gpu-processing', { connection: redis });
 const videoQueue = new Queue('video-processing', { connection: redis });
 const aiContentQueue = new Queue('ai-content-generation', { connection: redis });
 
-const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 1000,
-  message: { error: 'Too many requests, please try again later' },
-  standardHeaders: true,
-  legacyHeaders: false
-});
+const { 
+  apiLimiter, 
+  authLimiter, 
+  uploadLimiter, 
+  searchLimiter, 
+  aiLimiter, 
+  videoLimiter, 
+  strictLimiter,
+  dynamicLimiter 
+} = require('./middleware/rate-limiter');
 
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: { error: 'API rate limit exceeded' },
-  standardHeaders: true,
-  legacyHeaders: false
-});
-
-const uploadLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 10,
-  message: { error: 'Upload rate limit exceeded' },
-  standardHeaders: true,
-  legacyHeaders: false
-});
+const { securityMiddleware, requestLogger, errorHandler } = require('./middleware/security');
 
 const upload = multer({
   dest: 'uploads/',
@@ -78,28 +67,14 @@ const logger = winston.createLogger({
   ]
 });
 
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "https:"],
-      scriptSrc: ["'self'"],
-      mediaSrc: ["'self'", "https:"],
-      connectSrc: ["'self'", "wss:", "https:"]
-    }
-  }
-}));
-app.use(compression());
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://medtour.ai', 'https://www.medtour.ai']
-    : ['http://localhost:3000', 'http://localhost:5173'],
-  credentials: true
-}));
-app.use(generalLimiter);
-app.use('/api', apiLimiter);
+app.use(securityMiddleware);
+app.use(requestLogger);
+app.use('/api', dynamicLimiter);
+app.use('/api/auth', authLimiter);
+app.use('/api/search', searchLimiter);
+app.use('/api/ai', aiLimiter);
+app.use('/api/video', videoLimiter);
+app.use('/api/admin', strictLimiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -417,10 +392,7 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint not found' });
 });
 
-app.use((err, req, res, next) => {
-  logger.error('Server error:', err);
-  res.status(500).json({ error: 'Internal server error' });
-});
+app.use(errorHandler);
 
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received, shutting down gracefully');
