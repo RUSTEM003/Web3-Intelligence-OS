@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MEDTOUR - Глобальная AI-платформа для Турецкой медицины</title>
     <meta name="description" content="Передовая AI-платформа для медицинского туризма в Турции. Найдите лучших врачей, клиники и получите персонализированные рекомендации.">
     <meta name="keywords" content="медицинский туризм, Турция, AI, врачи, клиники, лечение">
@@ -187,9 +187,9 @@
         }
 
         .stat-number {
-     ак       font-size: 2.5rem;
+            font-size: 2.5rem;
             font-weight: bold;
-боте             margin-bottom: 10px;
+            margin-bottom: 10px;
         }
 
         .api-section {
@@ -1047,6 +1047,340 @@
 
             .comparison-section p {
                 font-size: 1rem;
+            }
+        }
+
+        /* Comprehensive Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header p {
+                font-size: 1.1rem;
+            }
+
+            .features {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+
+            .top-widgets {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+                overflow-x: hidden;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 15px 15px 15px;
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+
+            .header p {
+                font-size: 1rem;
+                margin-bottom: 15px;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+            }
+
+            .auth-btn {
+                width: 100%;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin: 30px 0;
+            }
+
+            .top-widgets {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin: 20px 0 30px 0;
+            }
+
+            .widget {
+                padding: 20px;
+            }
+
+            .feature-card {
+                padding: 20px;
+            }
+
+            .feature-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+                margin: 30px 0;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .api-section {
+                padding: 20px;
+                margin: 20px 0;
+            }
+
+            .api-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-width: none;
+                margin: 5% auto;
+                padding: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 12px;
+                font-size: 1rem;
+            }
+
+            .ai-assistant-widget {
+                width: 95%;
+                height: 70vh;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .ai-assistant-button {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 13px;
+            }
+
+            .container {
+                padding: 8px;
+            }
+
+            .header {
+                padding: 20px 10px 10px 10px;
+                margin-bottom: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .auth-buttons {
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .auth-btn {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            .widget {
+                padding: 15px;
+            }
+
+            .widget h3 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            .feature-card {
+                padding: 15px;
+            }
+
+            .feature-card h3 {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+
+            .feature-card p {
+                font-size: 0.9rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin: 20px 0;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+
+            .api-section {
+                padding: 15px;
+                margin: 15px 0;
+            }
+
+            .api-section h3 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            .btn {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                width: 98%;
+                margin: 2% auto;
+                padding: 15px;
+            }
+
+            .modal-content h2 {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .ai-assistant-widget {
+                width: 98%;
+                height: 60vh;
+                bottom: 5px;
+                right: 5px;
+            }
+
+            .ai-assistant-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .ai-assistant-button {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+
+            .ai-assistant-input input {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+
+            .ai-assistant-input button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .btn,
+            .auth-btn,
+            .ai-assistant-button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            .widget:hover,
+            .feature-card:hover {
+                transform: none;
+            }
+
+            .widget,
+            .feature-card {
+                transition: none;
+            }
+        }
+
+        /* Landscape orientation on mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .header {
+                padding: 20px 15px 10px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .ai-assistant-widget {
+                height: 80vh;
+                width: 90%;
+            }
+        }
+
+        /* High DPI displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .header,
+            .widget,
+            .feature-card {
+                border: 0.5px solid rgba(255, 255, 255, 0.2);
             }
         }
 
