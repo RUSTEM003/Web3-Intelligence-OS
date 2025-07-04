@@ -221,6 +221,177 @@
             background: #5a6fd8;
         }
 
+        .ai-assistant-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ai-assistant-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #000;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-assistant-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            color: #000;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-button:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-assistant-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .ai-message {
+            background: #f1f1f1;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            align-self: flex-start;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .ai-message p {
+            margin: 0;
+            color: #000;
+        }
+
+        .user-message {
+            background: #667eea;
+            color: #000;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            align-self: flex-end;
+            font-weight: 600;
+        }
+
+        .user-message p {
+            margin: 0;
+            color: #000;
+        }
+
+        .ai-assistant-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .ai-assistant-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+            color: #000;
+            background: #fff;
+        }
+
+        .ai-assistant-input input::placeholder {
+            color: #666;
+        }
+
+        .ai-assistant-input button {
+            background: #667eea;
+            color: #000;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .ai-assistant-input button:hover {
+            background: #5a6fd8;
+        }
+
+        .ai-assistant-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            font-weight: 700;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ai-assistant-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .ai-assistant-button span {
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .ai-assistant-widget {
+                width: 300px;
+                height: 400px;
+                bottom: 10px;
+                right: 10px;
+            }
+            
+            .ai-assistant-button {
+                bottom: 10px;
+                right: 10px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
         .api-response {
             background: #f8f9fa;
             padding: 20px;
@@ -362,6 +533,56 @@
         .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .document-upload {
+            background: rgba(245, 247, 250, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .document-upload h4 {
+            margin: 0 0 15px 0;
+            color: #2d3748;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .upload-field {
+            margin-bottom: 15px;
+        }
+
+        .upload-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .upload-field input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-field input[type="file"]:hover {
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .upload-field input[type="file"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .modal h2 {
@@ -621,9 +842,9 @@
 </head>
 <body>
     <div class="auth-buttons">
-        <button class="auth-btn" onclick="openModal('patientModal')">Регистрация пациента</button>
-        <button class="auth-btn" onclick="openModal('doctorModal')">Регистрация врача</button>
-        <button class="auth-btn" onclick="openModal('loginModal')">Вход</button>
+        <button class="auth-btn" id="patientRegBtn" data-modal="patientModal">Регистрация пациента</button>
+        <button class="auth-btn" id="doctorRegBtn" data-modal="doctorModal">Регистрация врача</button>
+        <button class="auth-btn" id="loginBtn" data-modal="loginModal">Вход</button>
     </div>
 
     <div class="container">
@@ -724,7 +945,7 @@
 
     <div id="patientModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('patientModal')">&times;</span>
+            <span class="close" data-modal="patientModal">&times;</span>
             <h2>Регистрация пациента</h2>
             <form id="patientForm" onsubmit="registerPatient(event)">
                 <div class="form-group">
@@ -781,6 +1002,27 @@
                         <option value="other">Другая</option>
                     </select>
                 </div>
+                
+                <div class="document-upload">
+                    <h4>Загрузка медицинских документов</h4>
+                    <div class="upload-field">
+                        <label for="patientMedicalRecord">Медицинская карта</label>
+                        <input type="file" id="patientMedicalRecord" name="medicalRecord" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    </div>
+                    <div class="upload-field">
+                        <label for="patientInsurance">Страховой полис</label>
+                        <input type="file" id="patientInsurance" name="insurancePolicy" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    </div>
+                    <div class="upload-field">
+                        <label for="patientPassport">Паспорт</label>
+                        <input type="file" id="patientPassport" name="passport" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="upload-field">
+                        <label for="patientOtherDocs">Другие медицинские документы</label>
+                        <input type="file" id="patientOtherDocs" name="otherDocuments" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    </div>
+                </div>
+                
                 <button type="submit" class="submit-btn">Зарегистрироваться</button>
             </form>
         </div>
@@ -788,7 +1030,7 @@
 
     <div id="doctorModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('doctorModal')">&times;</span>
+            <span class="close" data-modal="doctorModal">&times;</span>
             <h2>Регистрация врача</h2>
             <form id="doctorForm" onsubmit="registerDoctor(event)">
                 <div class="form-group">
@@ -870,6 +1112,31 @@
                     <label for="doctorLicense">Номер медицинской лицензии</label>
                     <input type="text" id="doctorLicense" name="license" placeholder="TR-12345678" required>
                 </div>
+                
+                <div class="document-upload">
+                    <h4>Загрузка профессиональных документов</h4>
+                    <div class="upload-field">
+                        <label for="doctorDiploma">Диплом о медицинском образовании</label>
+                        <input type="file" id="doctorDiploma" name="diploma" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="upload-field">
+                        <label for="doctorLicenseFile">Медицинская лицензия</label>
+                        <input type="file" id="doctorLicenseFile" name="licenseFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="upload-field">
+                        <label for="doctorCertificates">Сертификаты специализации</label>
+                        <input type="file" id="doctorCertificates" name="certificates" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    </div>
+                    <div class="upload-field">
+                        <label for="doctorPhoto">Профессиональное фото</label>
+                        <input type="file" id="doctorPhoto" name="photo" accept=".jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="upload-field">
+                        <label for="doctorCV">Резюме/CV</label>
+                        <input type="file" id="doctorCV" name="cv" accept=".pdf,.doc,.docx">
+                    </div>
+                </div>
+                
                 <button type="submit" class="submit-btn">Зарегистрироваться</button>
             </form>
         </div>
@@ -877,14 +1144,14 @@
 
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <span class="close" data-modal="loginModal">&times;</span>
             <h2>Вход в систему</h2>
             <div class="role-selector">
-                <div class="role-option selected" onclick="selectRole('patient')">
+                <div class="role-option selected" data-role="patient">
                     <h4>Пациент</h4>
                     <p>Поиск врачей и запись на прием</p>
                 </div>
-                <div class="role-option" onclick="selectRole('doctor')">
+                <div class="role-option" data-role="doctor">
                     <h4>Врач</h4>
                     <p>Управление профилем и пациентами</p>
                 </div>
@@ -2329,6 +2596,65 @@
         }
 
         function selectRole(role) {
+            const roleOptions = document.querySelectorAll('.role-option');
+            roleOptions.forEach(option => option.classList.remove('selected'));
+            
+            const selectedOption = document.querySelector(`[data-role="${role}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const patientRegBtn = document.getElementById('patientRegBtn');
+            const doctorRegBtn = document.getElementById('doctorRegBtn');
+            const loginBtn = document.getElementById('loginBtn');
+            
+            if (patientRegBtn) {
+                patientRegBtn.addEventListener('click', function() {
+                    openModal('patientModal');
+                });
+            }
+            
+            if (doctorRegBtn) {
+                doctorRegBtn.addEventListener('click', function() {
+                    openModal('doctorModal');
+                });
+            }
+            
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function() {
+                    openModal('loginModal');
+                });
+            }
+            
+            const closeButtons = document.querySelectorAll('.close[data-modal]');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    closeModal(modalId);
+                });
+            });
+            
+            const roleOptions = document.querySelectorAll('.role-option[data-role]');
+            roleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const role = this.getAttribute('data-role');
+                    selectRole(role);
+                });
+            });
+            
+            window.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        function selectRole(role) {
             document.getElementById('loginRole').value = role;
             document.querySelectorAll('.role-option').forEach(option => {
                 option.classList.remove('selected');
@@ -2591,6 +2917,91 @@
             changeLanguage(savedLang);
             loadInitialData();
         });
+
+        function toggleAIAssistant() {
+            const aiAssistant = document.getElementById('aiAssistant');
+            const aiButton = document.getElementById('aiAssistantButton');
+            
+            if (aiAssistant.style.display === 'flex') {
+                aiAssistant.style.display = 'none';
+                aiButton.style.display = 'block';
+            } else {
+                aiAssistant.style.display = 'flex';
+                aiButton.style.display = 'none';
+            }
+        }
+
+        function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                addUserMessage(message);
+                input.value = '';
+                
+                setTimeout(() => {
+                    const responses = [
+                        "Я могу помочь вам найти лучших врачей в Турции для вашего лечения.",
+                        "Для записи к врачу, пожалуйста, зарегистрируйтесь как пациент.",
+                        "Турция предлагает высококачественные медицинские услуги по доступным ценам.",
+                        "Я могу предоставить информацию о различных медицинских процедурах и их стоимости.",
+                        "Для получения более подробной информации о конкретном враче, нажмите на его профиль.",
+                        "Турецкие клиники имеют международную аккредитацию JCI и используют новейшие технологии.",
+                        "Медицинский туризм в Турции включает полный пакет услуг: лечение, проживание и экскурсии.",
+                        "Стоимость лечения в Турции на 60-70% ниже, чем в США и Европе при том же качестве.",
+                        "Турецкие врачи проходят обучение в лучших медицинских центрах мира.",
+                        "Я помогу вам выбрать подходящую клинику и врача для вашего заболевания."
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addAIMessage(randomResponse);
+                }, 1000);
+            }
+        }
+
+        function addUserMessage(message) {
+            const messagesContainer = document.getElementById('aiMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'user-message';
+            messageElement.innerHTML = `<p>${message}</p>`;
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function addAIMessage(message) {
+            const messagesContainer = document.getElementById('aiMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'ai-message';
+            messageElement.innerHTML = `<p>${message}</p>`;
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function handleAIInputKeypress(event) {
+            if (event.key === 'Enter') {
+                sendAIMessage();
+            }
+        }
     </script>
+
+    <div id="aiAssistant" class="ai-assistant-widget">
+        <div class="ai-assistant-header">
+            <h3>AI Ассистент</h3>
+            <button onclick="toggleAIAssistant()" class="close-button">×</button>
+        </div>
+        <div class="ai-assistant-messages" id="aiMessages">
+            <div class="ai-message">
+                <p>Здравствуйте! Я ваш AI ассистент по медицинскому туризму в Турции. Чем могу помочь?</p>
+            </div>
+        </div>
+        <div class="ai-assistant-input">
+            <input type="text" id="aiInput" placeholder="Задайте вопрос о лечении в Турции..." onkeypress="handleAIInputKeypress(event)">
+            <button onclick="sendAIMessage()">Отправить</button>
+        </div>
+    </div>
+
+    <button id="aiAssistantButton" onclick="toggleAIAssistant()" class="ai-assistant-button">
+        <span>AI Ассистент</span>
+    </button>
 
 </html>
