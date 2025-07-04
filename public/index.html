@@ -641,8 +641,8 @@
 
         <header class="header">
             <h1>MEDTOUR</h1>
-            <p>Турецкая медицина мирового уровня</p>
-            <p>Ведущие клиники Турции - Лучшие врачи - Передовые технологии</p>
+            <p data-i18n="headerSubtitle">Турецкая медицина мирового уровня</p>
+            <p data-i18n="headerDescription">Ведущие клиники Турции - Лучшие врачи - Передовые технологии</p>
 <div class="lang-switcher">
     <button class="lang-btn active" onclick="changeLanguage('ru')" data-lang="ru">RU</button>
     <button class="lang-btn" onclick="changeLanguage('en')" data-lang="en">EN</button>
@@ -655,57 +655,57 @@
         <div class="stats">
             <div class="stat-card">
                 <div class="stat-number">1000+</div>
-                <div>Врачей-экспертов</div>
+                <div data-i18n="statDoctors">Врачей-экспертов</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">50+</div>
-                <div>Клиник-партнеров</div>
+                <div data-i18n="statClinics">Клиник-партнеров</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">25+</div>
-                <div>Языков поддержки</div>
+                <div data-i18n="statLanguages">Языков поддержки</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">99.9%</div>
-                <div>Uptime SLA</div>
+                <div data-i18n="statUptime">Uptime SLA</div>
             </div>
         </div>
 
         <div class="features">
             <div class="feature-card">
-                <h3>Турецкие клиники мирового класса</h3>
-                <p>Ведущие медицинские центры Стамбула, Анкары и Анталии с международной аккредитацией JCI и передовым оборудованием.</p>
+                <h3 data-i18n="featureWorldClassTitle">Турецкие клиники мирового класса</h3>
+                <p data-i18n="featureWorldClassDesc">Ведущие медицинские центры Стамбула, Анкары и Анталии с международной аккредитацией JCI и передовым оборудованием.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Профессора турецкой медицины</h3>
-                <p>Лучшие турецкие врачи и профессора с мировым признанием в кардиохирургии, онкологии, трансплантологии и эстетической медицине.</p>
+                <h3 data-i18n="featureProfessorsTitle">Профессора турецкой медицины</h3>
+                <p data-i18n="featureProfessorsDesc">Лучшие турецкие врачи и профессора с мировым признанием в кардиохирургии, онкологии, трансплантологии и эстетической медицине.</p>
             </div>
 
             <div class="feature-card">
-                <h3>AI-диагностика нового поколения</h3>
-                <p>Революционные AI-системы для ранней диагностики рака, сердечно-сосудистых заболеваний и неврологических расстройств.</p>
+                <h3 data-i18n="featureAiTitle">AI-диагностика нового поколения</h3>
+                <p data-i18n="featureAiDesc">Революционные AI-системы для ранней диагностики рака, сердечно-сосудистых заболеваний и неврологических расстройств.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Инновационные методы лечения</h3>
-                <p>Стволовые клетки, генная терапия, роботизированная хирургия Da Vinci и персонализированная медицина в Турции.</p>
+                <h3 data-i18n="featureTreatmentTitle">Инновационные методы лечения</h3>
+                <p data-i18n="featureTreatmentDesc">Стволовые клетки, генная терапия, роботизированная хирургия Da Vinci и персонализированная медицина в Турции.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Медицинский туризм премиум-класса</h3>
-                <p>Полный пакет услуг: лечение, проживание в 5-звездочных отелях, трансфер, переводчики и культурная программа.</p>
+                <h3 data-i18n="featureTourismTitle">Медицинский туризм премиум-класса</h3>
+                <p data-i18n="featureTourismDesc">Полный пакет услуг: лечение, проживание в 5-звездочных отелях, трансфер, переводчики и культурная программа.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Турецкое качество по доступным ценам</h3>
-                <p>Экономия до 70% по сравнению с США и Европой при сохранении высочайших стандартов качества и безопасности.</p>
+                <h3 data-i18n="featureAffordableTitle">Турецкое качество по доступным ценам</h3>
+                <p data-i18n="featureAffordableDesc">Экономия до 70% по сравнению с США и Европой при сохранении высочайших стандартов качества и безопасности.</p>
             </div>
         </div>
 
 
         <div class="api-section">
-            <h3>Передовые медицинские AI-технологии</h3>
+            <h3 data-i18n="apiSectionTitle">Передовые медицинские AI-технологии</h3>
             <div class="api-buttons">
                 <button class="btn" onclick="loadDoctors()" data-i18n="loadDoctors">Турецкие врачи-эксперты</button>
                 <button class="btn" onclick="loadVideos()" data-i18n="loadVideos">Медицинские процедуры</button>
@@ -714,7 +714,7 @@
                 <button class="btn" onclick="medicalConsultation()" data-i18n="medicalConsultation">Онлайн-консультация</button>
                 <button class="btn" onclick="loadNews()" data-i18n="medicalNews">Медицинские новости</button>
             </div>
-            <div id="apiResponse" class="api-response">Выберите медицинскую услугу для получения персонализированной помощи...</div>
+            <div id="apiResponse" class="api-response" data-i18n="apiResponseDefault">Выберите медицинскую услугу для получения персонализированной помощи...</div>
         </div>
 
         <footer class="footer">
@@ -2437,35 +2437,145 @@
     </script>
 </body>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Language switcher logic
-            function setLanguage(lang) {
-                currentLanguage = lang;
-                document.documentElement.lang = lang;
-                document.querySelectorAll('.lang-btn').forEach(b => {
-                    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
-                });
-                fetch(`/api/localization/${lang}/common`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (typeof updateUILanguage === 'function') {
-                            updateUILanguage(data);
-                        }
-                    })
-                    .catch(() => {});
-                if (typeof updateCurrentTime === 'function') updateCurrentTime();
-                if (typeof loadNewsData === 'function') loadNewsData();
-                if (typeof loadWeatherData === 'function') loadWeatherData();
+        const translations = {
+            ru: {
+                headerSubtitle: "Турецкая медицина мирового уровня",
+                headerDescription: "Ведущие клиники Турции - Лучшие врачи - Передовые технологии",
+                statDoctors: "Врачей-экспертов",
+                statClinics: "Клиник-партнеров",
+                statLanguages: "Языков поддержки",
+                statUptime: "Uptime SLA",
+                featureWorldClassTitle: "Турецкие клиники мирового класса",
+                featureWorldClassDesc: "Ведущие медицинские центры Стамбула, Анкары и Анталии с международной аккредитацией JCI и передовым оборудованием.",
+                featureProfessorsTitle: "Профессора турецкой медицины",
+                featureProfessorsDesc: "Лучшие турецкие врачи и профессора с мировым признанием в кардиохирургии, онкологии, трансплантологии и эстетической медицине.",
+                featureAiTitle: "AI-диагностика нового поколения",
+                featureAiDesc: "Революционные AI-системы для ранней диагностики рака, сердечно-сосудистых заболеваний и неврологических расстройств.",
+                featureTreatmentTitle: "Инновационные методы лечения",
+                featureTreatmentDesc: "Стволовые клетки, генная терапия, роботизированная хирургия Da Vinci и персонализированная медицина в Турции.",
+                featureTourismTitle: "Медицинский туризм премиум-класса",
+                featureTourismDesc: "Полный пакет услуг: лечение, проживание в 5-звездочных отелях, трансфер, переводчики и культурная программа.",
+                featureAffordableTitle: "Турецкое качество по доступным ценам",
+                featureAffordableDesc: "Экономия до 70% по сравнению с США и Европой при сохранении высочайших стандартов качества и безопасности.",
+                apiSectionTitle: "Передовые медицинские AI-технологии",
+                loadDoctors: "Турецкие врачи-эксперты",
+                loadVideos: "Медицинские процедуры",
+                aiDiagnostics: "AI-диагностика",
+                treatmentPlanning: "Планирование лечения",
+                medicalConsultation: "Онлайн-консультация",
+                medicalNews: "Медицинские новости",
+                apiResponseDefault: "Выберите медицинскую услугу для получения персонализированной помощи..."
+            },
+            en: {
+                headerSubtitle: "World-class Turkish Medicine",
+                headerDescription: "Leading Turkish Clinics - Top Doctors - Advanced Technologies",
+                statDoctors: "Expert Doctors",
+                statClinics: "Partner Clinics",
+                statLanguages: "Supported Languages",
+                statUptime: "Uptime SLA",
+                featureWorldClassTitle: "World-class Turkish Clinics",
+                featureWorldClassDesc: "Leading medical centers in Istanbul, Ankara and Antalya with international JCI accreditation and advanced equipment.",
+                featureProfessorsTitle: "Turkish Medical Professors",
+                featureProfessorsDesc: "Top Turkish doctors and professors with global recognition in cardiosurgery, oncology, transplantology and aesthetic medicine.",
+                featureAiTitle: "Next-generation AI Diagnostics",
+                featureAiDesc: "Revolutionary AI systems for early diagnosis of cancer, cardiovascular diseases and neurological disorders.",
+                featureTreatmentTitle: "Innovative Treatment Methods",
+                featureTreatmentDesc: "Stem cells, gene therapy, Da Vinci robotic surgery and personalized medicine in Turkey.",
+                featureTourismTitle: "Premium Medical Tourism",
+                featureTourismDesc: "Complete service package: treatment, accommodation in 5-star hotels, transfer, interpreters and cultural program.",
+                featureAffordableTitle: "Turkish Quality at Affordable Prices",
+                featureAffordableDesc: "Save up to 70% compared to USA and Europe while maintaining the highest standards of quality and safety.",
+                apiSectionTitle: "Advanced Medical AI Technologies",
+                loadDoctors: "Turkish Expert Doctors",
+                loadVideos: "Medical Procedures",
+                aiDiagnostics: "AI Diagnostics",
+                treatmentPlanning: "Treatment Planning",
+                medicalConsultation: "Online Consultation",
+                medicalNews: "Medical News",
+                apiResponseDefault: "Select a medical service to receive personalized assistance..."
+            },
+            tr: {
+                headerSubtitle: "Dünya standartlarında Türk Tıbbı",
+                headerDescription: "Önde gelen Türk Klinikleri - En İyi Doktorlar - İleri Teknolojiler",
+                statDoctors: "Uzman Doktorlar",
+                statClinics: "Partner Klinikler",
+                statLanguages: "Desteklenen Diller",
+                statUptime: "Uptime SLA",
+                featureWorldClassTitle: "Dünya standartlarında Türk Klinikleri",
+                featureWorldClassDesc: "İstanbul, Ankara ve Antalya'daki uluslararası JCI akreditasyonlu ve ileri teknolojili önde gelen tıp merkezleri.",
+                featureProfessorsTitle: "Türk Tıp Profesörleri",
+                featureProfessorsDesc: "Kalp cerrahisi, onkoloji, transplantoloji ve estetik tıpta dünya çapında tanınmış en iyi Türk doktorları ve profesörleri.",
+                featureAiTitle: "Yeni nesil AI Tanı",
+                featureAiDesc: "Kanser, kardiyovasküler hastalıklar ve nörolojik bozuklukların erken tanısı için devrimci AI sistemleri.",
+                featureTreatmentTitle: "İnovatif Tedavi Yöntemleri",
+                featureTreatmentDesc: "Kök hücreler, gen terapisi, Da Vinci robotik cerrahi ve Türkiye'de kişiselleştirilmiş tıp.",
+                featureTourismTitle: "Premium Medikal Turizm",
+                featureTourismDesc: "Komple hizmet paketi: tedavi, 5 yıldızlı otellerde konaklama, transfer, tercümanlar ve kültürel program.",
+                featureAffordableTitle: "Uygun Fiyatlarla Türk Kalitesi",
+                featureAffordableDesc: "En yüksek kalite ve güvenlik standartlarını korurken ABD ve Avrupa'ya kıyasla %70'e kadar tasarruf.",
+                apiSectionTitle: "İleri Medikal AI Teknolojileri",
+                loadDoctors: "Türk Uzman Doktorlar",
+                loadVideos: "Medikal Prosedürler",
+                aiDiagnostics: "AI Tanı",
+                treatmentPlanning: "Tedavi Planlaması",
+                medicalConsultation: "Online Konsültasyon",
+                medicalNews: "Medikal Haberler",
+                apiResponseDefault: "Kişiselleştirilmiş yardım almak için bir medikal hizmet seçin..."
+            },
+            ar: {
+                headerSubtitle: "الطب التركي بمستوى عالمي",
+                headerDescription: "العيادات التركية الرائدة - أفضل الأطباء - التقنيات المتقدمة",
+                statDoctors: "الأطباء الخبراء",
+                statClinics: "العيادات الشريكة",
+                statLanguages: "اللغات المدعومة",
+                statUptime: "اتفاقية مستوى الخدمة",
+                featureWorldClassTitle: "العيادات التركية ذات المستوى العالمي",
+                featureWorldClassDesc: "المراكز الطبية الرائدة في إسطنبول وأنقرة وأنطاليا مع الاعتماد الدولي JCI والمعدات المتقدمة.",
+                featureProfessorsTitle: "أساتذة الطب التركي",
+                featureProfessorsDesc: "أفضل الأطباء والأساتذة الأتراك المعترف بهم عالمياً في جراحة القلب والأورام وزراعة الأعضاء والطب التجميلي.",
+                featureAiTitle: "تشخيص الذكاء الاصطناعي من الجيل الجديد",
+                featureAiDesc: "أنظمة الذكاء الاصطناعي الثورية للتشخيص المبكر للسرطان وأمراض القلب والأوعية الدموية والاضطرابات العصبية.",
+                featureTreatmentTitle: "طرق العلاج المبتكرة",
+                featureTreatmentDesc: "الخلايا الجذعية والعلاج الجيني وجراحة دافنشي الروبوتية والطب الشخصي في تركيا.",
+                featureTourismTitle: "السياحة العلاجية الفاخرة",
+                featureTourismDesc: "حزمة خدمات كاملة: العلاج والإقامة في فنادق 5 نجوم والنقل والمترجمين والبرنامج الثقافي.",
+                featureAffordableTitle: "الجودة التركية بأسعار معقولة",
+                featureAffordableDesc: "توفير يصل إلى 70% مقارنة بالولايات المتحدة وأوروبا مع الحفاظ على أعلى معايير الجودة والسلامة.",
+                apiSectionTitle: "تقنيات الذكاء الاصطناعي الطبية المتقدمة",
+                loadDoctors: "الأطباء الأتراك الخبراء",
+                loadVideos: "الإجراءات الطبية",
+                aiDiagnostics: "تشخيص الذكاء الاصطناعي",
+                treatmentPlanning: "تخطيط العلاج",
+                medicalConsultation: "الاستشارة عبر الإنترنت",
+                medicalNews: "الأخبار الطبية",
+                apiResponseDefault: "اختر خدمة طبية للحصول على مساعدة شخصية..."
             }
+        };
 
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLanguage', lang);
+            
             document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    setLanguage(this.getAttribute('data-lang'));
-                });
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
             });
+            
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+        }
 
-            // Set initial language button active
-            setLanguage(document.documentElement.lang || 'ru');
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('selectedLanguage') || 'ru';
+            changeLanguage(savedLang);
         });
     </script>
 
