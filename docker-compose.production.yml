@@ -160,6 +160,19 @@ services:
     networks:
       - medtour-network
 
+  realtime-ai:
+    build: ./services/realtime-ai
+    ports:
+      - "8083:8083"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY}
+      - NEWS_API_KEY=${NEWS_API_KEY}
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - medtour-network
+
   cloudflare-tunnel:
     image: cloudflare/cloudflared:latest
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}

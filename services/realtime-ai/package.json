@@ -1,0 +1,24 @@
+{
+  "name": "medtour-realtime-ai",
+  "version": "1.0.0",
+  "description": "Real-time AI services with LLM, weather, news and geolocation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "dotenv": "^16.3.1",
+    "openai": "^4.20.1",
+    "axios": "^1.6.2",
+    "node-cron": "^3.0.3",
+    "geoip-lite": "^1.4.7",
+    "winston": "^3.11.0",
+    "socket.io": "^4.7.4",
+    "rss-parser": "^3.13.0",
+    "moment-timezone": "^0.5.43"
+  }
+}
