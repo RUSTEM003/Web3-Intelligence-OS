@@ -15,7 +15,7 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    
+
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#667eea">
@@ -42,7 +42,7 @@
             line-height: 1.6;
             color: #000;
             background:
-                linear-gradient(135deg, rgba(10, 15, 25, 0.4) 0%, rgba(20, 30, 45, 0.5) 100%),
+                linear-gradient(135deg, rgba(5, 10, 20, 0.7) 0%, rgba(15, 25, 40, 0.8) 100%),
                 url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=1920&h=1080&fit=crop') center/cover no-repeat fixed;
             min-height: 100vh;
             position: relative;
@@ -73,7 +73,7 @@
             color: #000;
             padding: 40px 0 20px 0;
             background:
-                linear-gradient(135deg, rgba(240, 245, 250, 0.7) 0%, rgba(220, 230, 240, 0.8) 100%),
+                linear-gradient(135deg, rgba(250, 250, 250, 0.9) 0%, rgba(240, 240, 240, 0.95) 100%),
                 url('https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=1200&h=400&fit=crop') center/cover;
             border-radius: 20px;
             margin-bottom: 30px;
@@ -107,7 +107,7 @@
 
         .widget {
             background:
-                linear-gradient(135deg, rgba(240, 245, 250, 0.6) 0%, rgba(220, 230, 240, 0.7) 100%),
+                linear-gradient(135deg, rgba(250, 250, 250, 0.9) 0%, rgba(240, 240, 240, 0.95) 100%),
                 url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop') center/cover;
             padding: 25px;
             border-radius: 20px;
@@ -132,7 +132,7 @@
 
         .feature-card {
             background:
-                linear-gradient(135deg, rgba(240, 245, 250, 0.6) 0%, rgba(220, 230, 240, 0.7) 100%),
+                linear-gradient(135deg, rgba(250, 250, 250, 0.9) 0%, rgba(240, 240, 240, 0.95) 100%),
                 url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop') center/cover;
             padding: 30px;
             border-radius: 20px;
@@ -175,7 +175,7 @@
             margin: 50px 0;
         }
 
-        .stat-card {
+       дленно. .stat-card {
             background: rgba(255,255,255,0.9);
             padding: 30px;
             border-radius: 15px;
@@ -194,7 +194,7 @@
 
         .api-section {
             background:
-                linear-gradient(135deg, rgba(240, 245, 250, 0.6) 0%, rgba(220, 230, 240, 0.7) 100%),
+                linear-gradient(135deg, rgba(250, 250, 250, 0.9) 0%, rgba(240, 240, 240, 0.95) 100%),
                 url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop') center/cover;
             padding: 30px;
             border-radius: 15px;
@@ -396,7 +396,7 @@
                 bottom: 10px;
                 right: 10px;
             }
-            
+
             .ai-assistant-button {
                 bottom: 10px;
                 right: 10px;
@@ -1411,10 +1411,10 @@
             <p data-i18n="headerSubtitle">Турецкая медицина мирового уровня</p>
             <p data-i18n="headerDescription">Ведущие клиники Турции - Лучшие врачи - Передовые технологии</p>
 <div class="lang-switcher">
-    <button class="lang-btn active" onclick="changeLanguage('ru')" data-lang="ru">RU</button>
-    <button class="lang-btn" onclick="changeLanguage('en')" data-lang="en">EN</button>
-    <button class="lang-btn" onclick="changeLanguage('tr')" data-lang="tr">TR</button>
-    <button class="lang-btn" onclick="changeLanguage('ar')" data-lang="ar">AR</button>
+    <button class="lang-btn active" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="tr">TR</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
 </div>
 
         </header>
@@ -1587,12 +1587,12 @@
         <div class="api-section"></div>
             <h3 data-i18n="apiSectionTitle">Передовые медицинские AI-технологии</h3>
             <div class="api-buttons">
-                <button class="btn" onclick="loadDoctors()" data-i18n="loadDoctors">Турецкие врачи-эксперты</button>
-                <button class="btn" onclick="loadVideos()" data-i18n="loadVideos">Медицинские процедуры</button>
-                <button class="btn" onclick="aiDiagnostics()" data-i18n="aiDiagnostics">AI-диагностика</button>
-                <button class="btn" onclick="treatmentPlanning()" data-i18n="treatmentPlanning">Планирование лечения</button>
-                <button class="btn" onclick="medicalConsultation()" data-i18n="medicalConsultation">Онлайн-консультация</button>
-                <button class="btn" onclick="loadNews()" data-i18n="medicalNews">Медицинские новости</button>
+                <button class="btn" data-action="loadDoctors" data-i18n="loadDoctors">Турецкие врачи-эксперты</button>
+                <button class="btn" data-action="loadVideos" data-i18n="loadVideos">Медицинские процедуры</button>
+                <button class="btn" data-action="aiDiagnostics" data-i18n="aiDiagnostics">AI-диагностика</button>
+                <button class="btn" data-action="treatmentPlanning" data-i18n="treatmentPlanning">Планирование лечения</button>
+                <button class="btn" data-action="medicalConsultation" data-i18n="medicalConsultation">Онлайн-консультация</button>
+                <button class="btn" data-action="loadNews" data-i18n="medicalNews">Медицинские новости</button>
             </div>
             <div id="apiResponse" class="api-response" data-i18n="apiResponseDefault">Выберите медицинскую услугу для получения персонализированной помощи...</div>
         </div>
@@ -1661,7 +1661,7 @@
                         <option value="other">Другая</option>
                     </select>
                 </div>
-                
+
                 <div class="document-upload">
                     <h4>Загрузка медицинских документов</h4>
                     <div class="upload-field">
@@ -1681,7 +1681,7 @@
                         <input type="file" id="patientOtherDocs" name="otherDocuments" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
                     </div>
                 </div>
-                
+
                 <button type="submit" class="submit-btn">Зарегистрироваться</button>
             </form>
         </div>
@@ -1771,7 +1771,7 @@
                     <label for="doctorLicense">Номер медицинской лицензии</label>
                     <input type="text" id="doctorLicense" name="license" placeholder="TR-12345678" required>
                 </div>
-                
+
                 <div class="document-upload">
                     <h4>Загрузка профессиональных документов</h4>
                     <div class="upload-field">
@@ -1795,7 +1795,7 @@
                         <input type="file" id="doctorCV" name="cv" accept=".pdf,.doc,.docx">
                     </div>
                 </div>
-                
+
                 <button type="submit" class="submit-btn">Зарегистрироваться</button>
             </form>
         </div>
@@ -2165,14 +2165,14 @@
                                 <p style="margin: 5px 0;"><strong>Местоположение:</strong> ${doctor.location}</p>
                             </div>
                             <div style="display: flex; gap: 10px;">
-                                <button onclick="bookAppointment(${doctor.id})" style="flex: 1; background: #4CAF50; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Записаться на прием</button>
-                                <button onclick="viewProfile(${doctor.id})" style="flex: 1; background: #2196F3; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Профиль врача</button>
+                                <button data-action="bookAppointment" data-doctor-id="${doctor.id}" style="flex: 1; background: #4CAF50; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Записаться на прием</button>
+                                <button data-action="viewProfile" data-doctor-id="${doctor.id}" style="flex: 1; background: #2196F3; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Профиль врача</button>
                             </div>
                         </div>
                     `).join('')}
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
-                    <button onclick="showAllDoctors()" style="background: #FF9800; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">Показать всех врачей (1247)</button>
+                    <button data-action="showAllDoctors" style="background: #FF9800; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">Показать всех врачей (1247)</button>
                 </div>
             `;
             } catch (error) {
@@ -2217,7 +2217,7 @@
                         <textarea placeholder="Описание проблемы или вопросы" style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; height: 80px; resize: vertical;"></textarea>
                         <div style="display: flex; gap: 10px; margin-top: 20px;">
                             <button type="submit" style="flex: 1; background: #4CAF50; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">Отправить заявку</button>
-                            <button type="button" onclick="closeModal()" style="flex: 1; background: #f44336; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">Отмена</button>
+                            <button type="button" data-action="closeModal" style="flex: 1; background: #f44336; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">Отмена</button>
                         </div>
                     </form>
                 </div>
@@ -2297,8 +2297,8 @@
                         </ul>
                     </div>
                     <div style="display: flex; gap: 10px; margin-top: 30px;">
-                        <button onclick="bookAppointment(${doctor.id})" style="flex: 1; background: #4CAF50; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">Записаться на прием</button>
-                        <button onclick="closeModal()" style="flex: 1; background: #2196F3; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">Закрыть</button>
+                        <button data-action="bookAppointment" data-doctor-id="${doctor.id}" style="flex: 1; background: #4CAF50; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">Записаться на прием</button>
+                        <button data-action="closeModal" style="flex: 1; background: #2196F3; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">Закрыть</button>
                     </div>
                 </div>
             `;
@@ -2314,8 +2314,8 @@
                     <p style="font-size: 16px; margin: 10px 0;">50+ медицинских специализаций</p>
                     <p style="font-size: 16px; margin: 10px 0;">25+ больниц-партнеров</p>
                     <div style="margin-top: 30px;">
-                        <button onclick="loadDoctors()" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px;">Показать топ врачей</button>
-                        <button onclick="searchDoctors()" style="background: #FF9800; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px;">Поиск по специализации</button>
+                        <button data-action="loadDoctors" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px;">Показать топ врачей</button>
+                        <button data-action="searchDoctors" style="background: #FF9800; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px;">Поиск по специализации</button>
                     </div>
                 </div>
             `;
@@ -3257,7 +3257,7 @@
         function selectRole(role) {
             const roleOptions = document.querySelectorAll('.role-option');
             roleOptions.forEach(option => option.classList.remove('selected'));
-            
+
             const selectedOption = document.querySelector(`[data-role="${role}"]`);
             if (selectedOption) {
                 selectedOption.classList.add('selected');
@@ -3268,25 +3268,25 @@
             const patientRegBtn = document.getElementById('patientRegBtn');
             const doctorRegBtn = document.getElementById('doctorRegBtn');
             const loginBtn = document.getElementById('loginBtn');
-            
+
             if (patientRegBtn) {
                 patientRegBtn.addEventListener('click', function() {
                     openModal('patientModal');
                 });
             }
-            
+
             if (doctorRegBtn) {
                 doctorRegBtn.addEventListener('click', function() {
                     openModal('doctorModal');
                 });
             }
-            
+
             if (loginBtn) {
                 loginBtn.addEventListener('click', function() {
                     openModal('loginModal');
                 });
             }
-            
+
             const closeButtons = document.querySelectorAll('.close[data-modal]');
             closeButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -3294,7 +3294,7 @@
                     closeModal(modalId);
                 });
             });
-            
+
             const roleOptions = document.querySelectorAll('.role-option[data-role]');
             roleOptions.forEach(option => {
                 option.addEventListener('click', function() {
@@ -3302,7 +3302,102 @@
                     selectRole(role);
                 });
             });
-            
+
+            const medicalServiceButtons = document.querySelectorAll('.btn[data-action]');
+            medicalServiceButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.getAttribute('data-action');
+                    switch(action) {
+                        case 'loadDoctors':
+                            loadDoctors();
+                            break;
+                        case 'loadVideos':
+                            loadVideos();
+                            break;
+                        case 'aiDiagnostics':
+                            aiDiagnostics();
+                            break;
+                        case 'treatmentPlanning':
+                            treatmentPlanning();
+                            break;
+                        case 'medicalConsultation':
+                            medicalConsultation();
+                            break;
+                        case 'loadNews':
+                            loadNews();
+                            break;
+                    }
+                });
+            });
+
+            const aiAssistantButton = document.getElementById('aiAssistantButton');
+            if (aiAssistantButton) {
+                aiAssistantButton.addEventListener('click', function() {
+                    toggleAIAssistant();
+                });
+            }
+
+            const aiCloseButtons = document.querySelectorAll('.ai-close-btn');
+            aiCloseButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    toggleAIAssistant();
+                });
+            });
+
+            const aiSendButtons = document.querySelectorAll('.ai-send-btn');
+            aiSendButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    sendAIMessage();
+                });
+            });
+
+            const aiInput = document.getElementById('aiInput');
+            if (aiInput) {
+                aiInput.addEventListener('keypress', function(event) {
+                    handleAIInputKeypress(event);
+                });
+            }
+
+            // Global event delegation for data-action buttons
+            document.addEventListener('click', function(event) {
+                const target = event.target;
+                const action = target.getAttribute('data-action');
+                
+                if (action) {
+                    event.preventDefault();
+                    
+                    switch(action) {
+                        case 'bookAppointment':
+                            const doctorId = target.getAttribute('data-doctor-id');
+                            if (doctorId) {
+                                bookAppointment(parseInt(doctorId));
+                            }
+                            break;
+                        case 'viewProfile':
+                            const profileDoctorId = target.getAttribute('data-doctor-id');
+                            if (profileDoctorId) {
+                                viewProfile(parseInt(profileDoctorId));
+                            }
+                            break;
+                        case 'showAllDoctors':
+                            showAllDoctors();
+                            break;
+                        case 'closeModal':
+                            closeModal();
+                            break;
+                        case 'loadDoctors':
+                            loadDoctors();
+                            break;
+                        case 'searchDoctors':
+                            searchDoctors();
+                            break;
+                        case 'toggleAIAssistant':
+                            toggleAIAssistant();
+                            break;
+                    }
+                }
+            });
+
             window.addEventListener('click', function(event) {
                 const modals = document.querySelectorAll('.modal');
                 modals.forEach(modal => {
@@ -3552,21 +3647,21 @@
 
         function changeLanguage(lang) {
             localStorage.setItem('selectedLanguage', lang);
-            
+
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.getAttribute('data-lang') === lang) {
                     btn.classList.add('active');
                 }
             });
-            
+
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
                     element.textContent = translations[lang][key];
                 }
             });
-            
+
             document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
             document.documentElement.lang = lang;
         }
@@ -3575,12 +3670,20 @@
             const savedLang = localStorage.getItem('selectedLanguage') || 'ru';
             changeLanguage(savedLang);
             loadInitialData();
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
         });
 
-        function toggleAIAssistant() {
+        // Make functions globally accessible
+        window.toggleAIAssistant = function() {
             const aiAssistant = document.getElementById('aiAssistant');
             const aiButton = document.getElementById('aiAssistantButton');
-            
+
             if (aiAssistant.style.display === 'flex') {
                 aiAssistant.style.display = 'none';
                 aiButton.style.display = 'block';
@@ -3588,16 +3691,45 @@
                 aiAssistant.style.display = 'flex';
                 aiButton.style.display = 'none';
             }
-        }
+        };
+
+        window.bookAppointment = function(doctorId) {
+            console.log('Booking appointment for doctor:', doctorId);
+            alert('Функция записи к врачу будет реализована. ID врача: ' + doctorId);
+        };
+
+        window.viewProfile = function(doctorId) {
+            console.log('Viewing profile for doctor:', doctorId);
+            alert('Функция просмотра профиля врача будет реализована. ID врача: ' + doctorId);
+        };
+
+        window.showAllDoctors = function() {
+            console.log('Showing all doctors');
+            alert('Функция показа всех врачей будет реализована');
+        };
+
+        window.closeModal = function() {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (modal.parentNode) {
+                    modal.parentNode.removeChild(modal);
+                }
+            });
+        };
+
+        window.searchDoctors = function() {
+            console.log('Searching doctors');
+            alert('Функция поиска врачей будет реализована');
+        };
 
         function sendAIMessage() {
             const input = document.getElementById('aiInput');
             const message = input.value.trim();
-            
+
             if (message) {
                 addUserMessage(message);
                 input.value = '';
-                
+
                 setTimeout(() => {
                     const responses = [
                         "Я могу помочь вам найти лучших врачей в Турции для вашего лечения.",
@@ -3611,7 +3743,7 @@
                         "Турецкие врачи проходят обучение в лучших медицинских центрах мира.",
                         "Я помогу вам выбрать подходящую клинику и врача для вашего заболевания."
                     ];
-                    
+
                     const randomResponse = responses[Math.floor(Math.random() * responses.length)];
                     addAIMessage(randomResponse);
                 }, 1000);
@@ -3646,7 +3778,7 @@
     <div id="aiAssistant" class="ai-assistant-widget">
         <div class="ai-assistant-header">
             <h3>AI Ассистент</h3>
-            <button onclick="toggleAIAssistant()" class="close-button">×</button>
+            <button class="close-button ai-close-btn">×</button>
         </div>
         <div class="ai-assistant-messages" id="aiMessages">
             <div class="ai-message">
@@ -3654,12 +3786,12 @@
             </div>
         </div>
         <div class="ai-assistant-input">
-            <input type="text" id="aiInput" placeholder="Задайте вопрос о лечении в Турции..." onkeypress="handleAIInputKeypress(event)">
-            <button onclick="sendAIMessage()">Отправить</button>
+            <input type="text" id="aiInput" placeholder="Задайте вопрос о лечении в Турции...">
+            <button class="ai-send-btn">Отправить</button>
         </div>
     </div>
 
-    <button id="aiAssistantButton" onclick="toggleAIAssistant()" class="ai-assistant-button">
+    <button id="aiAssistantButton" class="ai-assistant-button" data-action="toggleAIAssistant">
         <span>AI Ассистент</span>
     </button>
 
@@ -3670,7 +3802,7 @@
                 navigator.serviceWorker.register('/service-worker.js')
                     .then((registration) => {
                         console.log('Service Worker registered successfully:', registration.scope);
-                        
+
                         registration.addEventListener('updatefound', () => {
                             const newWorker = registration.installing;
                             newWorker.addEventListener('statechange', () => {
@@ -3699,7 +3831,7 @@
             console.log('PWA install prompt available');
             e.preventDefault();
             deferredPrompt = e;
-            
+
             const installButton = document.createElement('button');
             installButton.textContent = 'Установить приложение';
             installButton.style.cssText = `
@@ -3717,17 +3849,17 @@
                 z-index: 1000;
                 transition: all 0.3s ease;
             `;
-            
+
             installButton.addEventListener('mouseenter', () => {
                 installButton.style.transform = 'translateY(-2px)';
                 installButton.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.6)';
             });
-            
+
             installButton.addEventListener('mouseleave', () => {
                 installButton.style.transform = 'translateY(0)';
                 installButton.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
             });
-            
+
             installButton.addEventListener('click', async () => {
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
@@ -3737,7 +3869,7 @@
                     installButton.remove();
                 }
             });
-            
+
             document.body.appendChild(installButton);
         });
 
