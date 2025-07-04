@@ -27,9 +27,9 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #fff;
+            color: #000;
             background:
-                linear-gradient(135deg, rgba(20, 30, 48, 0.7) 0%, rgba(36, 59, 85, 0.8) 100%),
+                linear-gradient(135deg, rgba(10, 15, 25, 0.4) 0%, rgba(20, 30, 45, 0.5) 100%),
                 url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=1920&h=1080&fit=crop') center/cover no-repeat fixed;
             min-height: 100vh;
             position: relative;
@@ -57,10 +57,10 @@
 
         .header {
             text-align: center;
-            color: #fff;
+            color: #000;
             padding: 40px 0 20px 0;
             background:
-                linear-gradient(135deg, rgba(30, 50, 80, 0.6) 0%, rgba(50, 70, 100, 0.7) 100%),
+                linear-gradient(135deg, rgba(240, 245, 250, 0.7) 0%, rgba(220, 230, 240, 0.8) 100%),
                 url('https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=1200&h=400&fit=crop') center/cover;
             border-radius: 20px;
             margin-bottom: 30px;
@@ -81,7 +81,8 @@
         .header p {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5a6c7d;
+            color: #000;
+            font-weight: 600;
         }
 
         .features {
@@ -93,15 +94,15 @@
 
         .widget {
             background:
-                linear-gradient(135deg, rgba(30, 50, 80, 0.6) 0%, rgba(50, 70, 100, 0.7) 100%),
+                linear-gradient(135deg, rgba(240, 245, 250, 0.6) 0%, rgba(220, 230, 240, 0.7) 100%),
                 url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop') center/cover;
             padding: 25px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            color: #000;
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            color: #fff;
         }
 
         .widget:hover {
@@ -110,18 +111,15 @@
         }
 
         .widget h3 {
-            color: #2c3e50;
+            color: #000;
             margin-bottom: 20px;
             font-size: 1.4rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-weight: 700;
         }
 
         .feature-card {
             background:
-                linear-gradient(135deg, rgba(30, 50, 80, 0.6) 0%, rgba(50, 70, 100, 0.7) 100%),
+                linear-gradient(135deg, rgba(240, 245, 250, 0.6) 0%, rgba(220, 230, 240, 0.7) 100%),
                 url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop') center/cover;
             padding: 30px;
             border-radius: 20px;
@@ -129,7 +127,7 @@
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            color: #fff;
+            color: #000;
         }
 
         .feature-card:hover {
@@ -138,14 +136,16 @@
         }
 
         .feature-card h3 {
-            color: #667eea;
+            color: #000;
             margin-bottom: 15px;
             font-size: 1.5rem;
+            font-weight: 700;
         }
 
         .feature-card p {
-            color: #666;
+            color: #000;
             line-height: 1.6;
+            font-weight: 500;
         }
 
         .top-widgets {
@@ -170,8 +170,7 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            backdrop-filter: blur(10px);
+            color: #000;
         }
 
         .stat-number {
@@ -180,9 +179,9 @@
 боте             margin-bottom: 10px;
         }
 
-        .api-demo {
+        .api-section {
             background:
-                linear-gradient(135deg, rgba(30, 50, 80, 0.6) 0%, rgba(50, 70, 100, 0.7) 100%),
+                linear-gradient(135deg, rgba(240, 245, 250, 0.6) 0%, rgba(220, 230, 240, 0.7) 100%),
                 url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop') center/cover;
             padding: 30px;
             border-radius: 15px;
@@ -190,12 +189,13 @@
             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.2);
-            color: #fff;
+            color: #000;
         }
 
-        .api-demo h3 {
-            color: #667eea;
+        .api-section h3 {
+            color: #000;
             margin-bottom: 20px;
+            font-weight: 700;
         }
 
         .api-buttons {
@@ -207,13 +207,14 @@
 
         .btn {
             background: #667eea;
-            color: white;
+            color: #000;
             padding: 12px 24px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
             transition: background 0.3s ease;
+            font-weight: 600;
         }
 
         .btn:hover {
@@ -248,7 +249,7 @@
 
         .auth-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            color: #000;
             padding: 12px 20px;
             border: none;
             border-radius: 25px;
@@ -288,12 +289,12 @@
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
+            color: #000;
             position: relative;
         }
 
         .close {
-            color: #fff;
+            color: #000;
             float: right;
             font-size: 28px;
             font-weight: bold;
@@ -304,7 +305,7 @@
         }
 
         .close:hover {
-            color: #667eea;
+            color: #333;
         }
 
         .form-group {
@@ -315,7 +316,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #fff;
+            color: #000;
         }
 
         .form-group input,
@@ -326,7 +327,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.1);
-            color: #fff;
+            color: #000;
             font-size: 1rem;
             backdrop-filter: blur(10px);
         }
@@ -640,13 +641,13 @@
 
         <header class="header">
             <h1>MEDTOUR</h1>
-            <p>Глобальная AI-платформа для Турецкой медицины</p>
-            <p>Революционная технология - Мировой класс - Enterprise-уровень</p>
+            <p>Турецкая медицина мирового уровня</p>
+            <p>Ведущие клиники Турции - Лучшие врачи - Передовые технологии</p>
 <div class="lang-switcher">
-    <button class="lang-btn" data-lang="ru">Рус</button>
-    <button class="lang-btn" data-lang="en">Eng</button>
-    <button class="lang-btn" data-lang="tr">Tr</button>
-    <button class="lang-btn" data-lang="ar">عربى</button>
+    <button class="lang-btn active" onclick="changeLanguage('ru')" data-lang="ru">RU</button>
+    <button class="lang-btn" onclick="changeLanguage('en')" data-lang="en">EN</button>
+    <button class="lang-btn" onclick="changeLanguage('tr')" data-lang="tr">TR</button>
+    <button class="lang-btn" onclick="changeLanguage('ar')" data-lang="ar">AR</button>
 </div>
 
         </header>
@@ -672,49 +673,48 @@
 
         <div class="features">
             <div class="feature-card">
-                <h3>AI-Powered Matching</h3>
-                <p>Передовые алгоритмы машинного обучения для подбора идеального врача и клиники на основе медицинской истории, предпочтений и бюджета пациента.</p>
+                <h3>Турецкие клиники мирового класса</h3>
+                <p>Ведущие медицинские центры Стамбула, Анкары и Анталии с международной аккредитацией JCI и передовым оборудованием.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Global CDN</h3>
-                <p>Глобальная сеть доставки контента с edge-серверами в 200+ городах мира для мгновенной загрузки в любой точке планеты.</p>
+                <h3>Профессора турецкой медицины</h3>
+                <p>Лучшие турецкие врачи и профессора с мировым признанием в кардиохирургии, онкологии, трансплантологии и эстетической медицине.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Real-time Processing</h3>
-                <p>Обработка запросов в реальном времени с использованием WebSocket, Server-Sent Events и микросервисной архитектуры.</p>
-            </div>
-
-
-            <div class="feature-card">
-                <h3>Enterprise Security</h3>
-                <p>Банковский уровень безопасности: end-to-end шифрование, HIPAA compliance, SOC 2 Type II сертификация.</p>
+                <h3>AI-диагностика нового поколения</h3>
+                <p>Революционные AI-системы для ранней диагностики рака, сердечно-сосудистых заболеваний и неврологических расстройств.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Advanced Analytics</h3>
-                <p>Глубокая аналитика с машинным обучением, предиктивная аналитика и персонализированные инсайты для каждого пользователя.</p>
+                <h3>Инновационные методы лечения</h3>
+                <p>Стволовые клетки, генная терапия, роботизированная хирургия Da Vinci и персонализированная медицина в Турции.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Auto-scaling</h3>
-                <p>Автоматическое масштабирование до миллионов пользователей с использованием Kubernetes, Docker и cloud-native архитектуры.</p>
+                <h3>Медицинский туризм премиум-класса</h3>
+                <p>Полный пакет услуг: лечение, проживание в 5-звездочных отелях, трансфер, переводчики и культурная программа.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Турецкое качество по доступным ценам</h3>
+                <p>Экономия до 70% по сравнению с США и Европой при сохранении высочайших стандартов качества и безопасности.</p>
             </div>
         </div>
 
 
-        <div class="api-demo">
-            <h3>Live API Demo</h3>
+        <div class="api-section">
+            <h3>Передовые медицинские AI-технологии</h3>
             <div class="api-buttons">
-                <button class="btn" onclick="loadDoctors()">Load Doctors</button>
-                <button class="btn" onclick="loadVideos()">Load Videos</button>
-                <button class="btn" onclick="checkHealth()">Check Status</button>
-                <button class="btn" onclick="loadStats()">System Stats</button>
-                <button class="btn" onclick="loadWeather()">Weather Data</button>
-                <button class="btn" onclick="loadNews()">Medical News</button>
+                <button class="btn" onclick="loadDoctors()" data-i18n="loadDoctors">Турецкие врачи-эксперты</button>
+                <button class="btn" onclick="loadVideos()" data-i18n="loadVideos">Медицинские процедуры</button>
+                <button class="btn" onclick="aiDiagnostics()" data-i18n="aiDiagnostics">AI-диагностика</button>
+                <button class="btn" onclick="treatmentPlanning()" data-i18n="treatmentPlanning">Планирование лечения</button>
+                <button class="btn" onclick="medicalConsultation()" data-i18n="medicalConsultation">Онлайн-консультация</button>
+                <button class="btn" onclick="loadNews()" data-i18n="medicalNews">Медицинские новости</button>
             </div>
-            <div id="apiResponse" class="api-response">Click a button above for API demonstration...</div>
+            <div id="apiResponse" class="api-response">Выберите медицинскую услугу для получения персонализированной помощи...</div>
         </div>
 
         <footer class="footer">
@@ -1637,6 +1637,214 @@
                     </div>
                 </div>
             `;
+        async function aiDiagnostics() {
+            const responseElement = document.getElementById('apiResponse');
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Запуск AI-диагностики...</div>';
+
+            try {
+                const diagnosticsData = {
+                    status: "active",
+                    ai_models: ["Кардиология AI", "Онкология AI", "Неврология AI", "Радиология AI"],
+                    accuracy: "98.7%",
+                    processed_cases: 15420,
+                    specialties: [
+                        { name: "Кардиохирургия", accuracy: "99.2%", cases: 3240 },
+                        { name: "Онкология", accuracy: "98.8%", cases: 4150 },
+                        { name: "Неврология", accuracy: "98.1%", cases: 2890 },
+                        { name: "Радиология", accuracy: "99.5%", cases: 5140 }
+                    ]
+                };
+
+                responseElement.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #00b894 0%, #00a085 100%); border-radius: 15px; padding: 30px; color: white;">
+                        <h3 style="margin: 0 0 20px 0; font-size: 24px; text-align: center;">AI-диагностика нового поколения</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Общая точность</h4>
+                                <p style="margin: 0; font-size: 32px; font-weight: bold;">${diagnosticsData.accuracy}</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Обработано случаев: ${diagnosticsData.processed_cases.toLocaleString()}</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Статус системы</h4>
+                                <p style="margin: 0; font-size: 24px; font-weight: bold; color: #90EE90;">АКТИВНА</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Все AI-модели работают</p>
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h4 style="margin: 0 0 15px 0;">Специализированные AI-модели</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                ${diagnosticsData.specialties.map(specialty => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 16px;">${specialty.name}</p>
+                                        <p style="margin: 5px 0; font-size: 20px; font-weight: bold; color: #90EE90;">${specialty.accuracy}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">${specialty.cases} случаев</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 15px 0;">Доступные AI-модели</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                                ${diagnosticsData.ai_models.map(model => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; text-align: center;">
+                                        <p style="margin: 0; font-size: 14px; font-weight: bold;">${model}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка AI-диагностики:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к AI-серверу.</small>
+                </div>`;
+            }
+        }
+
+        async function treatmentPlanning() {
+            const responseElement = document.getElementById('apiResponse');
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Генерация плана лечения...</div>';
+
+            try {
+                const treatmentData = {
+                    available_treatments: 847,
+                    success_rate: "94.3%",
+                    avg_duration: "12-18 дней",
+                    specialties: [
+                        { name: "Кардиохирургия", procedures: 156, success: "96.8%" },
+                        { name: "Онкология", procedures: 234, success: "92.1%" },
+                        { name: "Трансплантология", procedures: 89, success: "98.2%" },
+                        { name: "Эстетическая медицина", procedures: 368, success: "99.1%" }
+                    ],
+                    packages: [
+                        { name: "Базовый пакет", price: "от $3,500", duration: "7-10 дней" },
+                        { name: "Стандартный пакет", price: "от $6,800", duration: "12-15 дней" },
+                        { name: "Премиум пакет", price: "от $12,000", duration: "18-21 день" }
+                    ]
+                };
+
+                responseElement.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #6c5ce7 0%, #5f3dc4 100%); border-radius: 15px; padding: 30px; color: white;">
+                        <h3 style="margin: 0 0 20px 0; font-size: 24px; text-align: center;">Персонализированное планирование лечения</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Доступно процедур</h4>
+                                <p style="margin: 0; font-size: 32px; font-weight: bold;">${treatmentData.available_treatments}</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">В турецких клиниках</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Успешность лечения</h4>
+                                <p style="margin: 0; font-size: 32px; font-weight: bold;">${treatmentData.success_rate}</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Средняя длительность: ${treatmentData.avg_duration}</p>
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h4 style="margin: 0 0 15px 0;">Специализации по направлениям</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                ${treatmentData.specialties.map(specialty => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 16px;">${specialty.name}</p>
+                                        <p style="margin: 5px 0; font-size: 18px; font-weight: bold; color: #90EE90;">${specialty.success}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">${specialty.procedures} процедур</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 15px 0;">Пакеты медицинского туризма</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                ${treatmentData.packages.map(pkg => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 18px;">${pkg.name}</p>
+                                        <p style="margin: 10px 0; font-size: 24px; font-weight: bold; color: #ffeaa7;">${pkg.price}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">${pkg.duration}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка планирования лечения:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу планирования.</small>
+                </div>`;
+            }
+        }
+
+        async function medicalConsultation() {
+            const responseElement = document.getElementById('apiResponse');
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Подключение к консультанту...</div>';
+
+            try {
+                const consultationData = {
+                    online_doctors: 47,
+                    avg_response_time: "3 минуты",
+                    languages: ["Русский", "Английский", "Турецкий", "Арабский"],
+                    available_now: [
+                        { name: "Проф. Мехмет Озтюрк", specialty: "Кардиохирург", experience: "25 лет", rating: "4.9" },
+                        { name: "Д-р Айше Йылмаз", specialty: "Онколог", experience: "18 лет", rating: "4.8" },
+                        { name: "Проф. Али Демир", specialty: "Нейрохирург", experience: "22 лет", rating: "4.9" },
+                        { name: "Д-р Фатма Коч", specialty: "Эндокринолог", experience: "15 лет", rating: "4.7" }
+                    ],
+                    consultation_types: [
+                        { type: "Первичная консультация", duration: "30 мин", price: "$85" },
+                        { type: "Повторная консультация", duration: "20 мин", price: "$65" },
+                        { type: "Экстренная консультация", duration: "15 мин", price: "$120" }
+                    ]
+                };
+
+                responseElement.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%); border-radius: 15px; padding: 30px; color: white;">
+                        <h3 style="margin: 0 0 20px 0; font-size: 24px; text-align: center;">Онлайн-консультации с турецкими врачами</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Врачей онлайн</h4>
+                                <p style="margin: 0; font-size: 32px; font-weight: bold;">${consultationData.online_doctors}</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Доступны сейчас</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Время ответа</h4>
+                                <p style="margin: 0; font-size: 32px; font-weight: bold;">${consultationData.avg_response_time}</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">В среднем</p>
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h4 style="margin: 0 0 15px 0;">Доступные врачи</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                                ${consultationData.available_now.map(doctor => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 16px;">${doctor.name}</p>
+                                        <p style="margin: 5px 0; font-size: 14px; color: #ffeaa7;">${doctor.specialty}</p>
+                                        <p style="margin: 5px 0; font-size: 12px; opacity: 0.9;">Опыт: ${doctor.experience}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 14px; font-weight: bold;">Рейтинг: ${doctor.rating}/5.0</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 15px 0;">Типы консультаций</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                ${consultationData.consultation_types.map(consult => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 16px;">${consult.type}</p>
+                                        <p style="margin: 10px 0; font-size: 20px; font-weight: bold; color: #ffeaa7;">${consult.price}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">${consult.duration}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка подключения к консультанту:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу консультаций.</small>
+                </div>`;
+            }
+        }
+
             } catch (error) {
                 responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
                     <strong>Ошибка загрузки новостей:</strong> ${error.message}<br>
