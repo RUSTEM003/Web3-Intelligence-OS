@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MEDTOUR - Глобальная AI-платформа для Турецкой медицины</title>
     <meta name="description" content="Передовая AI-платформа для медицинского туризма в Турции. Найдите лучших врачей, клиники и получите персонализированные рекомендации.">
     <meta name="keywords" content="медицинский туризм, Турция, AI, врачи, клиники, лечение">
@@ -16,6 +16,19 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="MEDTOUR">
+    <meta name="application-name" content="MEDTOUR">
+    <meta name="msapplication-TileColor" content="#667eea">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-192x192.png">
+
     <!-- Styles -->
     <style>
         * {
@@ -27,9 +40,9 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #fff;
+            color: #000;
             background:
-                linear-gradient(135deg, rgba(20, 30, 48, 0.7) 0%, rgba(36, 59, 85, 0.8) 100%),
+                linear-gradient(135deg, rgba(5, 10, 20, 0.9) 0%, rgba(15, 25, 40, 0.95) 100%),
                 url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=1920&h=1080&fit=crop') center/cover no-repeat fixed;
             min-height: 100vh;
             position: relative;
@@ -57,14 +70,14 @@
 
         .header {
             text-align: center;
-            color: #fff;
+            color: #000;
             padding: 40px 0 20px 0;
             background:
-                linear-gradient(135deg, rgba(30, 50, 80, 0.6) 0%, rgba(50, 70, 100, 0.7) 100%),
+                linear-gradient(135deg, rgba(250, 250, 250, 0.95) 0%, rgba(240, 240, 240, 0.98) 100%),
                 url('https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=1200&h=400&fit=crop') center/cover;
             border-radius: 20px;
             margin-bottom: 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
@@ -81,7 +94,8 @@
         .header p {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5a6c7d;
+            color: #000;
+            font-weight: 600;
         }
 
         .features {
@@ -93,15 +107,15 @@
 
         .widget {
             background:
-                linear-gradient(135deg, rgba(30, 50, 80, 0.6) 0%, rgba(50, 70, 100, 0.7) 100%),
+                linear-gradient(135deg, rgba(250, 250, 250, 0.9) 0%, rgba(240, 240, 240, 0.95) 100%),
                 url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop') center/cover;
             padding: 25px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            color: #000;
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            color: #fff;
         }
 
         .widget:hover {
@@ -110,18 +124,15 @@
         }
 
         .widget h3 {
-            color: #2c3e50;
+            color: #000;
             margin-bottom: 20px;
             font-size: 1.4rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-weight: 700;
         }
 
         .feature-card {
             background:
-                linear-gradient(135deg, rgba(30, 50, 80, 0.6) 0%, rgba(50, 70, 100, 0.7) 100%),
+                linear-gradient(135deg, rgba(250, 250, 250, 0.9) 0%, rgba(240, 240, 240, 0.95) 100%),
                 url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop') center/cover;
             padding: 30px;
             border-radius: 20px;
@@ -129,7 +140,7 @@
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            color: #fff;
+            color: #000;
         }
 
         .feature-card:hover {
@@ -138,14 +149,16 @@
         }
 
         .feature-card h3 {
-            color: #667eea;
+            color: #000;
             margin-bottom: 15px;
             font-size: 1.5rem;
+            font-weight: 700;
         }
 
         .feature-card p {
-            color: #666;
+            color: #000;
             line-height: 1.6;
+            font-weight: 500;
         }
 
         .top-widgets {
@@ -162,7 +175,7 @@
             margin: 50px 0;
         }
 
-        .stat-card {
+       дленно. .stat-card {
             background: rgba(255,255,255,0.9);
             padding: 30px;
             border-radius: 15px;
@@ -170,19 +183,18 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            backdrop-filter: blur(10px);
+            color: #000;
         }
 
         .stat-number {
             font-size: 2.5rem;
             font-weight: bold;
-боте             margin-bottom: 10px;
+            margin-bottom: 10px;
         }
 
-        .api-demo {
+        .api-section {
             background:
-                linear-gradient(135deg, rgba(30, 50, 80, 0.6) 0%, rgba(50, 70, 100, 0.7) 100%),
+                linear-gradient(135deg, rgba(250, 250, 250, 0.9) 0%, rgba(240, 240, 240, 0.95) 100%),
                 url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop') center/cover;
             padding: 30px;
             border-radius: 15px;
@@ -190,12 +202,13 @@
             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.2);
-            color: #fff;
+            color: #000;
         }
 
-        .api-demo h3 {
-            color: #667eea;
+        .api-section h3 {
+            color: #000;
             margin-bottom: 20px;
+            font-weight: 700;
         }
 
         .api-buttons {
@@ -207,17 +220,189 @@
 
         .btn {
             background: #667eea;
-            color: white;
+            color: #000;
             padding: 12px 24px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
             transition: background 0.3s ease;
+            font-weight: 600;
         }
 
         .btn:hover {
             background: #5a6fd8;
+        }
+
+        .ai-assistant-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ai-assistant-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #000;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-assistant-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            color: #000;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-button:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-assistant-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .ai-message {
+            background: #f1f1f1;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            align-self: flex-start;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .ai-message p {
+            margin: 0;
+            color: #000;
+        }
+
+        .user-message {
+            background: #667eea;
+            color: #000;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            align-self: flex-end;
+            font-weight: 600;
+        }
+
+        .user-message p {
+            margin: 0;
+            color: #000;
+        }
+
+        .ai-assistant-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .ai-assistant-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+            color: #000;
+            background: #fff;
+        }
+
+        .ai-assistant-input input::placeholder {
+            color: #666;
+        }
+
+        .ai-assistant-input button {
+            background: #667eea;
+            color: #000;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .ai-assistant-input button:hover {
+            background: #5a6fd8;
+        }
+
+        .ai-assistant-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            font-weight: 700;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ai-assistant-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .ai-assistant-button span {
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .ai-assistant-widget {
+                width: 300px;
+                height: 400px;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .ai-assistant-button {
+                bottom: 10px;
+                right: 10px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
         }
 
         .api-response {
@@ -248,7 +433,7 @@
 
         .auth-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            color: #000;
             padding: 12px 20px;
             border: none;
             border-radius: 25px;
@@ -288,12 +473,12 @@
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
+            color: #000;
             position: relative;
         }
 
         .close {
-            color: #fff;
+            color: #000;
             float: right;
             font-size: 28px;
             font-weight: bold;
@@ -304,7 +489,7 @@
         }
 
         .close:hover {
-            color: #667eea;
+            color: #333;
         }
 
         .form-group {
@@ -315,7 +500,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #fff;
+            color: #000;
         }
 
         .form-group input,
@@ -326,7 +511,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.1);
-            color: #fff;
+            color: #000;
             font-size: 1rem;
             backdrop-filter: blur(10px);
         }
@@ -361,6 +546,56 @@
         .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .document-upload {
+            background: rgba(245, 247, 250, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .document-upload h4 {
+            margin: 0 0 15px 0;
+            color: #2d3748;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .upload-field {
+            margin-bottom: 15px;
+        }
+
+        .upload-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .upload-field input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-field input[type="file"]:hover {
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .upload-field input[type="file"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .modal h2 {
@@ -616,13 +851,546 @@
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
 
+        .comparison-section {
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-section h2 {
+            text-align: center;
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .comparison-section p {
+            text-align: center;
+            color: #4a5568;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .comparison-table th.turkey-column {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            position: relative;
+        }
+
+        .comparison-table td {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .comparison-table td.highlight {
+            background: linear-gradient(135deg, rgba(229, 62, 62, 0.1) 0%, rgba(197, 48, 48, 0.1) 100%);
+            font-weight: 700;
+            color: #c53030;
+            border-left: 3px solid #e53e3e;
+            border-right: 3px solid #e53e3e;
+        }
+
+        .comparison-table tbody tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+
+        .comparison-table tbody tr:hover {
+            background-color: #edf2f7;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+
+        .comparison-advantages {
+            margin-top: 40px;
+        }
+
+        .comparison-advantages h3 {
+            text-align: center;
+            color: #2d3748;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .advantage-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .advantage-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+
+        .advantage-item h4 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .advantage-item p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .comparison-note {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .comparison-note p {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-section {
+                padding: 20px 15px;
+                margin: 20px 0;
+            }
+
+            .comparison-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px 8px;
+                font-size: 0.85rem;
+            }
+
+            .advantages-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .advantage-item {
+                padding: 20px;
+            }
+
+            .advantage-item h4 {
+                font-size: 1.1rem;
+            }
+
+            .advantage-item p {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .comparison-table {
+                font-size: 0.8rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 8px 6px;
+            }
+
+            .comparison-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .comparison-section p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Comprehensive Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header p {
+                font-size: 1.1rem;
+            }
+
+            .features {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+
+            .top-widgets {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+                overflow-x: hidden;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 15px 15px 15px;
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+
+            .header p {
+                font-size: 1rem;
+                margin-bottom: 15px;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+            }
+
+            .auth-btn {
+                width: 100%;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin: 30px 0;
+            }
+
+            .top-widgets {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin: 20px 0 30px 0;
+            }
+
+            .widget {
+                padding: 20px;
+            }
+
+            .feature-card {
+                padding: 20px;
+            }
+
+            .feature-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+                margin: 30px 0;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .api-section {
+                padding: 20px;
+                margin: 20px 0;
+            }
+
+            .api-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-width: none;
+                margin: 5% auto;
+                padding: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 12px;
+                font-size: 1rem;
+            }
+
+            .ai-assistant-widget {
+                width: 95%;
+                height: 70vh;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .ai-assistant-button {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 13px;
+            }
+
+            .container {
+                padding: 8px;
+            }
+
+            .header {
+                padding: 20px 10px 10px 10px;
+                margin-bottom: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .auth-buttons {
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .auth-btn {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            .widget {
+                padding: 15px;
+            }
+
+            .widget h3 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            .feature-card {
+                padding: 15px;
+            }
+
+            .feature-card h3 {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+
+            .feature-card p {
+                font-size: 0.9rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin: 20px 0;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+
+            .api-section {
+                padding: 15px;
+                margin: 15px 0;
+            }
+
+            .api-section h3 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            .btn {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                width: 98%;
+                margin: 2% auto;
+                padding: 15px;
+            }
+
+            .modal-content h2 {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .ai-assistant-widget {
+                width: 98%;
+                height: 60vh;
+                bottom: 5px;
+                right: 5px;
+            }
+
+            .ai-assistant-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .ai-assistant-button {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+
+            .ai-assistant-input input {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+
+            .ai-assistant-input button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .btn,
+            .auth-btn,
+            .ai-assistant-button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            .widget:hover,
+            .feature-card:hover {
+                transform: none;
+            }
+
+            .widget,
+            .feature-card {
+                transition: none;
+            }
+        }
+
+        /* Landscape orientation on mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .header {
+                padding: 20px 15px 10px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .ai-assistant-widget {
+                height: 80vh;
+                width: 90%;
+            }
+        }
+
+        /* High DPI displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .header,
+            .widget,
+            .feature-card {
+                border: 0.5px solid rgba(255, 255, 255, 0.2);
+            }
+        }
+
     </style>
 </head>
 <body>
     <div class="auth-buttons">
-        <button class="auth-btn" onclick="openModal('patientModal')">Регистрация пациента</button>
-        <button class="auth-btn" onclick="openModal('doctorModal')">Регистрация врача</button>
-        <button class="auth-btn" onclick="openModal('loginModal')">Вход</button>
+        <button class="auth-btn" id="patientRegBtn" data-modal="patientModal">Регистрация пациента</button>
+        <button class="auth-btn" id="doctorRegBtn" data-modal="doctorModal">Регистрация врача</button>
+        <button class="auth-btn" id="loginBtn" data-modal="loginModal">Вход</button>
     </div>
 
     <div class="container">
@@ -640,13 +1408,13 @@
 
         <header class="header">
             <h1>MEDTOUR</h1>
-            <p>Глобальная AI-платформа для Турецкой медицины</p>
-            <p>Революционная технология - Мировой класс - Enterprise-уровень</p>
+            <p data-i18n="headerSubtitle">Турецкая медицина мирового уровня</p>
+            <p data-i18n="headerDescription">Ведущие клиники Турции - Лучшие врачи - Передовые технологии</p>
 <div class="lang-switcher">
-    <button class="lang-btn" data-lang="ru">Рус</button>
-    <button class="lang-btn" data-lang="en">Eng</button>
-    <button class="lang-btn" data-lang="tr">Tr</button>
-    <button class="lang-btn" data-lang="ar">عربى</button>
+    <button class="lang-btn active" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="tr">TR</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
 </div>
 
         </header>
@@ -654,67 +1422,179 @@
         <div class="stats">
             <div class="stat-card">
                 <div class="stat-number">1000+</div>
-                <div>Врачей-экспертов</div>
+                <div data-i18n="statDoctors">Врачей-экспертов</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">50+</div>
-                <div>Клиник-партнеров</div>
+                <div data-i18n="statClinics">Клиник-партнеров</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">25+</div>
-                <div>Языков поддержки</div>
+                <div data-i18n="statLanguages">Языков поддержки</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">99.9%</div>
-                <div>Uptime SLA</div>
+                <div data-i18n="statUptime">Uptime SLA</div>
             </div>
         </div>
 
         <div class="features">
             <div class="feature-card">
-                <h3>AI-Powered Matching</h3>
-                <p>Передовые алгоритмы машинного обучения для подбора идеального врача и клиники на основе медицинской истории, предпочтений и бюджета пациента.</p>
+                <h3 data-i18n="featureWorldClassTitle">Турецкие клиники мирового класса</h3>
+                <p data-i18n="featureWorldClassDesc">Ведущие медицинские центры Стамбула, Анкары и Анталии с международной аккредитацией JCI и передовым оборудованием.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Global CDN</h3>
-                <p>Глобальная сеть доставки контента с edge-серверами в 200+ городах мира для мгновенной загрузки в любой точке планеты.</p>
+                <h3 data-i18n="featureProfessorsTitle">Профессора турецкой медицины</h3>
+                <p data-i18n="featureProfessorsDesc">Лучшие турецкие врачи и профессора с мировым признанием в кардиохирургии, онкологии, трансплантологии и эстетической медицине.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Real-time Processing</h3>
-                <p>Обработка запросов в реальном времени с использованием WebSocket, Server-Sent Events и микросервисной архитектуры.</p>
-            </div>
-
-
-            <div class="feature-card">
-                <h3>Enterprise Security</h3>
-                <p>Банковский уровень безопасности: end-to-end шифрование, HIPAA compliance, SOC 2 Type II сертификация.</p>
+                <h3 data-i18n="featureAiTitle">AI-диагностика нового поколения</h3>
+                <p data-i18n="featureAiDesc">Революционные AI-системы для ранней диагностики рака, сердечно-сосудистых заболеваний и неврологических расстройств.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Advanced Analytics</h3>
-                <p>Глубокая аналитика с машинным обучением, предиктивная аналитика и персонализированные инсайты для каждого пользователя.</p>
+                <h3 data-i18n="featureTreatmentTitle">Инновационные методы лечения</h3>
+                <p data-i18n="featureTreatmentDesc">Стволовые клетки, генная терапия, роботизированная хирургия Da Vinci и персонализированная медицина в Турции.</p>
             </div>
 
             <div class="feature-card">
-                <h3>Auto-scaling</h3>
-                <p>Автоматическое масштабирование до миллионов пользователей с использованием Kubernetes, Docker и cloud-native архитектуры.</p>
+                <h3 data-i18n="featureTourismTitle">Медицинский туризм премиум-класса</h3>
+                <p data-i18n="featureTourismDesc">Полный пакет услуг: лечение, проживание в 5-звездочных отелях, трансфер, переводчики и культурная программа.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3 data-i18n="featureAffordableTitle">Турецкое качество по доступным ценам</h3>
+                <p data-i18n="featureAffordableDesc">Экономия до 70% по сравнению с США и Европой при сохранении высочайших стандартов качества и безопасности.</p>
             </div>
         </div>
 
-
-        <div class="api-demo">
-            <h3>Live API Demo</h3>
-            <div class="api-buttons">
-                <button class="btn" onclick="loadDoctors()">Load Doctors</button>
-                <button class="btn" onclick="loadVideos()">Load Videos</button>
-                <button class="btn" onclick="checkHealth()">Check Status</button>
-                <button class="btn" onclick="loadStats()">System Stats</button>
-                <button class="btn" onclick="loadWeather()">Weather Data</button>
-                <button class="btn" onclick="loadNews()">Medical News</button>
+        <div class="comparison-section" id="comparisonTable">
+            <h2 data-i18n="comparisonTitle">Сравнение медицинских услуг по странам</h2>
+            <p data-i18n="comparisonSubtitle">Почему Турция - лучший выбор для медицинского туризма</p>
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="serviceCategory">Категория услуг</th>
+                            <th class="turkey-column">Турция</th>
+                            <th>США</th>
+                            <th>Европа</th>
+                            <th>Азия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-i18n="costCategory">Стоимость лечения</td>
+                            <td class="highlight">70% экономия</td>
+                            <td>$50,000+</td>
+                            <td>$35,000+</td>
+                            <td>$15,000+</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="qualityCategory">Качество медицины</td>
+                            <td class="highlight">JCI стандарт</td>
+                            <td>Высокое</td>
+                            <td>Высокое</td>
+                            <td>Среднее</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="waitingTimeCategory">Время ожидания</td>
+                            <td class="highlight">1-2 недели</td>
+                            <td>3-6 месяцев</td>
+                            <td>2-4 месяца</td>
+                            <td>2-8 недель</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="jciAccreditationCategory">JCI аккредитация</td>
+                            <td class="highlight">50+ клиник</td>
+                            <td>300+ клиник</td>
+                            <td>200+ клиник</td>
+                            <td>100+ клиник</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="doctorQualificationCategory">Квалификация врачей</td>
+                            <td class="highlight">Профессора мирового уровня</td>
+                            <td>Высокая</td>
+                            <td>Высокая</td>
+                            <td>Средняя-Высокая</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="equipmentCategory">Современное оборудование</td>
+                            <td class="highlight">Новейшие технологии</td>
+                            <td>Новейшее</td>
+                            <td>Современное</td>
+                            <td>Современное</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="tourismPackageCategory">Туристический пакет</td>
+                            <td class="highlight">Полный пакет включен</td>
+                            <td>Не включен</td>
+                            <td>Частично</td>
+                            <td>Базовый</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="visaCategory">Визовый режим</td>
+                            <td class="highlight">Безвизовый/упрощенный</td>
+                            <td>Сложный</td>
+                            <td>Средний</td>
+                            <td>Средний</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="languageCategory">Языковая поддержка</td>
+                            <td class="highlight">25+ языков</td>
+                            <td>Английский</td>
+                            <td>Местные языки</td>
+                            <td>Английский + местные</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="locationCategory">Географическое положение</td>
+                            <td class="highlight">Мост между Европой и Азией</td>
+                            <td>Северная Америка</td>
+                            <td>Европа</td>
+                            <td>Азия</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div id="apiResponse" class="api-response">Click a button above for API demonstration...</div>
+            <div class="comparison-advantages">
+                <h3 data-i18n="advantagesTitle">Преимущества лечения в Турции</h3>
+                <div class="advantages-grid">
+                    <div class="advantage-item">
+                        <h4 data-i18n="advantage1Title">Экономия до 70%</h4>
+                        <p data-i18n="advantage1Desc">Высококачественное лечение по доступным ценам без компромиссов в качестве</p>
+                    </div>
+                    <div class="advantage-item">
+                        <h4 data-i18n="advantage2Title">Международные стандарты</h4>
+                        <p data-i18n="advantage2Desc">50+ клиник с аккредитацией JCI и международным признанием</p>
+                    </div>
+                    <div class="advantage-item">
+                        <h4 data-i18n="advantage3Title">Быстрое обслуживание</h4>
+                        <p data-i18n="advantage3Desc">Минимальное время ожидания и быстрая организация лечения</p>
+                    </div>
+                    <div class="advantage-item">
+                        <h4 data-i18n="advantage4Title">Комплексный сервис</h4>
+                        <p data-i18n="advantage4Desc">Полный пакет: лечение, проживание, трансфер, переводчики</p>
+                    </div>
+                </div>
+            </div>
+            <div class="comparison-note">
+                <p data-i18n="comparisonNote">Турция предлагает оптимальное соотношение цены и качества с международной аккредитацией JCI, минимальным временем ожидания и полным туристическим пакетом.</p>
+            </div>
+        </div>
+
+        <div class="api-section"></div>
+            <h3 data-i18n="apiSectionTitle">Передовые медицинские AI-технологии</h3>
+            <div class="api-buttons">
+                <button class="btn" data-action="loadDoctors" data-i18n="loadDoctors">Турецкие врачи-эксперты</button>
+                <button class="btn" data-action="loadVideos" data-i18n="loadVideos">Медицинские процедуры</button>
+                <button class="btn" data-action="aiDiagnostics" data-i18n="aiDiagnostics">AI-диагностика</button>
+                <button class="btn" data-action="treatmentPlanning" data-i18n="treatmentPlanning">Планирование лечения</button>
+                <button class="btn" data-action="medicalConsultation" data-i18n="medicalConsultation">Онлайн-консультация</button>
+                <button class="btn" data-action="loadNews" data-i18n="medicalNews">Медицинские новости</button>
+            </div>
+            <div id="apiResponse" class="api-response" data-i18n="apiResponseDefault">Выберите медицинскую услугу для получения персонализированной помощи...</div>
         </div>
 
         <footer class="footer">
@@ -724,7 +1604,7 @@
 
     <div id="patientModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('patientModal')">&times;</span>
+            <span class="close" data-modal="patientModal">&times;</span>
             <h2>Регистрация пациента</h2>
             <form id="patientForm" onsubmit="registerPatient(event)">
                 <div class="form-group">
@@ -781,6 +1661,27 @@
                         <option value="other">Другая</option>
                     </select>
                 </div>
+
+                <div class="document-upload">
+                    <h4>Загрузка медицинских документов</h4>
+                    <div class="upload-field">
+                        <label for="patientMedicalRecord">Медицинская карта</label>
+                        <input type="file" id="patientMedicalRecord" name="medicalRecord" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    </div>
+                    <div class="upload-field">
+                        <label for="patientInsurance">Страховой полис</label>
+                        <input type="file" id="patientInsurance" name="insurancePolicy" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    </div>
+                    <div class="upload-field">
+                        <label for="patientPassport">Паспорт</label>
+                        <input type="file" id="patientPassport" name="passport" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="upload-field">
+                        <label for="patientOtherDocs">Другие медицинские документы</label>
+                        <input type="file" id="patientOtherDocs" name="otherDocuments" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    </div>
+                </div>
+
                 <button type="submit" class="submit-btn">Зарегистрироваться</button>
             </form>
         </div>
@@ -788,7 +1689,7 @@
 
     <div id="doctorModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('doctorModal')">&times;</span>
+            <span class="close" data-modal="doctorModal">&times;</span>
             <h2>Регистрация врача</h2>
             <form id="doctorForm" onsubmit="registerDoctor(event)">
                 <div class="form-group">
@@ -870,6 +1771,31 @@
                     <label for="doctorLicense">Номер медицинской лицензии</label>
                     <input type="text" id="doctorLicense" name="license" placeholder="TR-12345678" required>
                 </div>
+
+                <div class="document-upload">
+                    <h4>Загрузка профессиональных документов</h4>
+                    <div class="upload-field">
+                        <label for="doctorDiploma">Диплом о медицинском образовании</label>
+                        <input type="file" id="doctorDiploma" name="diploma" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="upload-field">
+                        <label for="doctorLicenseFile">Медицинская лицензия</label>
+                        <input type="file" id="doctorLicenseFile" name="licenseFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="upload-field">
+                        <label for="doctorCertificates">Сертификаты специализации</label>
+                        <input type="file" id="doctorCertificates" name="certificates" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    </div>
+                    <div class="upload-field">
+                        <label for="doctorPhoto">Профессиональное фото</label>
+                        <input type="file" id="doctorPhoto" name="photo" accept=".jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="upload-field">
+                        <label for="doctorCV">Резюме/CV</label>
+                        <input type="file" id="doctorCV" name="cv" accept=".pdf,.doc,.docx">
+                    </div>
+                </div>
+
                 <button type="submit" class="submit-btn">Зарегистрироваться</button>
             </form>
         </div>
@@ -877,14 +1803,14 @@
 
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <span class="close" data-modal="loginModal">&times;</span>
             <h2>Вход в систему</h2>
             <div class="role-selector">
-                <div class="role-option selected" onclick="selectRole('patient')">
+                <div class="role-option selected" data-role="patient">
                     <h4>Пациент</h4>
                     <p>Поиск врачей и запись на прием</p>
                 </div>
-                <div class="role-option" onclick="selectRole('doctor')">
+                <div class="role-option" data-role="doctor">
                     <h4>Врач</h4>
                     <p>Управление профилем и пациентами</p>
                 </div>
@@ -957,7 +1883,7 @@
                 loadDefaultWeather();
             }
 
-            fetch('/api/realtime/detect-language')
+            fetch('api/realtime/detect-language')
                 .then(response => response.json())
                 .then(data => {
                     currentLanguage = data.language;
@@ -1004,6 +1930,10 @@
 
         function loadInitialData() {
             loadNewsData();
+            loadWeatherData();
+            updateCurrentTime();
+            updateTopWeather();
+            updateTopNews();
         }
 
         function loadWeatherData() {
@@ -1020,7 +1950,9 @@
                 windSpeed: 3
             };
             console.log('Loading default weather:', weather);
+            window.lastWeatherData = weather;
             updateWeatherDisplay(weather);
+            updateTopWeather();
         }
 
         function loadNewsData() {
@@ -1062,7 +1994,9 @@
                     link: "#"
                 }
             ];
+            window.lastNewsData = medicalNews;
             updateNewsDisplay(medicalNews);
+            updateTopNews();
         }
 
         function updateWeatherDisplay(weather) {
@@ -1131,7 +2065,7 @@
                 socket.emit('ai-question', { question, lang: currentLanguage });
             } else {
                 showAIThinking('Processing your request...');
-                fetch('/api/realtime/ai-chat', {
+                fetch('api/realtime/ai-chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ question, lang: currentLanguage })
@@ -1200,84 +2134,18 @@
             }
         }
 
-        function loadDoctors() {
+        async function loadDoctors() {
             const responseElement = document.getElementById('apiResponse');
-            const doctors = [
-                {
-                    id: 1,
-                    name: "Dr. Mehmet Özkan",
-                    specialty: "Кардиология",
-                    hospital: "Acıbadem Maslak Hospital",
-                    experience: "15 лет",
-                    languages: ["Турецкий", "Английский", "Немецкий", "Русский"],
-                    rating: 4.9,
-                    price: "€2,500",
-                    photo: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=150&h=150&fit=crop&crop=face",
-                    location: "Стамбул, Турция"
-                },
-                {
-                    id: 2,
-                    name: "Dr. Ayşe Demir",
-                    specialty: "Пластическая хирургия",
-                    hospital: "Memorial Şişli Hospital",
-                    experience: "12 лет",
-                    languages: ["Турецкий", "Английский", "Русский"],
-                    rating: 4.8,
-                    price: "€3,200",
-                    photo: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face",
-                    location: "Стамбул, Турция"
-                },
-                {
-                    id: 3,
-                    name: "Dr. Ali Yılmaz",
-                    specialty: "Ортопедия",
-                    hospital: "Medicana International Ankara",
-                    experience: "18 лет",
-                    languages: ["Турецкий", "Английский", "Арабский"],
-                    rating: 4.7,
-                    price: "€2,800",
-                    photo: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop&crop=face",
-                    location: "Анкара, Турция"
-                },
-                {
-                    id: 4,
-                    name: "Dr. Fatma Kaya",
-                    specialty: "Неврология",
-                    hospital: "Koç University Hospital",
-                    experience: "20 лет",
-                    languages: ["Турецкий", "Английский", "Русский", "Немецкий"],
-                    rating: 4.9,
-                    price: "€2,200",
-                    photo: "https://images.unsplash.com/photo-1594824475317-29bb4b71e3e3?w=150&h=150&fit=crop&crop=face",
-                    location: "Стамбул, Турция"
-                },
-                {
-                    id: 5,
-                    name: "Dr. Mustafa Çelik",
-                    specialty: "Онкология",
-                    hospital: "Anadolu Medical Center",
-                    experience: "14 лет",
-                    languages: ["Турецкий", "Английский", "Испанский"],
-                    rating: 4.8,
-                    price: "€4,500",
-                    photo: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=150&h=150&fit=crop&crop=face",
-                    location: "Стамбул, Турция"
-                },
-                {
-                    id: 6,
-                    name: "Dr. Zeynep Aktaş",
-                    specialty: "Стоматология",
-                    hospital: "Dentistanbul Clinic",
-                    experience: "10 лет",
-                    languages: ["Турецкий", "Английский", "Русский"],
-                    rating: 4.9,
-                    price: "€1,200",
-                    photo: "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=150&h=150&fit=crop&crop=face",
-                    location: "Стамбул, Турция"
-                }
-            ];
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка врачей...</div>';
 
-            responseElement.innerHTML = `
+            try {
+                const response = await fetch('api/doctors');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                const doctors = await response.json();
+
+                responseElement.innerHTML = `
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
                     ${doctors.map(doctor => `
                         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 20px; color: white; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
@@ -1291,30 +2159,36 @@
                             <div style="margin-bottom: 15px;">
                                 <p style="margin: 5px 0;"><strong>Больница:</strong> ${doctor.hospital}</p>
                                 <p style="margin: 5px 0;"><strong>Опыт:</strong> ${doctor.experience}</p>
-                                <p style="margin: 5px 0;"><strong>Рейтинг:</strong> ⭐ ${doctor.rating}/5.0</p>
+                                <p style="margin: 5px 0;"><strong>Рейтинг:</strong> ${doctor.rating}/5.0</p>
                                 <p style="margin: 5px 0;"><strong>Цена:</strong> ${doctor.price}</p>
                                 <p style="margin: 5px 0;"><strong>Языки:</strong> ${doctor.languages.join(', ')}</p>
                                 <p style="margin: 5px 0;"><strong>Местоположение:</strong> ${doctor.location}</p>
                             </div>
                             <div style="display: flex; gap: 10px;">
-                                <button onclick="bookAppointment(${doctor.id})" style="flex: 1; background: #4CAF50; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Записаться на прием</button>
-                                <button onclick="viewProfile(${doctor.id})" style="flex: 1; background: #2196F3; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Профиль врача</button>
+                                <button data-action="bookAppointment" data-doctor-id="${doctor.id}" style="flex: 1; background: #4CAF50; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Записаться на прием</button>
+                                <button data-action="viewProfile" data-doctor-id="${doctor.id}" style="flex: 1; background: #2196F3; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Профиль врача</button>
                             </div>
                         </div>
                     `).join('')}
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
-                    <button onclick="showAllDoctors()" style="background: #FF9800; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">Показать всех врачей (1247)</button>
+                    <button data-action="showAllDoctors" style="background: #FF9800; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">Показать всех врачей (1247)</button>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка загрузки врачей:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
         function bookAppointment(doctorId) {
             const modal = document.createElement('div');
             modal.className = 'booking-modal';
             modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); display: flex; align-items: center;
                 justify-content: center; z-index: 1000;
             `;
             modal.innerHTML = `
@@ -1343,13 +2217,13 @@
                         <textarea placeholder="Описание проблемы или вопросы" style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; height: 80px; resize: vertical;"></textarea>
                         <div style="display: flex; gap: 10px; margin-top: 20px;">
                             <button type="submit" style="flex: 1; background: #4CAF50; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">Отправить заявку</button>
-                            <button type="button" onclick="closeModal()" style="flex: 1; background: #f44336; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">Отмена</button>
+                            <button type="button" data-action="closeModal" style="flex: 1; background: #f44336; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">Отмена</button>
                         </div>
                     </form>
                 </div>
             `;
             document.body.appendChild(modal);
-            
+
             modal.querySelector('form').addEventListener('submit', function(e) {
                 e.preventDefault();
                 alert('Заявка отправлена! Мы свяжемся с вами в течение 24 часов.');
@@ -1382,15 +2256,15 @@
                     procedures: ["Ринопластика", "Маммопластика", "Липосакция", "Подтяжка лица"]
                 }
             ];
-            
+
             const doctor = doctors.find(d => d.id === doctorId);
             if (!doctor) return;
-            
+
             const modal = document.createElement('div');
             modal.className = 'profile-modal';
             modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); display: flex; align-items: center;
                 justify-content: center; z-index: 1000; overflow-y: auto;
             `;
             modal.innerHTML = `
@@ -1408,23 +2282,23 @@
                         <p><strong>Местоположение:</strong> ${doctor.location}</p>
                         <p><strong>Цена консультации:</strong> ${doctor.price}</p>
                         <p><strong>Языки:</strong> ${doctor.languages.join(', ')}</p>
-                        
+
                         <h4 style="color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; margin-top: 20px;">Образование</h4>
                         <p>${doctor.education}</p>
-                        
+
                         <h4 style="color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; margin-top: 20px;">Сертификации</h4>
                         <ul style="margin: 10px 0; padding-left: 20px;">
                             ${doctor.certifications.map(cert => `<li>${cert}</li>`).join('')}
                         </ul>
-                        
+
                         <h4 style="color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; margin-top: 20px;">Специализированные процедуры</h4>
                         <ul style="margin: 10px 0; padding-left: 20px;">
                             ${doctor.procedures.map(proc => `<li>${proc}</li>`).join('')}
                         </ul>
                     </div>
                     <div style="display: flex; gap: 10px; margin-top: 30px;">
-                        <button onclick="bookAppointment(${doctor.id})" style="flex: 1; background: #4CAF50; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">Записаться на прием</button>
-                        <button onclick="closeModal()" style="flex: 1; background: #2196F3; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">Закрыть</button>
+                        <button data-action="bookAppointment" data-doctor-id="${doctor.id}" style="flex: 1; background: #4CAF50; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">Записаться на прием</button>
+                        <button data-action="closeModal" style="flex: 1; background: #2196F3; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">Закрыть</button>
                     </div>
                 </div>
             `;
@@ -1440,8 +2314,8 @@
                     <p style="font-size: 16px; margin: 10px 0;">50+ медицинских специализаций</p>
                     <p style="font-size: 16px; margin: 10px 0;">25+ больниц-партнеров</p>
                     <div style="margin-top: 30px;">
-                        <button onclick="loadDoctors()" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px;">Показать топ врачей</button>
-                        <button onclick="searchDoctors()" style="background: #FF9800; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px;">Поиск по специализации</button>
+                        <button data-action="loadDoctors" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px;">Показать топ врачей</button>
+                        <button data-action="searchDoctors" style="background: #FF9800; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; margin: 5px;">Поиск по специализации</button>
                     </div>
                 </div>
             `;
@@ -1487,52 +2361,18 @@
             modals.forEach(modal => modal.remove());
         }
 
-        function loadVideos() {
+        async function loadVideos() {
             const responseElement = document.getElementById('apiResponse');
-            const videos = [
-                {
-                    id: 1,
-                    title: "Операция на сердце: современные методы",
-                    doctor: "Dr. Mehmet Özkan",
-                    duration: "15:30",
-                    views: 12450,
-                    language: "Русский",
-                    thumbnail: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&h=200&fit=crop",
-                    specialty: "Кардиология"
-                },
-                {
-                    id: 2,
-                    title: "Пластическая хирургия: консультация",
-                    doctor: "Dr. Ayşe Demir",
-                    duration: "8:45",
-                    views: 8920,
-                    language: "Английский",
-                    thumbnail: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=300&h=200&fit=crop",
-                    specialty: "Пластическая хирургия"
-                },
-                {
-                    id: 3,
-                    title: "Лечение суставов без операции",
-                    doctor: "Dr. Ali Yılmaz",
-                    duration: "12:15",
-                    views: 15670,
-                    language: "Турецкий",
-                    thumbnail: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=300&h=200&fit=crop",
-                    specialty: "Ортопедия"
-                },
-                {
-                    id: 4,
-                    title: "Диагностика неврологических заболеваний",
-                    doctor: "Dr. Fatma Kaya",
-                    duration: "20:10",
-                    views: 9340,
-                    language: "Русский",
-                    thumbnail: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=300&h=200&fit=crop",
-                    specialty: "Неврология"
-                }
-            ];
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка видео...</div>';
 
-            responseElement.innerHTML = `
+            try {
+                const response = await fetch('api/videos');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                const videos = await response.json();
+
+                responseElement.innerHTML = `
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin-top: 20px;">
                     ${videos.map(video => `
                         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; overflow: hidden; color: white; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
@@ -1556,26 +2396,24 @@
                     <button onclick="showAllVideos()" style="background: #9C27B0; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">Все медицинские видео (89)</button>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка загрузки видео:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
-        function checkHealth() {
+        async function checkHealth() {
             const responseElement = document.getElementById('apiResponse');
-            const healthData = {
-                status: "healthy",
-                timestamp: new Date().toISOString(),
-                services: {
-                    database: "connected",
-                    redis: "connected",
-                    ai_service: "running",
-                    video_processor: "running",
-                    payment_gateway: "active",
-                    notification_service: "running"
-                },
-                uptime: "99.99%",
-                response_time: "45ms",
-                active_users: 1247,
-                total_appointments: 15420
-            };
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Проверка состояния системы...</div>';
+
+            try {
+                const response = await fetch('health');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                const healthData = await response.json();
 
             responseElement.innerHTML = `
                 <div style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); border-radius: 15px; padding: 30px; color: white; text-align: center; margin-top: 20px;">
@@ -1612,26 +2450,24 @@
                     <p style="margin: 20px 0 0 0; opacity: 0.8;">Последнее обновление: ${new Date().toLocaleString('ru-RU')}</p>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка проверки состояния:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
-        function loadWeather() {
+        async function loadWeather() {
             const responseElement = document.getElementById('apiResponse');
-            const weatherData = {
-                temperature: 22,
-                description: "Clear sky",
-                city: "Istanbul",
-                country: "TR",
-                humidity: 65,
-                windSpeed: 3,
-                pressure: 1013,
-                visibility: 10,
-                forecast: [
-                    {day: "Завтра", temp: 24, desc: "Переменная облачность"},
-                    {day: "Послезавтра", temp: 21, desc: "Небольшой дождь"},
-                    {day: "Понедельник", temp: 25, desc: "Солнечно"},
-                    {day: "Вторник", temp: 23, desc: "Облачно"}
-                ]
-            };
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка данных о погоде...</div>';
+
+            try {
+                const response = await fetch('api/realtime/weather?lat=41.0082&lon=28.9784&lang=ru');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                const weatherData = await response.json();
 
             responseElement.innerHTML = `
                 <div style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); border-radius: 15px; padding: 30px; color: white; text-align: center;">
@@ -1691,52 +2527,24 @@
                     </div>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка загрузки погоды:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
-        function loadNews() {
+        async function loadNews() {
             const responseElement = document.getElementById('apiResponse');
-            const newsData = [
-                {
-                    title: "Прорыв в лечении рака с использованием ИИ-технологий",
-                    description: "Исследователи разработали новый диагностический инструмент на основе искусственного интеллекта, который повышает точность диагностики онкологических заболеваний на 97.8%",
-                    source: "Medical Journal",
-                    published: new Date().toISOString(),
-                    category: "Онкология",
-                    readTime: "5 мин"
-                },
-                {
-                    title: "Турция становится ведущим направлением медицинского туризма",
-                    description: "40% рост числа международных пациентов в 2025 году. Турецкие клиники привлекают пациентов высоким качеством услуг и доступными ценами",
-                    source: "Healthcare Today",
-                    published: new Date().toISOString(),
-                    category: "Медицинский туризм",
-                    readTime: "3 мин"
-                },
-                {
-                    title: "Новые методы кардиохирургии в турецких клиниках",
-                    description: "Внедрение роботизированных систем для операций на сердце показывает выдающиеся результаты с 99.2% успешностью операций",
-                    source: "Cardiology News",
-                    published: new Date().toISOString(),
-                    category: "Кардиология",
-                    readTime: "4 мин"
-                },
-                {
-                    title: "Революция в пластической хирургии: 3D-моделирование",
-                    description: "Турецкие хирурги используют передовые 3D-технологии для планирования операций, что снижает риски и улучшает результаты",
-                    source: "Plastic Surgery Today",
-                    published: new Date().toISOString(),
-                    category: "Пластическая хирургия",
-                    readTime: "6 мин"
-                },
-                {
-                    title: "Телемедицина в Турции: новые возможности для пациентов",
-                    description: "Развитие телемедицинских услуг позволяет проводить консультации с ведущими специалистами удаленно, экономя время и средства пациентов",
-                    source: "Digital Health",
-                    published: new Date().toISOString(),
-                    category: "Телемедицина",
-                    readTime: "4 мин"
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка новостей...</div>';
+
+            try {
+                const response = await fetch('api/realtime/news?lang=ru');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            ];
+                const newsData = await response.json();
 
             responseElement.innerHTML = `
                 <div style="background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%); border-radius: 15px; padding: 30px; color: white;">
@@ -1763,38 +2571,238 @@
                     </div>
                 </div>
             `;
+        async function aiDiagnostics() {
+            const responseElement = document.getElementById('apiResponse');
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Запуск AI-диагностики...</div>';
+
+            try {
+                const diagnosticsData = {
+                    status: "active",
+                    ai_models: ["Кардиология AI", "Онкология AI", "Неврология AI", "Радиология AI"],
+                    accuracy: "98.7%",
+                    processed_cases: 15420,
+                    specialties: [
+                        { name: "Кардиохирургия", accuracy: "99.2%", cases: 3240 },
+                        { name: "Онкология", accuracy: "98.8%", cases: 4150 },
+                        { name: "Неврология", accuracy: "98.1%", cases: 2890 },
+                        { name: "Радиология", accuracy: "99.5%", cases: 5140 }
+                    ]
+                };
+
+                responseElement.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #00b894 0%, #00a085 100%); border-radius: 15px; padding: 30px; color: white;">
+                        <h3 style="margin: 0 0 20px 0; font-size: 24px; text-align: center;">AI-диагностика нового поколения</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Общая точность</h4>
+                                <p style="margin: 0; font-size: 32px; font-weight: bold;">${diagnosticsData.accuracy}</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Обработано случаев: ${diagnosticsData.processed_cases.toLocaleString()}</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Статус системы</h4>
+                                <p style="margin: 0; font-size: 24px; font-weight: bold; color: #90EE90;">АКТИВНА</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Все AI-модели работают</p>
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h4 style="margin: 0 0 15px 0;">Специализированные AI-модели</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                ${diagnosticsData.specialties.map(specialty => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 16px;">${specialty.name}</p>
+                                        <p style="margin: 5px 0; font-size: 20px; font-weight: bold; color: #90EE90;">${specialty.accuracy}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">${specialty.cases} случаев</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 15px 0;">Доступные AI-модели</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                                ${diagnosticsData.ai_models.map(model => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; text-align: center;">
+                                        <p style="margin: 0; font-size: 14px; font-weight: bold;">${model}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка AI-диагностики:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к AI-серверу.</small>
+                </div>`;
+            }
         }
 
-        function loadStats() {
-            const stats = {
-                platform: "MEDTOUR AI Platform",
-                version: "1.0.0",
-                uptime: "99.99%",
-                activeUsers: 15420,
-                totalDoctors: 1247,
-                totalClinics: 89,
-                supportedLanguages: 25,
-                aiModelsActive: 12,
-                requestsPerSecond: 2847,
-                averageResponseTime: "45ms",
-                dataProcessed: "2.4TB today",
-                aiAccuracy: "97.8%",
-                userSatisfaction: "4.9/5.0",
-                globalCoverage: "200+ cities",
-                realTimeFeatures: {
-                    weatherAPI: "OpenWeatherMap",
-                    newsAPI: "Medical RSS Feeds",
-                    aiModel: "GPT-4",
-                    languageDetection: "GeoIP + Browser",
-                    webSocketConnections: 1247
+        async function treatmentPlanning() {
+            const responseElement = document.getElementById('apiResponse');
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Генерация плана лечения...</div>';
+
+            try {
+                const treatmentData = {
+                    available_treatments: 847,
+                    success_rate: "94.3%",
+                    avg_duration: "12-18 дней",
+                    specialties: [
+                        { name: "Кардиохирургия", procedures: 156, success: "96.8%" },
+                        { name: "Онкология", procedures: 234, success: "92.1%" },
+                        { name: "Трансплантология", procedures: 89, success: "98.2%" },
+                        { name: "Эстетическая медицина", procedures: 368, success: "99.1%" }
+                    ],
+                    packages: [
+                        { name: "Базовый пакет", price: "от $3,500", duration: "7-10 дней" },
+                        { name: "Стандартный пакет", price: "от $6,800", duration: "12-15 дней" },
+                        { name: "Премиум пакет", price: "от $12,000", duration: "18-21 день" }
+                    ]
+                };
+
+                responseElement.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #6c5ce7 0%, #5f3dc4 100%); border-radius: 15px; padding: 30px; color: white;">
+                        <h3 style="margin: 0 0 20px 0; font-size: 24px; text-align: center;">Персонализированное планирование лечения</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Доступно процедур</h4>
+                                <p style="margin: 0; font-size: 32px; font-weight: bold;">${treatmentData.available_treatments}</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">В турецких клиниках</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Успешность лечения</h4>
+                                <p style="margin: 0; font-size: 32px; font-weight: bold;">${treatmentData.success_rate}</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Средняя длительность: ${treatmentData.avg_duration}</p>
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h4 style="margin: 0 0 15px 0;">Специализации по направлениям</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                ${treatmentData.specialties.map(specialty => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 16px;">${specialty.name}</p>
+                                        <p style="margin: 5px 0; font-size: 18px; font-weight: bold; color: #90EE90;">${specialty.success}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">${specialty.procedures} процедур</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 15px 0;">Пакеты медицинского туризма</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                ${treatmentData.packages.map(pkg => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 18px;">${pkg.name}</p>
+                                        <p style="margin: 10px 0; font-size: 24px; font-weight: bold; color: #ffeaa7;">${pkg.price}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">${pkg.duration}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка планирования лечения:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу планирования.</small>
+                </div>`;
+            }
+        }
+
+        async function medicalConsultation() {
+            const responseElement = document.getElementById('apiResponse');
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Подключение к консультанту...</div>';
+
+            try {
+                const consultationData = {
+                    online_doctors: 47,
+                    avg_response_time: "3 минуты",
+                    languages: ["Русский", "Английский", "Турецкий", "Арабский"],
+                    available_now: [
+                        { name: "Проф. Мехмет Озтюрк", specialty: "Кардиохирург", experience: "25 лет", rating: "4.9" },
+                        { name: "Д-р Айше Йылмаз", specialty: "Онколог", experience: "18 лет", rating: "4.8" },
+                        { name: "Проф. Али Демир", specialty: "Нейрохирург", experience: "22 лет", rating: "4.9" },
+                        { name: "Д-р Фатма Коч", specialty: "Эндокринолог", experience: "15 лет", rating: "4.7" }
+                    ],
+                    consultation_types: [
+                        { type: "Первичная консультация", duration: "30 мин", price: "$85" },
+                        { type: "Повторная консультация", duration: "20 мин", price: "$65" },
+                        { type: "Экстренная консультация", duration: "15 мин", price: "$120" }
+                    ]
+                };
+
+                responseElement.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%); border-radius: 15px; padding: 30px; color: white;">
+                        <h3 style="margin: 0 0 20px 0; font-size: 24px; text-align: center;">Онлайн-консультации с турецкими врачами</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Врачей онлайн</h4>
+                                <p style="margin: 0; font-size: 32px; font-weight: bold;">${consultationData.online_doctors}</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Доступны сейчас</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px;">
+                                <h4 style="margin: 0 0 10px 0;">Время ответа</h4>
+                                <p style="margin: 0; font-size: 32px; font-weight: bold;">${consultationData.avg_response_time}</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">В среднем</p>
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h4 style="margin: 0 0 15px 0;">Доступные врачи</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                                ${consultationData.available_now.map(doctor => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 16px;">${doctor.name}</p>
+                                        <p style="margin: 5px 0; font-size: 14px; color: #ffeaa7;">${doctor.specialty}</p>
+                                        <p style="margin: 5px 0; font-size: 12px; opacity: 0.9;">Опыт: ${doctor.experience}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 14px; font-weight: bold;">Рейтинг: ${doctor.rating}/5.0</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 15px 0;">Типы консультаций</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                ${consultationData.consultation_types.map(consult => `
+                                    <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                                        <p style="margin: 0; font-weight: bold; font-size: 16px;">${consult.type}</p>
+                                        <p style="margin: 10px 0; font-size: 20px; font-weight: bold; color: #ffeaa7;">${consult.price}</p>
+                                        <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">${consult.duration}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка подключения к консультанту:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу консультаций.</small>
+                </div>`;
+            }
+        }
+
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка загрузки новостей:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
+        }
+
+        async function loadStats() {
+            const responseElement = document.getElementById('apiResponse');
+            responseElement.innerHTML = '<div style="text-align: center; padding: 20px;">Загрузка статистики...</div>';
+
+            try {
+                const response = await fetch('metrics');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            };
+                const stats = await response.json();
 
             const responseElement = document.getElementById('apiResponse');
             responseElement.innerHTML = `
                 <div style="background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); border-radius: 15px; padding: 30px; color: white;">
                     <h3 style="margin: 0 0 25px 0; font-size: 24px; text-align: center;">Системная статистика MEDTOUR</h3>
-                    
+
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px;">
                         <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 12px; text-align: center;">
                             <h4 style="margin: 0 0 10px 0; font-size: 16px; opacity: 0.9;">Платформа</h4>
@@ -1882,14 +2890,25 @@
                     </div>
                 </div>
             `;
+            } catch (error) {
+                responseElement.innerHTML = `<div style="color: #e74c3c; padding: 15px; background: #fdf2f2; border-radius: 10px; border-left: 4px solid #e74c3c;">
+                    <strong>Ошибка загрузки статистики:</strong> ${error.message}<br>
+                    <small>Проверьте подключение к серверу.</small>
+                </div>`;
+            }
         }
 
         setInterval(() => {
+            updateCurrentTime();
             if (userLocation) {
                 loadWeatherData();
             }
             loadNewsData();
-        }, 600000);
+        }, 60000);
+
+        setInterval(() => {
+            updateCurrentTime();
+        }, 1000);
 
         function updateCurrentTime() {
             const now = new Date();
@@ -2236,6 +3255,160 @@
         }
 
         function selectRole(role) {
+            const roleOptions = document.querySelectorAll('.role-option');
+            roleOptions.forEach(option => option.classList.remove('selected'));
+
+            const selectedOption = document.querySelector(`[data-role="${role}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const patientRegBtn = document.getElementById('patientRegBtn');
+            const doctorRegBtn = document.getElementById('doctorRegBtn');
+            const loginBtn = document.getElementById('loginBtn');
+
+            if (patientRegBtn) {
+                patientRegBtn.addEventListener('click', function() {
+                    openModal('patientModal');
+                });
+            }
+
+            if (doctorRegBtn) {
+                doctorRegBtn.addEventListener('click', function() {
+                    openModal('doctorModal');
+                });
+            }
+
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function() {
+                    openModal('loginModal');
+                });
+            }
+
+            const closeButtons = document.querySelectorAll('.close[data-modal]');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    closeModal(modalId);
+                });
+            });
+
+            const roleOptions = document.querySelectorAll('.role-option[data-role]');
+            roleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const role = this.getAttribute('data-role');
+                    selectRole(role);
+                });
+            });
+
+            const medicalServiceButtons = document.querySelectorAll('.btn[data-action]');
+            medicalServiceButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.getAttribute('data-action');
+                    switch(action) {
+                        case 'loadDoctors':
+                            loadDoctors();
+                            break;
+                        case 'loadVideos':
+                            loadVideos();
+                            break;
+                        case 'aiDiagnostics':
+                            aiDiagnostics();
+                            break;
+                        case 'treatmentPlanning':
+                            treatmentPlanning();
+                            break;
+                        case 'medicalConsultation':
+                            medicalConsultation();
+                            break;
+                        case 'loadNews':
+                            loadNews();
+                            break;
+                    }
+                });
+            });
+
+            const aiAssistantButton = document.getElementById('aiAssistantButton');
+            if (aiAssistantButton) {
+                aiAssistantButton.addEventListener('click', function() {
+                    toggleAIAssistant();
+                });
+            }
+
+            const aiCloseButtons = document.querySelectorAll('.ai-close-btn');
+            aiCloseButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    toggleAIAssistant();
+                });
+            });
+
+            const aiSendButtons = document.querySelectorAll('.ai-send-btn');
+            aiSendButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    sendAIMessage();
+                });
+            });
+
+            const aiInput = document.getElementById('aiInput');
+            if (aiInput) {
+                aiInput.addEventListener('keypress', function(event) {
+                    handleAIInputKeypress(event);
+                });
+            }
+
+            // Global event delegation for data-action buttons
+            document.addEventListener('click', function(event) {
+                const target = event.target;
+                const action = target.getAttribute('data-action');
+                
+                if (action) {
+                    event.preventDefault();
+                    
+                    switch(action) {
+                        case 'bookAppointment':
+                            const doctorId = target.getAttribute('data-doctor-id');
+                            if (doctorId) {
+                                bookAppointment(parseInt(doctorId));
+                            }
+                            break;
+                        case 'viewProfile':
+                            const profileDoctorId = target.getAttribute('data-doctor-id');
+                            if (profileDoctorId) {
+                                viewProfile(parseInt(profileDoctorId));
+                            }
+                            break;
+                        case 'showAllDoctors':
+                            showAllDoctors();
+                            break;
+                        case 'closeModal':
+                            closeModal();
+                            break;
+                        case 'loadDoctors':
+                            loadDoctors();
+                            break;
+                        case 'searchDoctors':
+                            searchDoctors();
+                            break;
+                        case 'toggleAIAssistant':
+                            toggleAIAssistant();
+                            break;
+                    }
+                }
+            });
+
+            window.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        function selectRole(role) {
             document.getElementById('loginRole').value = role;
             document.querySelectorAll('.role-option').forEach(option => {
                 option.classList.remove('selected');
@@ -2247,10 +3420,10 @@
             event.preventDefault();
             const formData = new FormData(event.target);
             const patientData = Object.fromEntries(formData);
-            
+
             console.log('Регистрация пациента:', patientData);
-            
-            fetch('/api/auth/register/patient', {
+
+            fetch('api/auth/register/patient', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -2277,14 +3450,14 @@
             event.preventDefault();
             const formData = new FormData(event.target);
             const doctorData = Object.fromEntries(formData);
-            
+
             const selectedLanguages = Array.from(document.getElementById('doctorLanguages').selectedOptions)
                 .map(option => option.value);
             doctorData.languages = selectedLanguages;
-            
+
             console.log('Регистрация врача:', doctorData);
-            
-            fetch('/api/auth/register/doctor', {
+
+            fetch('api/auth/register/doctor', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -2311,10 +3484,10 @@
             event.preventDefault();
             const formData = new FormData(event.target);
             const loginData = Object.fromEntries(formData);
-            
+
             console.log('Вход пользователя:', loginData);
-            
-            fetch('/api/auth/login', {
+
+            fetch('api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -2327,10 +3500,10 @@
                     localStorage.setItem('authToken', data.token);
                     localStorage.setItem('userRole', data.role);
                     localStorage.setItem('userId', data.userId);
-                    
+
                     alert('Вход выполнен успешно!');
                     closeModal('loginModal');
-                    
+
                     if (data.role === 'doctor') {
                         window.location.href = '/dashboard/doctor';
                     } else {
@@ -2357,36 +3530,362 @@
     </script>
 </body>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Language switcher logic
-            function setLanguage(lang) {
-                currentLanguage = lang;
-                document.documentElement.lang = lang;
-                document.querySelectorAll('.lang-btn').forEach(b => {
-                    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
-                });
-                fetch(`/api/localization/${lang}/common`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (typeof updateUILanguage === 'function') {
-                            updateUILanguage(data);
-                        }
-                    })
-                    .catch(() => {});
-                if (typeof updateCurrentTime === 'function') updateCurrentTime();
-                if (typeof loadNewsData === 'function') loadNewsData();
-                if (typeof loadWeatherData === 'function') loadWeatherData();
+        const translations = {
+            ru: {
+                headerSubtitle: "Турецкая медицина мирового уровня",
+                headerDescription: "Ведущие клиники Турции - Лучшие врачи - Передовые технологии",
+                statDoctors: "Врачей-экспертов",
+                statClinics: "Клиник-партнеров",
+                statLanguages: "Языков поддержки",
+                statUptime: "Uptime SLA",
+                featureWorldClassTitle: "Турецкие клиники мирового класса",
+                featureWorldClassDesc: "Ведущие медицинские центры Стамбула, Анкары и Анталии с международной аккредитацией JCI и передовым оборудованием.",
+                featureProfessorsTitle: "Профессора турецкой медицины",
+                featureProfessorsDesc: "Лучшие турецкие врачи и профессора с мировым признанием в кардиохирургии, онкологии, трансплантологии и эстетической медицине.",
+                featureAiTitle: "AI-диагностика нового поколения",
+                featureAiDesc: "Революционные AI-системы для ранней диагностики рака, сердечно-сосудистых заболеваний и неврологических расстройств.",
+                featureTreatmentTitle: "Инновационные методы лечения",
+                featureTreatmentDesc: "Стволовые клетки, генная терапия, роботизированная хирургия Da Vinci и персонализированная медицина в Турции.",
+                featureTourismTitle: "Медицинский туризм премиум-класса",
+                featureTourismDesc: "Полный пакет услуг: лечение, проживание в 5-звездочных отелях, трансфер, переводчики и культурная программа.",
+                featureAffordableTitle: "Турецкое качество по доступным ценам",
+                featureAffordableDesc: "Экономия до 70% по сравнению с США и Европой при сохранении высочайших стандартов качества и безопасности.",
+                apiSectionTitle: "Передовые медицинские AI-технологии",
+                loadDoctors: "Турецкие врачи-эксперты",
+                loadVideos: "Медицинские процедуры",
+                aiDiagnostics: "AI-диагностика",
+                treatmentPlanning: "Планирование лечения",
+                medicalConsultation: "Онлайн-консультация",
+                medicalNews: "Медицинские новости",
+                apiResponseDefault: "Выберите медицинскую услугу для получения персонализированной помощи..."
+            },
+            en: {
+                headerSubtitle: "World-class Turkish Medicine",
+                headerDescription: "Leading Turkish Clinics - Top Doctors - Advanced Technologies",
+                statDoctors: "Expert Doctors",
+                statClinics: "Partner Clinics",
+                statLanguages: "Supported Languages",
+                statUptime: "Uptime SLA",
+                featureWorldClassTitle: "World-class Turkish Clinics",
+                featureWorldClassDesc: "Leading medical centers in Istanbul, Ankara and Antalya with international JCI accreditation and advanced equipment.",
+                featureProfessorsTitle: "Turkish Medical Professors",
+                featureProfessorsDesc: "Top Turkish doctors and professors with global recognition in cardiosurgery, oncology, transplantology and aesthetic medicine.",
+                featureAiTitle: "Next-generation AI Diagnostics",
+                featureAiDesc: "Revolutionary AI systems for early diagnosis of cancer, cardiovascular diseases and neurological disorders.",
+                featureTreatmentTitle: "Innovative Treatment Methods",
+                featureTreatmentDesc: "Stem cells, gene therapy, Da Vinci robotic surgery and personalized medicine in Turkey.",
+                featureTourismTitle: "Premium Medical Tourism",
+                featureTourismDesc: "Complete service package: treatment, accommodation in 5-star hotels, transfer, interpreters and cultural program.",
+                featureAffordableTitle: "Turkish Quality at Affordable Prices",
+                featureAffordableDesc: "Save up to 70% compared to USA and Europe while maintaining the highest standards of quality and safety.",
+                apiSectionTitle: "Advanced Medical AI Technologies",
+                loadDoctors: "Turkish Expert Doctors",
+                loadVideos: "Medical Procedures",
+                aiDiagnostics: "AI Diagnostics",
+                treatmentPlanning: "Treatment Planning",
+                medicalConsultation: "Online Consultation",
+                medicalNews: "Medical News",
+                apiResponseDefault: "Select a medical service to receive personalized assistance..."
+            },
+            tr: {
+                headerSubtitle: "Dünya standartlarında Türk Tıbbı",
+                headerDescription: "Önde gelen Türk Klinikleri - En İyi Doktorlar - İleri Teknolojiler",
+                statDoctors: "Uzman Doktorlar",
+                statClinics: "Partner Klinikler",
+                statLanguages: "Desteklenen Diller",
+                statUptime: "Uptime SLA",
+                featureWorldClassTitle: "Dünya standartlarında Türk Klinikleri",
+                featureWorldClassDesc: "İstanbul, Ankara ve Antalya'daki uluslararası JCI akreditasyonlu ve ileri teknolojili önde gelen tıp merkezleri.",
+                featureProfessorsTitle: "Türk Tıp Profesörleri",
+                featureProfessorsDesc: "Kalp cerrahisi, onkoloji, transplantoloji ve estetik tıpta dünya çapında tanınmış en iyi Türk doktorları ve profesörleri.",
+                featureAiTitle: "Yeni nesil AI Tanı",
+                featureAiDesc: "Kanser, kardiyovasküler hastalıklar ve nörolojik bozuklukların erken tanısı için devrimci AI sistemleri.",
+                featureTreatmentTitle: "İnovatif Tedavi Yöntemleri",
+                featureTreatmentDesc: "Kök hücreler, gen terapisi, Da Vinci robotik cerrahi ve Türkiye'de kişiselleştirilmiş tıp.",
+                featureTourismTitle: "Premium Medikal Turizm",
+                featureTourismDesc: "Komple hizmet paketi: tedavi, 5 yıldızlı otellerde konaklama, transfer, tercümanlar ve kültürel program.",
+                featureAffordableTitle: "Uygun Fiyatlarla Türk Kalitesi",
+                featureAffordableDesc: "En yüksek kalite ve güvenlik standartlarını korurken ABD ve Avrupa'ya kıyasla %70'e kadar tasarruf.",
+                apiSectionTitle: "İleri Medikal AI Teknolojileri",
+                loadDoctors: "Türk Uzman Doktorlar",
+                loadVideos: "Medikal Prosedürler",
+                aiDiagnostics: "AI Tanı",
+                treatmentPlanning: "Tedavi Planlaması",
+                medicalConsultation: "Online Konsültasyon",
+                medicalNews: "Medikal Haberler",
+                apiResponseDefault: "Kişiselleştirilmiş yardım almak için bir medikal hizmet seçin..."
+            },
+            ar: {
+                headerSubtitle: "الطب التركي بمستوى عالمي",
+                headerDescription: "العيادات التركية الرائدة - أفضل الأطباء - التقنيات المتقدمة",
+                statDoctors: "الأطباء الخبراء",
+                statClinics: "العيادات الشريكة",
+                statLanguages: "اللغات المدعومة",
+                statUptime: "اتفاقية مستوى الخدمة",
+                featureWorldClassTitle: "العيادات التركية ذات المستوى العالمي",
+                featureWorldClassDesc: "المراكز الطبية الرائدة في إسطنبول وأنقرة وأنطاليا مع الاعتماد الدولي JCI والمعدات المتقدمة.",
+                featureProfessorsTitle: "أساتذة الطب التركي",
+                featureProfessorsDesc: "أفضل الأطباء والأساتذة الأتراك المعترف بهم عالمياً في جراحة القلب والأورام وزراعة الأعضاء والطب التجميلي.",
+                featureAiTitle: "تشخيص الذكاء الاصطناعي من الجيل الجديد",
+                featureAiDesc: "أنظمة الذكاء الاصطناعي الثورية للتشخيص المبكر للسرطان وأمراض القلب والأوعية الدموية والاضطرابات العصبية.",
+                featureTreatmentTitle: "طرق العلاج المبتكرة",
+                featureTreatmentDesc: "الخلايا الجذعية والعلاج الجيني وجراحة دافنشي الروبوتية والطب الشخصي في تركيا.",
+                featureTourismTitle: "السياحة العلاجية الفاخرة",
+                featureTourismDesc: "حزمة خدمات كاملة: العلاج والإقامة في فنادق 5 نجوم والنقل والمترجمين والبرنامج الثقافي.",
+                featureAffordableTitle: "الجودة التركية بأسعار معقولة",
+                featureAffordableDesc: "توفير يصل إلى 70% مقارنة بالولايات المتحدة وأوروبا مع الحفاظ على أعلى معايير الجودة والسلامة.",
+                apiSectionTitle: "تقنيات الذكاء الاصطناعي الطبية المتقدمة",
+                loadDoctors: "الأطباء الأتراك الخبراء",
+                loadVideos: "الإجراءات الطبية",
+                aiDiagnostics: "تشخيص الذكاء الاصطناعي",
+                treatmentPlanning: "تخطيط العلاج",
+                medicalConsultation: "الاستشارة عبر الإنترنت",
+                medicalNews: "الأخبار الطبية",
+                apiResponseDefault: "اختر خدمة طبية للحصول على مساعدة شخصية..."
             }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLanguage', lang);
 
             document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    setLanguage(this.getAttribute('data-lang'));
-                });
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
             });
 
-            // Set initial language button active
-            setLanguage(document.documentElement.lang || 'ru');
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('selectedLanguage') || 'ru';
+            changeLanguage(savedLang);
+            loadInitialData();
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
         });
+
+        // Make functions globally accessible
+        window.toggleAIAssistant = function() {
+            const aiAssistant = document.getElementById('aiAssistant');
+            const aiButton = document.getElementById('aiAssistantButton');
+
+            if (aiAssistant.style.display === 'flex') {
+                aiAssistant.style.display = 'none';
+                aiButton.style.display = 'block';
+            } else {
+                aiAssistant.style.display = 'flex';
+                aiButton.style.display = 'none';
+            }
+        };
+
+        window.bookAppointment = function(doctorId) {
+            console.log('Booking appointment for doctor:', doctorId);
+            alert('Функция записи к врачу будет реализована. ID врача: ' + doctorId);
+        };
+
+        window.viewProfile = function(doctorId) {
+            console.log('Viewing profile for doctor:', doctorId);
+            alert('Функция просмотра профиля врача будет реализована. ID врача: ' + doctorId);
+        };
+
+        window.showAllDoctors = function() {
+            console.log('Showing all doctors');
+            alert('Функция показа всех врачей будет реализована');
+        };
+
+        window.closeModal = function() {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (modal.parentNode) {
+                    modal.parentNode.removeChild(modal);
+                }
+            });
+        };
+
+        window.searchDoctors = function() {
+            console.log('Searching doctors');
+            alert('Функция поиска врачей будет реализована');
+        };
+
+        function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const message = input.value.trim();
+
+            if (message) {
+                addUserMessage(message);
+                input.value = '';
+
+                setTimeout(() => {
+                    const responses = [
+                        "Я могу помочь вам найти лучших врачей в Турции для вашего лечения.",
+                        "Для записи к врачу, пожалуйста, зарегистрируйтесь как пациент.",
+                        "Турция предлагает высококачественные медицинские услуги по доступным ценам.",
+                        "Я могу предоставить информацию о различных медицинских процедурах и их стоимости.",
+                        "Для получения более подробной информации о конкретном враче, нажмите на его профиль.",
+                        "Турецкие клиники имеют международную аккредитацию JCI и используют новейшие технологии.",
+                        "Медицинский туризм в Турции включает полный пакет услуг: лечение, проживание и экскурсии.",
+                        "Стоимость лечения в Турции на 60-70% ниже, чем в США и Европе при том же качестве.",
+                        "Турецкие врачи проходят обучение в лучших медицинских центрах мира.",
+                        "Я помогу вам выбрать подходящую клинику и врача для вашего заболевания."
+                    ];
+
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addAIMessage(randomResponse);
+                }, 1000);
+            }
+        }
+
+        function addUserMessage(message) {
+            const messagesContainer = document.getElementById('aiMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'user-message';
+            messageElement.innerHTML = `<p>${message}</p>`;
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function addAIMessage(message) {
+            const messagesContainer = document.getElementById('aiMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'ai-message';
+            messageElement.innerHTML = `<p>${message}</p>`;
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function handleAIInputKeypress(event) {
+            if (event.key === 'Enter') {
+                sendAIMessage();
+            }
+        }
     </script>
 
+    <div id="aiAssistant" class="ai-assistant-widget">
+        <div class="ai-assistant-header">
+            <h3>AI Ассистент</h3>
+            <button class="close-button ai-close-btn">×</button>
+        </div>
+        <div class="ai-assistant-messages" id="aiMessages">
+            <div class="ai-message">
+                <p>Здравствуйте! Я ваш AI ассистент по медицинскому туризму в Турции. Чем могу помочь?</p>
+            </div>
+        </div>
+        <div class="ai-assistant-input">
+            <input type="text" id="aiInput" placeholder="Задайте вопрос о лечении в Турции...">
+            <button class="ai-send-btn">Отправить</button>
+        </div>
+    </div>
+
+    <button id="aiAssistantButton" class="ai-assistant-button" data-action="toggleAIAssistant">
+        <span>AI Ассистент</span>
+    </button>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered successfully:', registration.scope);
+
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    console.log('New service worker available');
+                                    if (confirm('Новая версия приложения доступна. Обновить?')) {
+                                        newWorker.postMessage({ type: 'SKIP_WAITING' });
+                                        window.location.reload();
+                                    }
+                                }
+                            });
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                window.location.reload();
+            });
+        }
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('PWA install prompt available');
+            e.preventDefault();
+            deferredPrompt = e;
+
+            const installButton = document.createElement('button');
+            installButton.textContent = 'Установить приложение';
+            installButton.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border: none;
+                padding: 12px 20px;
+                border-radius: 25px;
+                font-weight: 600;
+                cursor: pointer;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                z-index: 1000;
+                transition: all 0.3s ease;
+            `;
+
+            installButton.addEventListener('mouseenter', () => {
+                installButton.style.transform = 'translateY(-2px)';
+                installButton.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.6)';
+            });
+
+            installButton.addEventListener('mouseleave', () => {
+                installButton.style.transform = 'translateY(0)';
+                installButton.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
+            });
+
+            installButton.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('PWA install outcome:', outcome);
+                    deferredPrompt = null;
+                    installButton.remove();
+                }
+            });
+
+            document.body.appendChild(installButton);
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA installed successfully');
+            deferredPrompt = null;
+            const installButton = document.querySelector('button[style*="position: fixed"]');
+            if (installButton) {
+                installButton.remove();
+            }
+        });
+
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            console.log('Running as PWA');
+            document.documentElement.classList.add('pwa-mode');
+        }
+    </script>
+</body>
 </html>
